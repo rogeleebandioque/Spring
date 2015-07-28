@@ -1,4 +1,4 @@
-    <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" %>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.io.*,java.util.*, javax.servlet.*" %>
@@ -10,7 +10,7 @@
 <%@ page import="hibernateactivity.core.model.Roles" %>
 <%@ page import="org.apache.commons.lang3.StringUtils" %>
 <%@ page import="hibernateactivity.web.Operations" %>
-
+<%@ page import="javax.servlet.http.HttpServletRequest" %>
 <html>
     <head>
     <spring:url value="/resources/css/servlets.css" var="ServletsCss" />
@@ -25,7 +25,6 @@
     </head>
 
     <body>
-        
         <div id="container">
             <c:if test="${not empty msg}">     
                 <div id="alertUser">
@@ -39,16 +38,23 @@
             </span>
             <h1 align="center">Spring Activity</h1>
             <div id="search">
-                <div id="add"><button onClick="location.href='AddPerson'">Add Person</button></div><br/>                
-                 Search By: <select>
+                <div id="add"><button onClick="location.href='AddPerson'">
+                <spring:message code="label.addperson"/> </button></div><br/>                
+                <spring:message code="label.search"/>  <select>
                                 <option id="person">Person</option>
                                 <option id="prole">Role</option>
                             </select>                         
-                    <div id="displist">
+                    <div>
+                        <form method="POST" id="displist">
+                        </form>
                     </div>
             </div>
+            <c:if test="${empty person}">
+                <h2>No Person Found!</h2>
+            </c:if>
+           
             <table border="1"align="center">
-                 <thead><tr><th colspan="6">LIST of PERSONS</th></tr>
+                 <thead><tr><th colspan="6"><spring:message code="label.tablename"/> </th></tr>
                <tr><th>ID</th>
                     <th><spring:message code="label.name"/></th>
                     <th><spring:message code="label.datehired"/></th>
@@ -71,8 +77,8 @@
                           </c:forEach>
                         </td>
                         <td>
-                            <spring:url value="${user.id}delete" var="deleteUrl" /> 
-                            <spring:url value="${user.id}update" var="updateUrl" />
+                            <spring:url value="${user.id}delete" var="deleteUrl" />
+                            <spring:url value="${user.id}update" var="updateUrl" />      
 
                             <button onclick="location.href='${updateUrl}'">Update</button>
                             <button onclick="location.href='${deleteUrl}'">Delete</button>

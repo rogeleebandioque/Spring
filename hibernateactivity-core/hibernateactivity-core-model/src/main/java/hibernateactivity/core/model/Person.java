@@ -25,7 +25,7 @@ public class Person {//implements Comparable<Person> {
     private Set<Contacts> contact = new HashSet<Contacts>();
 
     @Column(name="age")
-    private int age;
+    private Integer age;
 
     @Column(name="gender")    
     private String gender;
@@ -35,7 +35,7 @@ public class Person {//implements Comparable<Person> {
     private Date bday = new Date();
 
     @Column(name="grade")
-    private int grade;
+    private Integer grade;
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     @Column(name="date_hired")    
@@ -96,11 +96,11 @@ public class Person {//implements Comparable<Person> {
         return contact;
     }
 
-    public void setAge(int age){
+    public void setAge(Integer age){
         this.age = age;
     }
 
-    public int getAge(){
+    public Integer getAge(){
         return age;
     }
 
@@ -120,11 +120,11 @@ public class Person {//implements Comparable<Person> {
         return bday;
     }
 
-    public void setGrade(int grade){
+    public void setGrade(Integer grade){
         this.grade = grade;
     }
 
-    public int getGrade(){
+    public Integer getGrade(){
         return grade;
     }
 
@@ -161,3 +161,4 @@ public class Person {//implements Comparable<Person> {
   	    return (this.grade < person.grade ) ? -1: (this.grade > person.grade ) ? 1:0 ;        
     }*/
 }
+

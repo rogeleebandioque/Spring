@@ -29,7 +29,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import org.apache.commons.io.FileUtils;
 
-import hibernateactivity.web.UserFormValidator;
+import hibernateactivity.web.PersonFormValidator;
 import hibernateactivity.web.Operations;
 import hibernateactivity.core.model.FileUpload;
 
@@ -37,14 +37,14 @@ import hibernateactivity.core.model.FileUpload;
 public class ActivityController{
     private Operations operations;    
     private Service service;
-    private UserFormValidator userFormValidator;
+    private PersonFormValidator personFormValidator;
 
     public void setOperations(Operations operations){
         this.operations = operations;
     }   
  
-    public void setUserFormValidator(UserFormValidator userFormValidator){
-        this.userFormValidator = userFormValidator;
+    public void setPersonFormValidator(PersonFormValidator personFormValidator){
+        this.personFormValidator = personFormValidator;
     } 
 
     public void setService(Service service){
@@ -196,12 +196,18 @@ public class ActivityController{
             person.setRole(r);        
                 
         }
+
         if(detail!=null){
             c = operations.contactDetails(detail, type);
             person.setContact(c);
         }
-        userFormValidator.validate(person,result);
-        if (result.hasErrors()){
+
+        personFormValidator.validate(person,result);
+        if (result.hasErrors()){   
+            model.addAttribute("roles", r);
+            model.addAttribute("personForm", person);
+            model.addAttribute("contact", c);
+            populateModel(model);
             return "UserForm";   
         }
         

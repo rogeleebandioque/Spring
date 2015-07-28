@@ -6,6 +6,8 @@
 
     <bean id="personDaoImpl" class="hibernateactivity.core.dao.PersonDaoImpl">
     </bean>
+    <bean id="userDaoImpl" class="hibernateactivity.core.dao.UserDaoImpl">
+    </bean>
     <bean id="hibernateUtil" class="hibernateactivity.core.dao.HibernateUtil" autowire="byName">
     </bean>
 	<import resource="classpath:hibernate.xml"/>

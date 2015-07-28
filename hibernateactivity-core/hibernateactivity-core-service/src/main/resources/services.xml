@@ -12,6 +12,7 @@ http://www.springframework.org/schema/aop/spring-aop.xsd">
 
     <bean id="service" class="hibernateactivity.core.service.Service" autowire="byName">
     </bean>
+
     <import resource="classpath:dao.xml"/>
 
  <tx:advice id="txAdvice" transaction-manager="txManager">

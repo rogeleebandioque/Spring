@@ -1,18 +1,18 @@
 package hibernateactivity.core.dao.actions;
 
 import hibernateactivity.core.dao.Command;
-import hibernateactivity.core.model.Person;
+import hibernateactivity.core.model.Users;
 import org.hibernate.Session;
 import java.util.*;
 import org.hibernate.*;
 import org.hibernate.criterion.*;
 import org.hibernate.transform.Transformers;
 
-public class ListPerson implements Command {
+public class ListUser implements Command {
 
     private Session session;
 
-    public ListPerson() {
+    public ListUser() {
     }
 
     public void setSession(Session session) {
@@ -20,10 +20,10 @@ public class ListPerson implements Command {
     }
 
     public Object execute() {
-        List<Person> persons = null;  
-        Criteria cr = session.createCriteria(Person.class);
+        List<Users> users = null;  
+        Criteria cr = session.createCriteria(Users.class);
         cr.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
-        persons = cr.list();
-        return persons;
+        users = cr.list();
+        return users;
     }
 }

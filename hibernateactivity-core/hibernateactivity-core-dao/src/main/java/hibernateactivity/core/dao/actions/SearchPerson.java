@@ -27,17 +27,30 @@ public class SearchPerson implements Command {
     }
 
     public Object execute() {
+        String hql = null;
         List<Person> persons = null;
-        listBy = listBy.replace(" ", "_").toLowerCase();  
+        listBy = listBy.replace(" ", "_").toLowerCase();
         Criteria cr = session.createCriteria(Person.class);
         cr.add(Restrictions.like("names.last_name", search, MatchMode.ANYWHERE));
-        if(order.equals("asc")){
-            cr.addOrder(Order.asc(listBy));
-        }else{
-            cr.addOrder(Order.desc(listBy));
+
+        if(!listBy.equals("last_name")) {
+            
+            if(order.equals("desc")) {
+                cr.addOrder(Order.desc(listBy));
+            } else {
+                cr.addOrder(Order.asc(listBy));
+            }
+            cr.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+            persons = cr.list();
+        } else {
+            if(order.equals("desc")) {
+                cr.addOrder(Order.desc("names.last_name"));
+            } else {
+                cr.addOrder(Order.asc("names.last_name"));
+            }
+            cr.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+            persons = cr.list();
         }
-        cr.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
-        persons = cr.list();
         return persons;
     }
 }
