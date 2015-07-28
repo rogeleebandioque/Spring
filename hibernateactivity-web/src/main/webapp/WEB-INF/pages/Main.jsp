@@ -52,7 +52,11 @@
             <c:if test="${empty person}">
                 <h2>No Person Found!</h2>
             </c:if>
-           
+            <c:forEach var="user" items="${users}">
+                ${user.username}
+                ${user.password}
+                ${user.role.roleName}
+            </c:forEach>
             <table border="1"align="center">
                  <thead><tr><th colspan="6"><spring:message code="label.tablename"/> </th></tr>
                <tr><th>ID</th>

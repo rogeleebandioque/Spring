@@ -175,6 +175,7 @@ public class ActivityController{
 	@RequestMapping(value ="Persons", method = RequestMethod.GET)
     public String displayPerson(ModelMap model) {
         model.addAttribute("person", service.getPersons());
+        model.addAttribute("users", service.getUsers());
         logger.debug("displayPerson()");
         return "Main";
     }
