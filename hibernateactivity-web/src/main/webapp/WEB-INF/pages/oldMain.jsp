@@ -17,11 +17,10 @@
 	<spring:url value="/resources/js/Servlets.js" var="ServletsJs" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <spring:url value="/resources/js/jq.js" var="JqJs" />
-    <spring:url value="/resources/js/deleteperson.js" var="DeleteJs" />
     <link rel="stylesheet" type="text/css" href="${ServletsCss}"/>
     <script src="${ServletsJs}"></script>
     <script src="${JqJs}"></script>
-    <script src="${DeleteJs}"></script>
+
     <title>Spring Activity</title>
     </head>
 
@@ -44,23 +43,28 @@
             <h1 align="center">Spring Activity</h1>
             <div id="search">
 
-                <c:url value="/logout" var="logoutUrl" />
-                <form action="${logoutUrl}" method="post" id="logoutForm">
-                    <input type="hidden" name="${_csrf.parameterName}"
-                value="${_csrf.token}" />
-                </form>
-    
+            <c:url value="/logout" var="logoutUrl" />
+            <form action="${logoutUrl}" method="post" id="logoutForm">
+            <input type="hidden" name="${_csrf.parameterName}"
+            value="${_csrf.token}" />
+            </form>
+            <script>
+            function formSubmit() {
+            document.getElementById("logoutForm").submit();
+            }
+            </script>
+
                 <div id="add"><button onClick="location.href='AddPerson'">
-                    <spring:message code="label.addperson"/> </button></div><br/>                
-                    <spring:message code="label.search"/>  
-                        <select>
-                            <option id="person">Person</option>
-                            <option id="prole">Role</option>
-                        </select>                         
-                    <form method="POST" id="displist">
-                    </form>
-                </div>
-            <div id="response"></div>
+                <spring:message code="label.addperson"/> </button></div><br/>                
+                <spring:message code="label.search"/>  <select>
+                                <option id="person">Person</option>
+                                <option id="prole">Role</option>
+                            </select>                         
+                    <div>
+                        <form method="POST" id="displist">
+                        </form>
+                    </div>
+            </div>
             <c:if test="${empty person}">
                 <h2>No Person Found!</h2>
             </c:if>
@@ -88,8 +92,11 @@
                           </c:forEach>
                         </td>
                         <td>
-                            <a href="/${user.id}update.html">Edit</a><br/>
-                            <a href="/${user.id}delete">Delete</a><br/>
+                            <spring:url value="${user.id}delete" var="deleteUrl" />
+                            <spring:url value="${user.id}update" var="updateUrl" />      
+
+                            <button onclick="location.href='${updateUrl}'">Update</button>
+                            <button onclick="location.href='${deleteUrl}'">Delete</button>
                         </td>
                     </tr>
 			    </c:forEach>               

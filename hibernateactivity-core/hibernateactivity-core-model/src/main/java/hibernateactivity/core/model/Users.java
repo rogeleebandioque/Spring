@@ -7,12 +7,9 @@ import hibernateactivity.core.model.UserRoles;
 @Table(name="Users")
 public class Users {
     
-    @Id 
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="userid_generator")
-    @SequenceGenerator(name="userid_generator", sequenceName="userid_generator", allocationSize=1)
-    @Column(name="id")
     private Integer id;
 
+    @Id
     @Column(name="username")
     private String username;
 

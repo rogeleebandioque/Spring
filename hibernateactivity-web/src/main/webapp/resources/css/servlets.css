@@ -29,3 +29,14 @@ table{
 .errors {
     color: red;
 }
+#login-box {
+    border:1px solid black;
+    text-align:center;
+}
+#tablelogin {
+
+    text-align:center;
+    padding:1em;
+    
+}
+

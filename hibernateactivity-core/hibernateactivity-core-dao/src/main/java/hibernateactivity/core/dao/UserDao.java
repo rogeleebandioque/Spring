@@ -6,4 +6,5 @@ import hibernateactivity.core.model.Users;
 
 interface UserDao{
     public List<Users> getUsers();
+    public Users getUserByUsername(String username);
 }

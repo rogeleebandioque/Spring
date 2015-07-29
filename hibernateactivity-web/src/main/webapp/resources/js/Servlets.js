@@ -4,3 +4,8 @@ function confirm_delete() {
 function removeAlert(){
     document.getElementById("alertUser").innerHTML="";
 }
+
+function formSubmit() {
+    document.getElementById("logoutForm").submit();
+}
+
