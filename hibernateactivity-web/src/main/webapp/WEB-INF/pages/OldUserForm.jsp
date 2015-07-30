@@ -11,12 +11,10 @@
         <spring:url value="/resources/js/Servlets.js" var="ServletsJs" />
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         <spring:url value="/resources/js/jq.js" var="JqJs" />
-        <spring:url value="/resources/js/addperson.js" var="AddJs" />
 
         <link rel="stylesheet" type="text/css" href="${ServletsCss}"/>
         <script src="${ServletsJs}"></script>
         <script src="${JqJs}"></script>
-        <script src="${AddJs}"></script>
 
         <title>Spring Activity</title>
     </head>
@@ -43,10 +41,9 @@
             </c:choose>
             <br/>
 
-            <div id="message"></div>
-
-            <form:form id="personForm" action="SaveUpdate" method="POST" modelAttribute="personForm">
+            <form:form action="SaveUpdate" method="POST" modelAttribute="personForm">
                 <table align="center">
+                    <form:hidden path="id" value="${userForm.id}"/>
                     <spring:bind path="names">
                         <tr><td><spring:message code="label.firstname"/></td>
                             <td> <form:input path="names.first_name" required="true"/></td>

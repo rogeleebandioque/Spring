@@ -46,6 +46,5 @@ $(document).ready(function() {
     $(wrapper).on("click",".remove_field", function(){ 
         $(this).parent('div').remove();
     })
-
 }); 
 

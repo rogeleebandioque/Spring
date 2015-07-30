@@ -60,7 +60,8 @@
                     <form method="POST" id="displist">
                     </form>
                 </div>
-            <div id="response"></div>
+            <div id="usermessage"></div>
+
             <c:if test="${empty person}">
                 <h2>No Person Found!</h2>
             </c:if>
@@ -88,8 +89,11 @@
                           </c:forEach>
                         </td>
                         <td>
-                            <a href="/${user.id}update.html">Edit</a><br/>
-                            <a href="/${user.id}delete">Delete</a><br/>
+                            <spring:url value="delete/${user.id}" var="deleteUrl" />
+                            <spring:url value="update/${user.id}" var="updateUrl" />      
+
+                            <button id="update" onclick="location.href='${updateUrl}'">Update</button>
+                            <a href="/delete/${user.id}">Delete</a>
                         </td>
                     </tr>
 			    </c:forEach>               

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.ModelAndView;
@@ -49,7 +50,8 @@ public class ActivityController{
     private Operations operations;    
     private Service service;
     private PersonFormValidator personFormValidator;
-
+    private final Logger logger = LoggerFactory.getLogger(ActivityController.class);
+    
     public void setOperations(Operations operations){
         this.operations = operations;
     }   
@@ -61,12 +63,11 @@ public class ActivityController{
     public void setService(Service service){
         this.service = service;
     }    
-        
-    private final Logger logger = LoggerFactory.getLogger(ActivityController.class);
 
 	@RequestMapping(value = "/Login", method = RequestMethod.GET)
 	public String login(@RequestParam(value = "error", required = false) String error,
-			@RequestParam(value = "logout", required = false) String logout, HttpServletRequest request, Model model) {
+	    @RequestParam(value = "logout", required = false) String logout, 
+        HttpServletRequest request, Model model) {
 
 		if (error != null) {
 			model.addAttribute("error", "Error");
@@ -77,7 +78,6 @@ public class ActivityController{
 		}
 
 		return "Login";
-
 	}
 
 	@RequestMapping(value ="Persons", method = RequestMethod.GET)
@@ -90,21 +90,74 @@ public class ActivityController{
         return "Main";
     }
 
-    @RequestMapping(value="", method=RequestMethod.GET,
-                    produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value="Persons", method=RequestMethod.GET,
+                    produces = MediaType.APPLICATION_JSON_VALUE, 
+                    consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public List<Person> getPersons(){
         return service.getPersons();
     }
 
-  	@RequestMapping(value="/{id}delete", method=RequestMethod.DELETE,
-                    produces = MediaType.APPLICATION_JSON_VALUE,
-                    consumes = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody                   
-    public String deletePerson(@PathVariable("id") int id){ 
-        logger.debug("deletePerson()"); 
-        System.out.println("DELETE PERSON");
-        return service.deletePersons(id);
+    @RequestMapping(value = "AddPerson", method = RequestMethod.GET)
+	public String addPersonForm(Model model) {
+        logger.debug("userForm()");
+
+		Person person = new Person();
+		model.addAttribute("personForm", person);
+        populateModel(model);
+        return "UserForm";
+	}
+
+    @RequestMapping(value ="SaveUpdate", method = RequestMethod.POST,
+    produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public void saveOrUpdateUser(@RequestBody Person person,
+                                    BindingResult result, 
+                                    @RequestParam(value="r",required=false) String[] roles,
+                                    @RequestParam(value="contactDetail",required=false) String[] detail,
+                                    @RequestParam(value="contactType", required=false) String[] type) {
+        logger.debug("saveOrUpdateUser()");        
+        Set<Roles> r = new HashSet();        
+        Set<Contacts> c = new HashSet();
+        System.out.println(person.getBday());
+        if(roles!=null){
+            r = operations.addRole(roles);
+            person.setRole(r);        
+                
+        }
+
+        if(detail!=null){
+            c = operations.contactDetails(detail, type);
+            person.setContact(c);
+        }
+
+        personFormValidator.validate(person,result);
+        if (result.hasErrors()){   
+        }
+        
+        if(person.isNew()){
+            service.addPersons(person);
+        }else{
+            service.updatePersons(person);        
+        }
+    }
+
+    @RequestMapping(value="/delete/{id}", method=RequestMethod.GET)//,
+          // produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public void deletePerson(@PathVariable int id) {
+        logger.debug("delete persons()");
+        String mes = service.deletePersons(id);
+    }
+
+    public void populateModel(Model model){
+        List<String> roleId = new ArrayList<String>();
+        roleId.add("Police");
+        roleId.add("Politician");
+        roleId.add("Soldier");
+        roleId.add("Celebrity");
+        roleId.add("Worker");
+        model.addAttribute("roleId", roleId);
     }
 
 }
