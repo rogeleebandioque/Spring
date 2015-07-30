@@ -111,35 +111,9 @@ public class ActivityController{
     @RequestMapping(value ="SaveUpdate", method = RequestMethod.POST,
     produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public void saveOrUpdateUser(@RequestBody Person person,
-                                    BindingResult result, 
-                                    @RequestParam(value="r",required=false) String[] roles,
-                                    @RequestParam(value="contactDetail",required=false) String[] detail,
-                                    @RequestParam(value="contactType", required=false) String[] type) {
+    public void saveOrUpdateUser(@RequestBody Person person) {
         logger.debug("saveOrUpdateUser()");        
-        Set<Roles> r = new HashSet();        
-        Set<Contacts> c = new HashSet();
-        System.out.println(person.getBday());
-        if(roles!=null){
-            r = operations.addRole(roles);
-            person.setRole(r);        
-                
-        }
-
-        if(detail!=null){
-            c = operations.contactDetails(detail, type);
-            person.setContact(c);
-        }
-
-        personFormValidator.validate(person,result);
-        if (result.hasErrors()){   
-        }
-        
-        if(person.isNew()){
             service.addPersons(person);
-        }else{
-            service.updatePersons(person);        
-        }
     }
 
     @RequestMapping(value="/delete/{id}", method=RequestMethod.GET)//,
