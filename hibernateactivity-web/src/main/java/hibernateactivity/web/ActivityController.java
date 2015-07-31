@@ -95,7 +95,7 @@ public class ActivityController{
                     consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public List<Person> getPersons(){
-        return service.getPersons();
+        return service.getPerson();
     }
 
     @RequestMapping(value = "AddPerson", method = RequestMethod.GET)
@@ -108,16 +108,26 @@ public class ActivityController{
         return "UserForm";
 	}
 
-    @RequestMapping(value ="SaveUpdate", method = RequestMethod.POST,
-    produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value ="/SaveUpdate", method = RequestMethod.GET,
+                   produces = MediaType.APPLICATION_JSON_VALUE, 
+                   consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public void saveOrUpdateUser(@RequestBody Person person) {
         logger.debug("saveOrUpdateUser()");        
             service.addPersons(person);
     }
 
-    @RequestMapping(value="/delete/{id}", method=RequestMethod.GET)//,
-          // produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping("person/random")
+    @ResponseBody
+    public String randomPerson() {
+        System.out.println("yehet");
+        return "done";
+    }
+ 
+
+    @RequestMapping(value="delete/{id}", method=RequestMethod.DELETE,
+                    produces = MediaType.APPLICATION_JSON_VALUE, 
+                    consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public void deletePerson(@PathVariable int id) {
         logger.debug("delete persons()");

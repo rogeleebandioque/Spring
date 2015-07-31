@@ -10,19 +10,13 @@ import java.util.List;
 
 public class Service {
 
-    PersonDaoImpl personDaoImpl = new PersonDaoImpl();
+    private PersonDaoImpl personDaoImpl;
 
     public void setPersonDaoImpl(PersonDaoImpl personDaoImpl){
         this.personDaoImpl = personDaoImpl;
     }
 
-    UserDaoImpl userDaoImpl = new UserDaoImpl();
-
-    public void setUserDaoImpl(UserDaoImpl userDaoImpl){
-        this.userDaoImpl = userDaoImpl;
-    }
-
-    public List<Person> getPersons() {
+    public List<Person> getPerson() {
         return personDaoImpl.getPeople();
     }
 
@@ -52,10 +46,6 @@ public class Service {
 
     public List<Person> searchPerson(String searchQ, String listBy, String order) {
         return personDaoImpl.searchPeople(searchQ, listBy, order);
-    }
-    
-    public List<Users> getUsers(){
-        return userDaoImpl.getUsers();
     }
 
 }

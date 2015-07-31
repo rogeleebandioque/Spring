@@ -46,5 +46,17 @@ $(document).ready(function() {
     $(wrapper).on("click",".remove_field", function(){ 
         $(this).parent('div').remove();
     })
+
+      $('#random').click(function() {
+        $.ajax({
+            method: "GET",
+            url: "person/random",
+        })
+        .done(function(msg) {
+            $("#usermessage").append(msg);
+        });
+        
+      });
+
 }); 
 

@@ -1,12 +1,14 @@
 package hibernateactivity.core.model;
 
 import javax.persistence.*;
-import hibernateactivity.core.model.UserRoles;
 
 @Entity
 @Table(name="Users")
 public class Users {
     
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="user_generator")
+    @SequenceGenerator(name="user_generator", sequenceName="user_generator", allocationSize=1)
+    @Column(name="id")
     private Integer id;
 
     @Id
@@ -16,16 +18,14 @@ public class Users {
     @Column(name="password")
     private String password;
 
-    @ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
-    @JoinColumn(name="role_id", referencedColumnName="roleId")    
-    private UserRoles role = new UserRoles();
+    @Column(name="role_name")
+    private String role;
 
     public Users(){}
     public Users(String username, String password){
         this.username = username;
         this.password = password;
     }
-
 
     public Integer getId(){
         return this.id;
@@ -51,11 +51,11 @@ public class Users {
         this.password = password;
     }
 
-    public UserRoles getRole(){
+    public String getRole(){
         return this.role;
     }
 
-    public void setRole(UserRoles role){
+    public void setRole(String role){
         this.role = role;
     }
 

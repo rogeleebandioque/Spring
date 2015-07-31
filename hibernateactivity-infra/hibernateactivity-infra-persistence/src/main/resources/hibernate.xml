@@ -45,7 +45,7 @@ Hibernate session factory -->
                 <value>hibernateactivity.core.model.Roles</value>
                 <value>hibernateactivity.core.model.Contacts</value>
                 <value>hibernateactivity.core.model.Users</value>
-                <value>hibernateactivity.core.model.UserRoles</value>
+                <value>hibernateactivity.core.model.Projects</value>
         	</list>
         </property>
     </bean>

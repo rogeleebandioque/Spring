@@ -48,6 +48,11 @@ public class Person {//implements Comparable<Person> {
     @JoinTable(name="PER_ROLE", joinColumns={@JoinColumn(name="person_id")},inverseJoinColumns={@JoinColumn(name="role_id")})   
     private Set<Roles> role = new HashSet<Roles>();
 
+
+    @ManyToMany(cascade=CascadeType.PERSIST, fetch=FetchType.EAGER)
+    @JoinTable(name="PER_PRO", joinColumns={@JoinColumn(name="person_id")},inverseJoinColumns={@JoinColumn(name="project_id")})   
+    private Set<Projects> project = new HashSet<Projects>();
+
     public Person() {}
     public Person(Name names, String address, int age, String gender, 
                   Date bday, int grade, Date date_hired, String currently_employed) {
@@ -152,13 +157,12 @@ public class Person {//implements Comparable<Person> {
         return role;
     }
 
-    public int getComparison(){
-        return grade;
+    public void setProject(Set<Projects> project){
+        this.project = project;
     }
 
-/*    public int compareTo(Person person){
-        //return (this.getComparison().compareTo(person.getComparison());
-  	    return (this.grade < person.grade ) ? -1: (this.grade > person.grade ) ? 1:0 ;        
-    }*/
+    public Set<Projects> getProject(){
+        return project;
+    }
 }
 

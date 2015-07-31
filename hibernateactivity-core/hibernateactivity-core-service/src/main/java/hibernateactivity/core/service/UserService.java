@@ -25,14 +25,11 @@ public class UserService implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
-
         hibernateactivity.core.model.Users user = userDaoImpl.getUserByUsername(username);
-		List<GrantedAuthority> authorities = buildUserAuthority(user.getRole().getRoleName());
+		List<GrantedAuthority> authorities = buildUserAuthority(user.getRole());
 		return buildUserForAuthentication(user, authorities);
 	}
 
-	// Converts com.mkyong.users.model.User user to
-	// org.springframework.security.core.userdetails.User
 	private User buildUserForAuthentication(hibernateactivity.core.model.Users user, List<GrantedAuthority> authorities) {
         for(GrantedAuthority a:authorities){
             System.out.println(a);
@@ -41,13 +38,26 @@ public class UserService implements UserDetailsService {
 	}
 
 	private List<GrantedAuthority> buildUserAuthority(String userRoles) {
-
 		Set<GrantedAuthority> setAuths = new HashSet<GrantedAuthority>();
 		setAuths.add(new SimpleGrantedAuthority(userRoles));
-
 		List<GrantedAuthority> Result = new ArrayList<GrantedAuthority>(setAuths);
-
 		return Result;
 	}
+
+    public List<Users> getUsers() {
+        return userDaoImpl.getUsers();
+    }
+
+    public String deleteUser(int id) {
+        return userDaoImpl.deleteUser(id);
+    }
+
+    public String addUser(Users user) {
+        return userDaoImpl.addUser(user);
+    }
+
+    public String updateUser(Users user) {
+        return userDaoImpl.updateUser(user);
+    }
 
 }

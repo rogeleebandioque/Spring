@@ -90,7 +90,7 @@
                     
                     <spring:bind path="gender">
                         <tr><td><spring:message code="label.gender"/> </td>
-                            <td><form:radiobutton path="gender" name="gender" value="male"required="true"/>Male
+                            <td><form:radiobutton path="gender" value="male"required="true"/>Male
                                 <form:radiobutton path="gender" value="female"required="true"/>Female</td>
                             <td><form:errors path="gender" class="errors"/></td>
                         </tr>    

@@ -40,6 +40,11 @@
                 <a href="?lang=en">en</a>|
                 <a href="?lang=tlg">tlg</a>
             </span>
+
+            <span style="float: left; text-align: right">
+                <a href=""> View Projects</a>
+            </span>
+
             <br/><br/>
             <h1 align="center">Spring Activity</h1>
             <div id="search">
@@ -60,6 +65,7 @@
                     <form method="POST" id="displist">
                     </form>
                 </div>
+            <button id="random">Pick Random Person</button>
             <div id="usermessage"></div>
 
             <c:if test="${empty person}">
@@ -93,7 +99,8 @@
                             <spring:url value="update/${user.id}" var="updateUrl" />      
 
                             <button id="update" onclick="location.href='${updateUrl}'">Update</button>
-                            <a href="/delete/${user.id}">Delete</a>
+                            
+                            <button id="${user.id}" onClick="deletePerson(${user.id})">Delete</button>
                         </td>
                     </tr>
 			    </c:forEach>               
