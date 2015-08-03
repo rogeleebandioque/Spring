@@ -90,7 +90,8 @@ public class ActivityController{
         return "Main";
     }
 
-    @RequestMapping(value="Persons", method=RequestMethod.GET,
+    @RequestMapping(value="Persons", 
+                    method=RequestMethod.GET,
                     produces = MediaType.APPLICATION_JSON_VALUE, 
                     consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
@@ -102,37 +103,56 @@ public class ActivityController{
 	public String addPersonForm(Model model) {
         logger.debug("userForm()");
 
-		Person person = new Person();
-		model.addAttribute("personForm", person);
+		model.addAttribute("personForm", new Person());
         populateModel(model);
         return "UserForm";
 	}
 
-    @RequestMapping(value ="/SaveUpdate", method = RequestMethod.GET,
-                   produces = MediaType.APPLICATION_JSON_VALUE, 
-                   consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "update/{id}", method = RequestMethod.GET)
+    public String updatePerson(@PathVariable int id, Model model) {
+        logger.debug("updatePerson()");
+        Person person = service.getPersons(id);
+        Set<Roles> roles = person.getRole();
+        Set<Contacts> contact = person.getContact();
+        model.addAttribute("personForm", person);
+        model.addAttribute("roles", roles);
+        model.addAttribute("contact", contact);
+        populateModel(model);
+        return "UserForm";
+    }
+
+    @RequestMapping(value ="/SaveUpdate", 
+                    method = RequestMethod.POST,
+                    produces = MediaType.APPLICATION_JSON_VALUE, 
+                    consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public void saveOrUpdateUser(@RequestBody Person person) {
         logger.debug("saveOrUpdateUser()");        
-            service.addPersons(person);
+        System.out.println(person.getNames().getFirst_name());
+        service.addPersons(person);
     }
 
-    @RequestMapping("person/random")
+    @RequestMapping(value="/person/random", method= RequestMethod.POST)
     @ResponseBody
     public String randomPerson() {
         System.out.println("yehet");
         return "done";
     }
- 
 
-    @RequestMapping(value="delete/{id}", method=RequestMethod.DELETE,
-                    produces = MediaType.APPLICATION_JSON_VALUE, 
-                    consumes = MediaType.APPLICATION_JSON_VALUE)
+     @RequestMapping(value="/remove/{id}",
+                        method=RequestMethod.DELETE,
+                        produces = MediaType.APPLICATION_JSON_VALUE,
+                        consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public void deletePerson(@PathVariable int id) {
-        logger.debug("delete persons()");
-        String mes = service.deletePersons(id);
-    }
+    public boolean deleteEmployee(@PathVariable int id) {
+        try {
+            logger.debug("delete persons()");
+    //        String mes = service.deletePersons(id);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    } 
 
     public void populateModel(Model model){
         List<String> roleId = new ArrayList<String>();

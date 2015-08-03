@@ -49,7 +49,7 @@ $(document).ready(function() {
 
       $('#random').click(function() {
         $.ajax({
-            method: "GET",
+            method: "POST",
             url: "person/random",
         })
         .done(function(msg) {

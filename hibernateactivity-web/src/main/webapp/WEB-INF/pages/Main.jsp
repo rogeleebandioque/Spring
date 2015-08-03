@@ -18,10 +18,12 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <spring:url value="/resources/js/jq.js" var="JqJs" />
     <spring:url value="/resources/js/deleteperson.js" var="DeleteJs" />
+    <spring:url value="/resources/js/update.js" var="UpdateJs" />
     <link rel="stylesheet" type="text/css" href="${ServletsCss}"/>
     <script src="${ServletsJs}"></script>
     <script src="${JqJs}"></script>
     <script src="${DeleteJs}"></script>
+    <script src="${UpdateJs}"></script>
     <title>Spring Activity</title>
     </head>
 
@@ -95,12 +97,8 @@
                           </c:forEach>
                         </td>
                         <td>
-                            <spring:url value="delete/${user.id}" var="deleteUrl" />
-                            <spring:url value="update/${user.id}" var="updateUrl" />      
-
-                            <button id="update" onclick="location.href='${updateUrl}'">Update</button>
-                            
-                            <button id="${user.id}" onClick="deletePerson(${user.id})">Delete</button>
+                            <button id="${user.id}" onclick="location.href='update/${user.id}'">Update</button>
+                            <button class="delete" value = "${user.id}">Delete</button>
                         </td>
                     </tr>
 			    </c:forEach>               

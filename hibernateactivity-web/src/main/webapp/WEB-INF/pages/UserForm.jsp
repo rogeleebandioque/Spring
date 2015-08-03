@@ -129,7 +129,7 @@
 
                     <tr><td></td><td colspan="2">
                         <input type="submit" value="Submit"/>
-                        <spring:url value="Persons" var="cancel" />
+                        <spring:url value="/Persons" var="cancel" />
                         <input type="button" onclick="location.href='${cancel}'" value="Cancel">
                     </td></tr>
 

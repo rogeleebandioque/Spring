@@ -9,27 +9,33 @@ $(document).ready(function() {
         var date_hired = $('#date_hired').val();
         var age = $('#age').val();
         var currently_employed = $('input[name=currently_employed]:checked').val();
-        console.log(address);
 
-        var json = { "names": {"names.first_name" : first_name, "names.last_name" : last_name}, 
-                    "address" : address, "gender": gender , "bday":bday, "date_hired":date_hired,
-                    "age":age, "currently_employed":currently_employed};
+        var json = { "names": 
+                        {
+                        "names.first_name" : first_name, 
+                        "names.last_name" : last_name
+                        }, 
+                    "address" : address, 
+                    "gender": gender , 
+                    "bday":bday, 
+                    "date_hired":date_hired,
+                    "age":age, 
+                    "currently_employed":currently_employed
+                    };
+
                 console.log(json);
-
-            $.ajax({
-                url: "/SaveUpdate",
-                data: JSON.stringify(json),
-                type: "POST",
-                beforeSend: function(xhr) {
-                    xhr.setRequestHeader("Accept", "application/json");
-                    xhr.setRequestHeader("Content-Type", "application/json");
-                    $(".error").remove();
-                    },
-                success: function() {
-                    var respContent = "Added";
-                    $("#message").html(respContent);
-                    },
-        
+        $.ajax({
+            url: "/SaveUpdate",
+            type: "POST",
+            data: JSON.stringify(json),
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader("Accept", "application/json");
+                xhr.setRequestHeader("Content-Type", "application/json");
+            }        
+        })
+        .done(function() {
+            var respContent = "Added";
+            $("#message").html("Added");
         });
         event.preventDefault();
     });
