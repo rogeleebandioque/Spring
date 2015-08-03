@@ -164,3 +164,97 @@
 2015-08-03 14:23:30 - updatePerson()
 2015-08-03 14:23:38 - displayPerson()
 2015-08-03 14:24:27 - displayPerson()
+2015-08-03 14:32:08 - userForm()
+2015-08-03 14:41:24 - displayPerson()
+2015-08-03 14:44:13 - displayPerson()
+2015-08-03 14:44:15 - displayPerson()
+2015-08-03 14:44:36 - displayPerson()
+2015-08-03 15:03:44 - displayPerson()
+2015-08-03 15:03:46 - updatePerson()
+2015-08-03 15:10:59 - updatePerson()
+2015-08-03 15:14:20 - updatePerson()
+2015-08-03 15:15:01 - updatePerson()
+2015-08-03 15:15:22 - updatePerson()
+2015-08-03 15:15:30 - updatePerson()
+2015-08-03 15:20:39 - updatePerson()
+2015-08-03 15:25:06 - updatePerson()
+2015-08-03 15:25:21 - updatePerson()
+2015-08-03 15:28:25 - displayPerson()
+2015-08-03 15:28:30 - updatePerson()
+2015-08-03 15:29:18 - displayPerson()
+2015-08-03 15:29:25 - userForm()
+2015-08-03 15:30:12 - displayPerson()
+2015-08-03 15:31:12 - updatePerson()
+2015-08-03 15:32:19 - displayPerson()
+2015-08-03 15:33:51 - displayPerson()
+2015-08-03 15:34:31 - userForm()
+2015-08-03 15:37:35 - userForm()
+2015-08-03 15:38:28 - displayPerson()
+2015-08-03 15:38:45 - updatePerson()
+2015-08-03 15:42:34 - updatePerson()
+2015-08-03 15:45:24 - updatePerson()
+2015-08-03 15:45:31 - Adding person..
+2015-08-03 15:45:32 - ERROR: null value in column "first_name" violates not-null constraint
+2015-08-03 15:46:00 - displayPerson()
+2015-08-03 15:46:05 - delete persons()
+2015-08-03 15:46:14 - displayPerson()
+2015-08-03 15:46:16 - updatePerson()
+2015-08-03 15:46:20 - Adding person..
+2015-08-03 15:46:20 - ERROR: null value in column "first_name" violates not-null constraint
+2015-08-03 15:46:52 - displayPerson()
+2015-08-03 15:46:56 - userForm()
+2015-08-03 15:47:09 - Adding person..
+2015-08-03 15:47:09 - ERROR: null value in column "first_name" violates not-null constraint
+2015-08-03 15:50:05 - userForm()
+2015-08-03 15:50:15 - Adding person..
+2015-08-03 15:50:15 - ERROR: null value in column "first_name" violates not-null constraint
+2015-08-03 15:51:03 - userForm()
+2015-08-03 15:51:45 - Adding person..
+2015-08-03 15:51:45 - ERROR: null value in column "first_name" violates not-null constraint
+2015-08-03 15:53:13 - displayPerson()
+2015-08-03 15:53:17 - updatePerson()
+2015-08-03 15:53:21 - Adding person..
+2015-08-03 15:53:21 - ERROR: null value in column "first_name" violates not-null constraint
+2015-08-03 15:54:26 - updatePerson()
+2015-08-03 15:54:35 - Adding person..
+2015-08-03 15:54:35 - ERROR: null value in column "first_name" violates not-null constraint
+2015-08-03 15:58:59 - updatePerson()
+2015-08-03 15:59:05 - Adding person..
+2015-08-03 15:59:05 - ERROR: null value in column "first_name" violates not-null constraint
+2015-08-03 16:00:33 - displayPerson()
+2015-08-03 16:00:39 - updatePerson()
+2015-08-03 16:01:45 - updatePerson()
+2015-08-03 16:02:03 - Adding person..
+2015-08-03 16:06:19 - updatePerson()
+2015-08-03 16:06:39 - Adding person..
+2015-08-03 16:06:43 - Adding person..
+2015-08-03 16:12:43 - updatePerson()
+2015-08-03 16:12:54 - Adding person..
+2015-08-03 16:14:20 - updatePerson()
+2015-08-03 16:14:33 - Adding person..
+2015-08-03 16:14:33 - ERROR: null value in column "first_name" violates not-null constraint
+2015-08-03 16:15:43 - updatePerson()
+2015-08-03 16:15:44 - Adding person..
+2015-08-03 16:16:26 - Adding person..
+2015-08-03 16:17:46 - displayPerson()
+2015-08-03 16:18:01 - updatePerson()
+2015-08-03 16:18:10 - Adding person..
+2015-08-03 16:35:28 - updatePerson()
+2015-08-03 16:35:33 - Adding person..
+2015-08-03 16:36:14 - updatePerson()
+2015-08-03 16:36:24 - Adding person..
+2015-08-03 16:36:24 - ERROR: null value in column "grade" violates not-null constraint
+2015-08-03 16:37:53 - updatePerson()
+2015-08-03 16:38:46 - Adding person..
+2015-08-03 16:38:59 - displayPerson()
+2015-08-03 16:51:25 - updatePerson()
+2015-08-03 16:51:38 - Adding person..
+2015-08-03 16:51:42 - displayPerson()
+2015-08-03 16:53:47 - displayPerson()
+2015-08-03 16:53:51 - updatePerson()
+2015-08-03 16:53:56 - Adding person..
+2015-08-03 16:54:10 - displayPerson()
+2015-08-03 16:54:15 - updatePerson()
+2015-08-03 16:54:20 - Adding person..
+2015-08-03 16:57:23 - updatePerson()
+2015-08-03 16:57:45 - Adding person..

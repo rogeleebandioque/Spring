@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.ModelAndView;
@@ -121,14 +122,15 @@ public class ActivityController{
         return "UserForm";
     }
 
-    @RequestMapping(value ="/SaveUpdate", 
+    @RequestMapping(value ="/AddPerson", 
                     method = RequestMethod.POST,
                     produces = MediaType.APPLICATION_JSON_VALUE, 
                     consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
-    public void saveOrUpdateUser(@RequestBody Person person) {
-        logger.debug("saveOrUpdateUser()");        
-        System.out.println(person.getNames().getFirst_name());
+    public void add(@RequestBody Person person) {
+        logger.debug("Adding person..");        
+        System.out.println(person.getId());
         service.addPersons(person);
     }
 

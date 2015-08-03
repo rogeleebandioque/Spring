@@ -22,6 +22,7 @@
     </head>
 
     <body>
+
         <div id="container">
             <h1 align="center">Spring Activity</h1>
             <c:choose>
@@ -47,6 +48,7 @@
 
             <form:form id="personForm" action="SaveUpdate" method="POST" modelAttribute="personForm">
                 <table align="center">
+                    <form:hidden path="id" value="${userForm.id}"/>
                     <spring:bind path="names">
                         <tr><td><spring:message code="label.firstname"/></td>
                             <td> <form:input path="names.first_name" required="true"/></td>
@@ -80,9 +82,9 @@
                         <div id="contactNumber">                
                             <c:forEach var="contacts" items="${contact}">
                                 <div> 
-                                ${contacts.type}: <input type="text" name="contactDetail" size="10" value="${contacts.contact}"required="true"/>
+                                ${contacts.type}: <input type="text" name="contactDetail" class="contactDetail" size="10" value="${contacts.contact}"required="true"/>
                                 <input type="button" value="Remove" class="remove_field" />  
-                                <input type="hidden" name="contactType" value="${contacts.type}"/> <br/>
+                                <input type="hidden" name="contactType" class="contactType" value="${contacts.type}"/> <br/>
                                 </div>
                             </c:forEach>
                         </div>                        

@@ -1,5 +1,6 @@
 $(document).ready(function() {
     $('#personForm').submit(function(event) {
+        var id = $('#id').val();
         var first_name = $('#names\\.first_name').val();
         var last_name = $('#names\\.last_name').val();
         var address = $('#address').val();
@@ -10,14 +11,22 @@ $(document).ready(function() {
         var age = $('#age').val();
         var currently_employed = $('input[name=currently_employed]:checked').val();
 
-        var json = { "names": 
-                        {
-                        "names.first_name" : first_name, 
-                        "names.last_name" : last_name
-                        }, 
+        var contact = [];
+        $(".contactDetail").each(function(value) {
+            contact.push({"detail": value});
+        });
+        console.log($(".contactDetail"));
+
+        var json = {"id": id, 
+                    "names": 
+                    {
+                        "first_name" : first_name, 
+                        "last_name" : last_name
+                    }, 
                     "address" : address, 
                     "gender": gender , 
                     "bday":bday, 
+                    "grade":grade,
                     "date_hired":date_hired,
                     "age":age, 
                     "currently_employed":currently_employed
@@ -25,7 +34,7 @@ $(document).ready(function() {
 
                 console.log(json);
         $.ajax({
-            url: "/SaveUpdate",
+            url: "/AddPerson",
             type: "POST",
             data: JSON.stringify(json),
             beforeSend: function(xhr) {
@@ -34,6 +43,7 @@ $(document).ready(function() {
             }        
         })
         .done(function() {
+            console.log(JSON.stringify(json));
             var respContent = "Added";
             $("#message").html("Added");
         });

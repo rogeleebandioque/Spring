@@ -1,20 +1,20 @@
 $(document).ready(function() {
     var wrapper = $("#contactNumber");
     $("#e-mail").click(function(){ 
-            $(wrapper).append('<div><input type="hidden" name="contactType" value="e-mail"/>E-mail:' +
-                                       '<input type="text" name="contactDetail" size="10" required="true"/>'+
+            $(wrapper).append('<div><input type="hidden" name="contactType" id="contactType" value="e-mail"/>E-mail:' +
+                                       '<input type="text" name="contactDetail" id="contactDetail" size="10" required="true"/>'+
                                        '<button class="remove_field">Remove</button></div>');
     });
    
     $("#cellphone").click(function(){ 
-            $(wrapper).append('<div id="hey"><input type="hidden" name="contactType" value="cellphone"/>Cellphone#: '+
-                                       '<input type="text" name="contactDetail"size="10" required="true"/>'+
+            $(wrapper).append('<div id="hey"><input type="hidden" name="contactType" id="contactType"value="cellphone"/>Cellphone#: '+
+                                       '<input type="text" name="contactDetail" id="contactDetail"size="10" required="true"/>'+
                                        '<button class="remove_field">Remove</button></div>');
     });
 
     $("#telephone").click(function(){ 
-            $(wrapper).append('<div><input type="hidden" name="contactType" value="telephone"/>Telephone#:'+
-                                       '<input type="text" name="contactDetail"size="10" required="true"/>'+
+            $(wrapper).append('<div><input type="hidden" name="contactType"id="contactType" value="telephone"/>Telephone#:'+
+                                       '<input type="text" name="contactDetail" id="contactDetail" size="10" required="true"/>'+
                                        '<button class="remove_field">Remove</button></div>');
     });
 
