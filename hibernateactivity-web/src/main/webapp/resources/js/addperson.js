@@ -12,11 +12,38 @@ $(document).ready(function() {
         var currently_employed = $('input[name=currently_employed]:checked').val();
 
         var contact = [];
-        $(".contactDetail").each(function(value) {
-            contact.push({"detail": value});
+        $(".contactDetail").each(function() {
+            contact.push($(this).val());
         });
-        console.log($(".contactDetail"));
-
+        console.log(contact);
+        var detail = [];
+        $(".contactType").each(function() {
+            detail.push($(this).val());
+        });
+        var contacts = []
+        for(i=0; i<contact.length; i++){
+            contacts[i] = {"contact" : contact[i], "type": detail[i]};
+        }        
+        
+        console.log(contacts);
+        
+        var roles = [];
+        $("input:checkbox[name=r]:checked").each(function(){
+            var id = $(this).val();    
+            console.log(id);        
+            if(id == "Police") {
+                roles.push({"id": 1, "roleName": id});
+            } if(id == "Politician") {
+                roles.push({"id": 2, "roleName": id});
+            } if(id == "Celebrity") {
+                roles.push({"id": 3, "roleName": id});
+            } if(id == "Soldier") {
+                roles.push({"id": 4, "roleName": id});
+            } if(id == "Worker") {
+                roles.push({"id": 5, "roleName": id});
+            } 
+        });
+        console.log(roles);
         var json = {"id": id, 
                     "names": 
                     {
@@ -29,11 +56,12 @@ $(document).ready(function() {
                     "grade":grade,
                     "date_hired":date_hired,
                     "age":age, 
-                    "currently_employed":currently_employed
-                    };
+                    "currently_employed":currently_employed,
+                    "contact" : contacts,
+                    "role": roles
+        };
 
-                console.log(json);
-        $.ajax({
+        var ajaxCall = $.ajax({
             url: "/AddPerson",
             type: "POST",
             data: JSON.stringify(json),
@@ -41,11 +69,13 @@ $(document).ready(function() {
                 xhr.setRequestHeader("Accept", "application/json");
                 xhr.setRequestHeader("Content-Type", "application/json");
             }        
-        })
-        .done(function() {
-            console.log(JSON.stringify(json));
-            var respContent = "Added";
-            $("#message").html("Added");
+        });
+        ajaxCall.done(function(data) {
+            if (data == true) {
+               $("#message").html("Person Added!");
+            } else {
+               $("#message").html("Unable to add Person");
+            }
         });
         event.preventDefault();
     });

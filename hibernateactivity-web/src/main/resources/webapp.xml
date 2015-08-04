@@ -6,6 +6,10 @@
 
     <bean id="activityController" class="hibernateactivity.web.ActivityController" autowire="byName" >    
     </bean>
+
+    <bean id="projectsController" class="hibernateactivity.web.ProjectsController" autowire="byName" >    
+    </bean>
+
     <bean id="operations" class="hibernateactivity.web.Operations" >
     </bean>
     <bean id="personFormValidator" class="hibernateactivity.web.PersonFormValidator" >

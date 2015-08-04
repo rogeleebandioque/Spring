@@ -106,7 +106,7 @@ public class ActivityController{
 
 		model.addAttribute("personForm", new Person());
         populateModel(model);
-        return "UserForm";
+        return "addform";
 	}
 
     @RequestMapping(value = "update/{id}", method = RequestMethod.GET)
@@ -119,26 +119,37 @@ public class ActivityController{
         model.addAttribute("roles", roles);
         model.addAttribute("contact", contact);
         populateModel(model);
-        return "UserForm";
+        return "updateform";
+    }
+
+    @RequestMapping(value ="/UpdatePerson", 
+                    method = RequestMethod.PUT,
+                    produces = MediaType.APPLICATION_JSON_VALUE,        
+                    consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public boolean update(@RequestBody Person person) {
+        logger.debug("Updating person..");        
+        try {
+            service.updatePersons(person);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     @RequestMapping(value ="/AddPerson", 
                     method = RequestMethod.POST,
-                    produces = MediaType.APPLICATION_JSON_VALUE, 
+                    produces = MediaType.APPLICATION_JSON_VALUE,        
                     consumes = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
-    public void add(@RequestBody Person person) {
+    public boolean add(@RequestBody Person person) {
         logger.debug("Adding person..");        
-        System.out.println(person.getId());
-        service.addPersons(person);
-    }
-
-    @RequestMapping(value="/person/random", method= RequestMethod.POST)
-    @ResponseBody
-    public String randomPerson() {
-        System.out.println("yehet");
-        return "done";
+        try {
+            service.addPersons(person);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
      @RequestMapping(value="/remove/{id}",
@@ -149,12 +160,121 @@ public class ActivityController{
     public boolean deleteEmployee(@PathVariable int id) {
         try {
             logger.debug("delete persons()");
-    //        String mes = service.deletePersons(id);
+            String mes = service.deletePersons(id);
             return true;
         } catch (Exception e) {
             return false;
         }
     } 
+
+    @RequestMapping(value = "/uploadForm", method = RequestMethod.POST)
+    public String uploadFileHandler(@RequestParam("file") MultipartFile file,@RequestParam("name") String name, Model model) {
+        Person person = new Person();
+        Name n = person.getNames();
+        Set<Contacts> c = person.getContact();
+        Set<Roles> r = person.getRole();
+        if (!file.isEmpty()) {
+            try {
+                byte[] bytes = file.getBytes();
+ 
+                File dir = new File("Uploaded Files");
+                if (!dir.exists())
+                    dir.mkdirs();
+                File serverFile = new File(dir.getAbsolutePath()
+                        + File.separator + name);
+                BufferedOutputStream stream = new BufferedOutputStream(
+                        new FileOutputStream(serverFile));
+                stream.write(bytes);
+                stream.close();
+            
+            
+            List<String> personDetails = FileUtils.readLines(serverFile);
+                    System.out.println(personDetails.size());
+            
+                for(String details: personDetails){
+                    System.out.println(details);
+                    String[] detail = details.split(":");        
+                    switch (detail[0]){
+                        case "first name":
+                            n.setFirst_name(detail[1]);
+                            break;
+
+                        case "last name":
+                            n.setLast_name(detail[1]);
+                            break;
+
+                        case "address":
+                            person.setAddress(detail[1]);
+                            break;
+
+                        case "age":
+                            person.setAge(operations.integerValid(detail[1]));
+                           break;
+
+                        case "grade":
+                            person.setGrade(operations.integerValid(detail[1]));
+                           break;
+
+                        case "birthday":
+                            person.setBday(operations.dateValid(detail[1]));
+                            System.out.println(person.getBday());
+                            break;
+
+                        case "contact":
+                            System.out.println(detail[1]);
+                            String[] contacts = detail[1].split("=");
+                            c.add(new Contacts(contacts[1],contacts[0]));
+                            break;
+
+                        case "gender":
+                            person.setGender(detail[1]);
+                            break;
+
+                        case "date hired":
+                            person.setDate_hired(operations.dateValid(detail[1]));
+                            break;
+
+                        case "currently employed":
+                            person.setCurrently_employed(detail[1]);
+                            break;
+
+                        case "role":
+                            switch(detail[1]){
+                                case "police": 
+                                    r.add(new Roles(1,"Police"));
+                                    break;
+                                case "politician":
+                                    r.add(new Roles(2,"Politician"));
+                                    break;
+                                case "soldier":
+                                    r.add(new Roles(3,"Soldier"));
+                                    break;
+                                case "celebrity":
+                                    r.add(new Roles(4,"Celebrity"));
+                                    break;
+                                case "worker":
+                                    r.add(new Roles(5,"Worker"));
+                                    break;
+                            }
+                            break;
+                            
+                        default:
+                            break;
+                    }//switch
+                }
+		    
+            } catch (Exception e) {
+            }
+            model.addAttribute("roles", r);
+            model.addAttribute("personForm", person);
+            model.addAttribute("contact", c);
+            populateModel(model);
+           return "addform";
+        } else {
+            return "addform";
+        }
+        
+    }
 
     public void populateModel(Model model){
         List<String> roleId = new ArrayList<String>();

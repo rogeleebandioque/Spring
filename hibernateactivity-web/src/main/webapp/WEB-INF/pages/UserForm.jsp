@@ -11,7 +11,7 @@
         <spring:url value="/resources/js/Servlets.js" var="ServletsJs" />
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         <spring:url value="/resources/js/jq.js" var="JqJs" />
-        <spring:url value="/resources/js/addperson.js" var="AddJs" />
+        <spring:url value="/resources/js/update.js" var="AddJs" />
 
         <link rel="stylesheet" type="text/css" href="${ServletsCss}"/>
         <script src="${ServletsJs}"></script>
@@ -46,7 +46,7 @@
 
             <div id="message"></div>
 
-            <form:form id="personForm" action="SaveUpdate" method="POST" modelAttribute="personForm">
+            <form:form id="personForm" action="SaveUpdate" modelAttribute="personForm">
                 <table align="center">
                     <form:hidden path="id" value="${userForm.id}"/>
                     <spring:bind path="names">

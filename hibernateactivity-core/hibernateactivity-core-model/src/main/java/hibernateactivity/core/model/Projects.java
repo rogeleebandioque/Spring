@@ -2,6 +2,8 @@ package hibernateactivity.core.model;
 
 import java.util.*;
 import javax.persistence.*;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 @Entity
 @Table(name="Projects")
@@ -15,11 +17,13 @@ public class Projects{
     @Column(name="project_name")
     private String project_name;
 
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     @Column(name="start_date")
-    private Date start_date;
+    private Date start_date = new Date();
 
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     @Column(name="end_date")
-    private Date end_date;
+    private Date end_date = new Date();
 
     @ManyToMany(fetch=FetchType.EAGER)
     @JoinTable(name="PER_PRO", joinColumns={@JoinColumn(name="project_id")},inverseJoinColumns={@JoinColumn(name="person_id")})      

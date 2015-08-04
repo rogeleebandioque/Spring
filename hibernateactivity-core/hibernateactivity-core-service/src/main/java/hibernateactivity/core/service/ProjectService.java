@@ -15,6 +15,10 @@ public class ProjectService {
         return projectDaoImpl.getProjects();
     }
 
+    public Projects getProject(Integer projectId) {
+        return projectDaoImpl.getProject(projectId);
+    }
+
     public String deleteProject(int projectId) {
         return projectDaoImpl.deleteProject(projectId);
     }
@@ -23,7 +27,7 @@ public class ProjectService {
         return projectDaoImpl.addProject(project);
     }
 
-    public String updatePersons(Projects project) {
+    public String updateProject(Projects project) {
         return projectDaoImpl.updateProject(project);
     }
 }

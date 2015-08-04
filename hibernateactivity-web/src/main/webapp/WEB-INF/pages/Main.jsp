@@ -18,12 +18,10 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <spring:url value="/resources/js/jq.js" var="JqJs" />
     <spring:url value="/resources/js/deleteperson.js" var="DeleteJs" />
-    <spring:url value="/resources/js/update.js" var="UpdateJs" />
     <link rel="stylesheet" type="text/css" href="${ServletsCss}"/>
     <script src="${ServletsJs}"></script>
     <script src="${JqJs}"></script>
     <script src="${DeleteJs}"></script>
-    <script src="${UpdateJs}"></script>
     <title>Spring Activity</title>
     </head>
 
@@ -44,7 +42,7 @@
             </span>
 
             <span style="float: left; text-align: right">
-                <a href=""> View Projects</a>
+                <a href="projects"> View Projects</a>
             </span>
 
             <br/><br/>
@@ -67,7 +65,7 @@
                     <form method="POST" id="displist">
                     </form>
                 </div>
-            <button id="random">Pick Random Person</button>
+           
             <div id="usermessage"></div>
 
             <c:if test="${empty person}">

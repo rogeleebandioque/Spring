@@ -9,4 +9,5 @@ interface ProjectDao {
     public String addProject(Projects project);
     public String updateProject(Projects project);
     public String deleteProject(int projectId);
+    public Projects getProject(Integer id);
 }

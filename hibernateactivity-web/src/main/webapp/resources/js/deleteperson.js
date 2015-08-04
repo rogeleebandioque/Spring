@@ -27,20 +27,3 @@ $(document).ready(function() {
     });
 
 });
-
-
- /*$.ajax({
-        url: "remove/"+person_id,
-        type: "DELETE",
-        beforeSend: function(xhr) {
-            xhr.setRequestHeader("Accept", "application/json");
-            xhr.setRequestHeader("Content-Type", "application/json");
-            }
-        })
-    .done(function() {
-        console.log("removed")
-        var respContent = "Deleted";
-        var rowToDelete = $("#"+id).closest("tr");
-        rowToDelete.remove();
-        $("#usermessage").html(respContent);
-    });*/
