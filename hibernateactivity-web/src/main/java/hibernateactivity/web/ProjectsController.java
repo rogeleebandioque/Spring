@@ -98,7 +98,7 @@ public class ProjectsController{
 
     @RequestMapping(value = "upproject/{id}", method = RequestMethod.GET)
     public String updateProject(@PathVariable int id, Model model) {
-        logger.debug("Update Person...");
+        logger.debug("Update Project...");
         Projects project = projectService.getProject(id);
         Set<Person> person = project.getPer_proj();
         model.addAttribute("projectForm", project);

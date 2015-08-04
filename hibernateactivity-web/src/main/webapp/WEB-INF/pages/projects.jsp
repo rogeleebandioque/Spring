@@ -10,7 +10,6 @@
     <head>
     <spring:url value="/resources/css/servlets.css" var="ServletsCss" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <spring:url value="/resources/js/jq.js" var="JqJs" />
     <link rel="stylesheet" type="text/css" href="${ServletsCss}"/>
     <title>Spring Activity</title>
     </head>
@@ -51,6 +50,7 @@
                     <spring:message code="label.search"/>:
                     <input type="text" placeHolder="Project Name.." size="10"/>
                     <input type="submit" value="Submit"/>
+                    </form>
                 </div>
             <div id="usermessage"></div>
 
@@ -77,12 +77,13 @@
                         <td>${project.end_date}</td>
                         <td>
                             <c:forEach var="team" items="${project.per_proj}" varStatus="loop">
-	                        ${team.names.first_name} ${team.names.last_name}
+	                        ${team.names.first_name} ${team.names.last_name} <br/>
             				    <c:if test="${not loop.last}"><br/></c:if>
                           </c:forEach>
                         </td>
                         <td>
-                            <button id="${project.project_id}" onclick="location.href='upproject/${project.project_id}'">Update</button>
+                            <button id="${project.project_id}" 
+                            onclick="location.href='/upproject/${project.project_id}'">Update</button>
                             <button class="deleteproj" value = "${project.project_id}">Delete</button>
                         </td>
                     </tr>
