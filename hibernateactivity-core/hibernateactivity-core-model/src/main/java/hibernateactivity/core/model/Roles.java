@@ -1,6 +1,7 @@
 package hibernateactivity.core.model;
 
 import java.util.*;
+import com.fasterxml.jackson.annotation.*;
 import javax.persistence.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -21,6 +22,7 @@ public class Roles {
     //@ManyToMany(mappedBy="role", fetch=FetchType.EAGER) 
     @ManyToMany(fetch=FetchType.EAGER)
     @JoinTable(name="PER_ROLE", joinColumns={@JoinColumn(name="role_id")},inverseJoinColumns={@JoinColumn(name="person_id")})      
+    @JsonBackReference
     private Set<Person> personRole;
     
     public Roles() {}

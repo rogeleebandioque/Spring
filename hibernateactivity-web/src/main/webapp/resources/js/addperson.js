@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    $('#personForm').submit(function(event) {
+   var addperson = function(event) {
         var id = $('#id').val();
         var first_name = $('#names\\.first_name').val();
         var last_name = $('#names\\.last_name').val();
@@ -12,22 +12,23 @@ $(document).ready(function() {
         var currently_employed = $('input[name=currently_employed]:checked').val();
 
         var contact = [];
+        var detail = [];
+        var roles = [];
+        var contacts = []
+
         $(".contactDetail").each(function() {
             contact.push($(this).val());
         });
-        console.log(contact);
-        var detail = [];
+
         $(".contactType").each(function() {
             detail.push($(this).val());
         });
-        var contacts = []
+        console.log(contacts);
+
         for(i=0; i<contact.length; i++){
             contacts[i] = {"contact" : contact[i], "type": detail[i]};
-        }        
-        
-        console.log(contacts);
-        
-        var roles = [];
+        }
+
         $("input:checkbox[name=r]:checked").each(function(){
             var id = $(this).val();    
             console.log(id);        
@@ -72,11 +73,16 @@ $(document).ready(function() {
         });
         ajaxCall.done(function(data) {
             if (data == true) {
-               $("#message").html("Person Added!");
+               $("#message").html("Person Updated!");
             } else {
-               $("#message").html("Unable to add Person");
+               $("#message").html("Unable to update Person");
             }
         });
-        event.preventDefault();
+    };
+
+    $("#container").on("submit","#personForm",function(e){
+        addperson();
+        e.preventDefault();
     });
 }); 
+

@@ -1,6 +1,7 @@
 package hibernateactivity.core.model;
 
 import java.util.*;
+import com.fasterxml.jackson.annotation.*;
 import javax.persistence.*;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
@@ -46,6 +47,7 @@ public class Person {//implements Comparable<Person> {
 
     @ManyToMany(cascade=CascadeType.PERSIST, fetch=FetchType.EAGER)
     @JoinTable(name="PER_ROLE", joinColumns={@JoinColumn(name="person_id")},inverseJoinColumns={@JoinColumn(name="role_id")})   
+//    @JsonManagedReference    
     private Set<Roles> role = new HashSet<Roles>();
 
 

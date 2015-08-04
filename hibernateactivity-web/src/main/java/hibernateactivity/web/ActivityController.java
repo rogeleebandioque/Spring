@@ -81,23 +81,22 @@ public class ActivityController{
 		return "Login";
 	}
 
-	@RequestMapping(value ="Persons", method = RequestMethod.GET)
+	@RequestMapping(value ="/Persons", method = RequestMethod.GET)
     public String displayPerson(ModelMap model) {
         logger.debug("displayPerson()");
-
-        List<Person> persons = new ArrayList<Person>();
-        persons.addAll(getPersons());
-        model.addAttribute("person",persons);
+        model.addAttribute("person",service.getPerson());
         return "Main";
     }
 
     @RequestMapping(value="Persons", 
-                    method=RequestMethod.GET,
-                    produces = MediaType.APPLICATION_JSON_VALUE, 
-                    consumes = MediaType.APPLICATION_JSON_VALUE)
+                    method=RequestMethod.POST,
+                    headers="Accept=application/json")
     @ResponseBody
-    public List<Person> getPersons(){
-        return service.getPerson();
+    public List<Person> getPersons(@RequestParam(value="listBy",defaultValue="grade") String listBy, 
+                @RequestParam(value="order",defaultValue="asc") String order,
+                @RequestParam(value="search",defaultValue="") String search){
+        logger.debug("Searching Person...");
+        return service.searchPerson(search,listBy,order);
     }
 
     @RequestMapping(value = "AddPerson", method = RequestMethod.GET)
@@ -159,7 +158,7 @@ public class ActivityController{
     @ResponseBody
     public boolean deleteEmployee(@PathVariable int id) {
         try {
-            logger.debug("delete persons()");
+            logger.debug("deleting person");
             String mes = service.deletePersons(id);
             return true;
         } catch (Exception e) {

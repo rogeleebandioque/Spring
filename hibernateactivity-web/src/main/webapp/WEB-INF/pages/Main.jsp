@@ -61,19 +61,21 @@
                         <select>
                             <option id="person">Person</option>
                             <option id="prole">Role</option>
-                        </select>                         
-                    <form method="POST" id="displist">
+                        </select>   
+                    <div id="s">                      
+                    <form id="displist">
                     </form>
+                    </div>
                 </div>
            
             <div id="usermessage"></div>
 
             <c:if test="${empty person}">
-                <h2>No Person Found!</h2>
+                <h2>No Persons Found!</h2>
             </c:if>
-            <table border="1"align="center">
-                 <thead><tr><th colspan="6"><spring:message code="label.tablename"/> </th></tr>
-               <tr><th>ID</th>
+            <table border="1"align="center"id="persons">
+                <thead><tr><th colspan="6"><spring:message code="label.tablename"/> </th></tr>
+                <tr><th>ID</th>
                     <th><spring:message code="label.name"/></th>
                     <th><spring:message code="label.datehired"/></th>
                     <th><spring:message code="label.grade"/></th>
@@ -99,7 +101,7 @@
                             <button class="delete" value = "${user.id}">Delete</button>
                         </td>
                     </tr>
-			    </c:forEach>               
+			    </c:forEach>     
             </table>
             <br/><br/><br/>
         </div>

@@ -1,7 +1,5 @@
 $(document).ready(function() {
-    var c = $('#personForm');
-
-    $('#personForm').submit(function(event) {
+   var updateperson = function(event) {
         var id = $('#id').val();
         var first_name = $('#names\\.first_name').val();
         var last_name = $('#names\\.last_name').val();
@@ -80,6 +78,11 @@ $(document).ready(function() {
                $("#message").html("Unable to update Person");
             }
         });
-        event.preventDefault();
+    };
+
+    $("#container").on("submit","#personForm",function(e){
+        updateperson();
+        e.preventDefault();
     });
 }); 
+

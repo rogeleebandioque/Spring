@@ -54,7 +54,7 @@
                 </div>
             <div id="usermessage"></div>
 
-            <c:if test="${empty project}">
+            <c:if test="${empty projects}">
                 <h2>No Projects Found!</h2>
             </c:if>
 
@@ -65,8 +65,28 @@
                     <th><spring:message code="label.start"/></th>
                     <th><spring:message code="label.end"/></th>
                     <th><spring:message code="label.team"/></th>
+                    <th><spring:message code="label.action"/></th>
                 </tr></thead>
-                
+                <c:forEach var="project" items="${projects}">
+                    <tr>
+                        <td>
+	                        ${project.project_id}
+                        </td>
+                        <td>${project.project_name} ${user.names.last_name}</td>
+                        <td>${project.start_date}</td>
+                        <td>${project.end_date}</td>
+                        <td>
+                            <c:forEach var="team" items="${project.per_proj}" varStatus="loop">
+	                        ${team.names.first_name} ${team.names.last_name}
+            				    <c:if test="${not loop.last}"><br/></c:if>
+                          </c:forEach>
+                        </td>
+                        <td>
+                            <button id="${project.project_id}" onclick="location.href='upproject/${project.project_id}'">Update</button>
+                            <button class="deleteproj" value = "${project.project_id}">Delete</button>
+                        </td>
+                    </tr>
+			    </c:forEach>     
             </table>
             <br/><br/><br/>
         </div>

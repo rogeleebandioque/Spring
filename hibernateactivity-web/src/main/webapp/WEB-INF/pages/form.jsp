@@ -1,4 +1,4 @@
-<form:form id="personForm" action="SaveUpdate" modelAttribute="personForm">
+<form:form id="personForm" modelAttribute="personForm">
     <table align="center">
         <form:hidden path="id" value="${userForm.id}"/>
         <spring:bind path="names">

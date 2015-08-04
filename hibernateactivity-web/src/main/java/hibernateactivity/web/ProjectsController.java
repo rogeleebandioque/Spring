@@ -60,7 +60,7 @@ public class ProjectsController{
 	@RequestMapping(value ="projects", method = RequestMethod.GET)
     public String displayProjects(ModelMap model) {
     logger.debug("Displaying projects...");
-
+    model.addAttribute("projects",projectService.getProjects());
     return "projects";
     }   
 
