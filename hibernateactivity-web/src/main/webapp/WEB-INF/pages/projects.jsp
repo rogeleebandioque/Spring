@@ -29,7 +29,7 @@
                 <br/>
                 <a href="?lang=en">en</a>|
                 <a href="?lang=tlg">tlg</a>
-            </span>
+            </span> 
 
             <span style="float: left; text-align: right">
                 <a href="Persons"> View Persons</a>
