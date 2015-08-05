@@ -23,6 +23,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
  
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -53,14 +56,11 @@ public class ActivityController{
     private PersonFormValidator personFormValidator;
     private final Logger logger = LoggerFactory.getLogger(ActivityController.class);
     
+    @Autowired
     public void setOperations(Operations operations){
         this.operations = operations;
     }   
- 
-    public void setPersonFormValidator(PersonFormValidator personFormValidator){
-        this.personFormValidator = personFormValidator;
-    } 
-
+    @Autowired
     public void setService(Service service){
         this.service = service;
     }    
@@ -100,7 +100,7 @@ public class ActivityController{
     }
 
   	@RequestMapping(value ="SearchRole",
-                    method=RequestMethod.POST,
+                   method=RequestMethod.POST,
                     headers="Accept=application/json")
     @ResponseBody
     public Set<Person> searchRole(@RequestParam(value="listBy",defaultValue="1") String listBy) {

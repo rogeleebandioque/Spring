@@ -5,8 +5,10 @@
 	http://www.springframework.org/schema/security
 	http://www.springframework.org/schema/security/spring-security-4.0.xsd">
 
+    <security:global-method-security secured-annotations="enabled" />
 	<http auto-config="true" use-expressions="true">
-		<intercept-url pattern="/Persons" access="isAuthenticated()" />
+		<intercept-url pattern="/Persons" access="ROLE_ADMIN" />
+        <intercept-url pattern="/projects" access="ROLE_ADMIN" />
 		<access-denied-handler error-page="/403" />
 		<form-login 
 		    login-page="/Login" 
@@ -15,12 +17,13 @@
 			username-parameter="username"
 			password-parameter="password" />
 		<logout logout-success-url="/Login?logout" />
-		<csrf />
 	</http>
 
 	<authentication-manager>
-		<authentication-provider user-service-ref="userService" >
-			<!--<password-encoder hash="bcrypt" />-->   
+		<authentication-provider>
+            <jdbc-user-service data-source-ref="dataSource"
+            users-by-username-query="select username, password from users where username=?"
+            authorities-by-username-query="select username, role_name from users where username=?" />
 		</authentication-provider>
 	</authentication-manager>
 

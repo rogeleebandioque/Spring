@@ -4,15 +4,13 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans 
 	   					   http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="activityController" class="hibernateactivity.web.ActivityController" autowire="byName" >    
+    <bean id="activityController" class="hibernateactivity.web.ActivityController">    
     </bean>
 
-    <bean id="projectsController" class="hibernateactivity.web.ProjectsController" autowire="byName" >    
+    <bean id="projectsController" class="hibernateactivity.web.ProjectsController">    
     </bean>
 
     <bean id="operations" class="hibernateactivity.web.Operations" >
     </bean>
-    <bean id="personFormValidator" class="hibernateactivity.web.PersonFormValidator" >
-    </bean>
-    <import resource="classpath:services.xml"/>
+
 </beans>

@@ -19,24 +19,26 @@ public class HibernateUtil {
     }
     
     public static <T> T perform(Command command, Class<T> returnClass) {
-        session = sessionFactory.openSession();
-        transaction = session.beginTransaction();
+//        session = sessionFactory.openSession();
+//        transaction = session.beginTransaction();
+
+        session = sessionFactory.getCurrentSession();
         
         Object returnObject = null;
         
-        try {
+//        try {
             command.setSession(session);
             returnObject = command.execute();
-            transaction.commit();
-        } catch (HibernateException e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            System.err.println("Unable to perform transaction.");
-            e.printStackTrace();
-        } finally {
-            session.close();
-        }
+//            transaction.commit();
+//        } catch (HibernateException e) {
+//            if (transaction != null) {
+//                transaction.rollback();
+//            }
+//            System.err.println("Unable to perform transaction.");
+//            e.printStackTrace();
+//        } finally {
+//            session.close();
+//        }
         
         return returnClass.cast(returnObject);
     }
