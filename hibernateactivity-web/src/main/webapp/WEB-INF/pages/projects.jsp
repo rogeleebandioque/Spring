@@ -10,6 +10,8 @@
     <head>
     <spring:url value="/resources/css/servlets.css" var="ServletsCss" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <spring:url value="/resources/js/deleteproject.js" var="deleteproject" />
+    <script src="${deleteproject}"></script>
     <link rel="stylesheet" type="text/css" href="${ServletsCss}"/>
     <title>Spring Activity</title>
     </head>
@@ -35,23 +37,18 @@
             </span>
 
             <br/><br/>
-            <h1 align="center">Spring Activity</h1>
+            <h1>Spring Activity</h1>
             <div id="search">
-
                 <c:url value="/logout" var="logoutUrl" />
                 <form action="${logoutUrl}" method="post" id="logoutForm">
                     <input type="hidden" name="${_csrf.parameterName}"
                 value="${_csrf.token}" />
                 </form>
-    
-                <div id="add"><button onClick="location.href='AddProject'">
-                    <spring:message code="label.addproject"/> </button></div><br/>   
-                    <form>  
-                    <spring:message code="label.search"/>:
-                    <input type="text" placeHolder="Project Name.." size="10"/>
-                    <input type="submit" value="Submit"/>
-                    </form>
-                </div>
+            </div>
+            <div id="add"><button onClick="location.href='AddProject'">
+                   <spring:message code="label.addproject"/> </button>
+            </div><br/> 
+
             <div id="usermessage"></div>
 
             <c:if test="${empty projects}">
@@ -81,11 +78,11 @@
             				    <c:if test="${not loop.last}"><br/></c:if>
                           </c:forEach>
                         </td>
-                        <td>
+                        <td><center>
                             <button id="${project.project_id}" 
                             onclick="location.href='/upproject/${project.project_id}'">Update</button>
                             <button class="deleteproj" value = "${project.project_id}">Delete</button>
-                        </td>
+                        </center></td>
                     </tr>
 			    </c:forEach>     
             </table>

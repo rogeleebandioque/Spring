@@ -2,6 +2,7 @@ package hibernateactivity.core.model;
 
 import java.util.*;
 import javax.persistence.*;
+import com.fasterxml.jackson.annotation.*;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 
@@ -27,6 +28,7 @@ public class Projects{
 
     @ManyToMany(fetch=FetchType.EAGER)
     @JoinTable(name="PER_PRO", joinColumns={@JoinColumn(name="project_id")},inverseJoinColumns={@JoinColumn(name="person_id")})      
+    @JsonBackReference 
     private Set<Person> per_proj = new HashSet<Person>();
 
     public Projects(){}

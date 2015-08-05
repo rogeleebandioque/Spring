@@ -99,6 +99,17 @@ public class ActivityController{
         return service.searchPerson(search,listBy,order);
     }
 
+  	@RequestMapping(value ="SearchRole",
+                    method=RequestMethod.POST,
+                    headers="Accept=application/json")
+    @ResponseBody
+    public Set<Person> searchRole(@RequestParam(value="listBy",defaultValue="1") String listBy) {
+        logger.debug("Searching role...");
+        Integer orders = Integer.parseInt(listBy);
+        Roles pr = service.getByRole(orders);
+        return pr.getPersonRole();
+    }
+
     @RequestMapping(value = "AddPerson", method = RequestMethod.GET)
 	public String addPersonForm(Model model) {
         logger.debug("userForm()");

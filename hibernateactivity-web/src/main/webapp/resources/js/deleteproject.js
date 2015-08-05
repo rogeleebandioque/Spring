@@ -1,6 +1,5 @@
 $(document).ready(function() {
-
-    $(".delete").click(function(e) {
+    $(".deleteproj").click(function(e) {
         if (!confirm("Are you sure you want to delete the Project?")) {
         return;
         }

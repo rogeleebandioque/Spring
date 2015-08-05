@@ -2,6 +2,7 @@ $(document).ready(function() {
 
     $("#person").click(function(){ 
             $("#displist").empty();
+            $("#disp").empty();
             $("#displist").append('<input type="text" name="searchBy"id="searchBy" placeHolder="Search.."/><br/>'+
                                     '<select name="listBy" id=listBy>'+
                                     '<option value="last_name"> Last Name </option>'+
@@ -14,14 +15,15 @@ $(document).ready(function() {
 
     $("#prole").click(function(){ 
             $("#displist").empty();
-            $("#displist").append('<form action="SearchRole">' +
-                                    '<input type="radio" name="listBy" value="1"> Police '+
-                                    '<input type="radio" name="listBy" value="2"> Politician '+
-                                    '<input type="radio" name="listBy" value="3"> Soldier '+
-                                    '<input type="radio" name="listBy" value="4"> Celebrity '+
-                                    '<input type="radio" name="listBy" value="5"> Worker <br/>'+
+            $("#disp").empty();
+            $("#disp").append('<select name="listBy">' + 
+                                    '<option value="1"> Police </option> '+
+                                    '<option value="2"> Politician </option>'+
+                                    '<option value="3"> Soldier </option>'+
+                                    '<option value="4"> Celebrity </option>'+
+                                    '<option value="5"> Worker <br/>'+
                                     '<input type="submit" value="Search">'+
-                                    '</form>');
+                                    '</select>');
 
     });
 
@@ -62,8 +64,40 @@ $(document).ready(function() {
         });
     };
 
+    var searchrole = function(){
+        var list = $('#listBy').val();
+        var aCall = $.ajax({    
+            url: "SearchRole",
+            type: "POST",
+            dataType: "json",
+            data: {
+                    "listBy":list,
+                    }
+        });
+        aCall.done(function(person) {
+            $("#persons").find("tr:gt(1)").remove();
+            $.each(person, function(index, element) { 
+                var contact = "";
+                $.each(element.contact, function(i,e){
+                    contact = contact + e.type + ":" + e.contact + "<br/>";
+                });
+                $("#persons").append("<tr>" + 
+                "<td>"+element.id+"</td>" +
+                "<td>"+element.names.first_name+" "+ element.names.last_name+"</td>" +
+                "<td>"+new Date(element.date_hired).toISOString().slice(0, 10)+"</td>" +
+                "<td>"+element.grade+"</td>" +
+                "<td>"+ contact +"</td>" +
+                "<td><button id=\""+element.id+"\"onclick=\"location.href=\'update/"+element.id+"\'\">Update</button>" +
+                "<button class=\"delete\" value =\""+element.id+"\">Delete</button></td></tr>");
+            }); 
+        });
+        aCall.fail(function() {
+            alert("Sorry.");
+        });
+    };
+
     var deleteButton = function(e) {
-        if (!confirm("Are you sure you want to delete the employee?")) {
+        if (!confirm("Delete Employee?")) {
         return;
         }
         var id = $(this).val();
@@ -92,6 +126,10 @@ $(document).ready(function() {
         searchperson();
         event.preventDefault();
     });    
+    $("#s").on("submit","#disp",function(event){
+        searchrole();
+        event.preventDefault();
+    });
 
     $("#persons").on("click",".delete",function(e) {
         deleteButton();

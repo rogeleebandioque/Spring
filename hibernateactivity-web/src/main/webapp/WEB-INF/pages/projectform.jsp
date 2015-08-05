@@ -17,15 +17,21 @@
         <tr><td><spring:message code="label.team"/></td>
             <td><select id="team" multiple="multiple" size="10">
             <c:forEach var="p" items="${person}">
-                <option value="${p.id}" 
+                 <option class="choice" value="${p.id}" 
                     <c:forEach var="t" items="${team}" varStatus="loop">
-                        <c:if test="${p.id == t.id}">
-                            selected="true"
+                        <c:if test="${(p.id == t.id)}">
+                            disabled="true"     
                         </c:if>
                     </c:forEach>
-                >${p.names.first_name} ${p.names.last_name}</option>                
+                >${p.names.first_name} ${p.names.last_name}</option>
             </c:forEach>
-        </select>       
+            </select>  
+
+            <select id="chosen" multiple="multiple" size="10">
+                <c:forEach var="t" items="${team}" varStatus="loop">
+                  <option value="${t.id}">${t.names.first_name} ${t.names.last_name}</option>
+                </c:forEach>
+            </select>      
         </td></tr>
 
 

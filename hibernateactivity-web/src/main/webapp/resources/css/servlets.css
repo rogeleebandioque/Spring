@@ -1,22 +1,24 @@
 #container {
 	position:relative;    
     top:5%;
-    width:60%;
-    height:50%;
-    left:20%;
     text-align:center;
 }
 #todo {
     display:none;
 }
 table{
-    text-align: center;
+    width:90%;
+    
 }
 #search{
     text-align:right;
+    position:relative;
+    right:5%;
 }
 #add{
     text-align:right;
+    position:relative;
+    right:5%;
 }
 #alertUser{
     border:1px;
@@ -38,5 +40,8 @@ table{
     text-align:center;
     padding:1em;
     
+}
+#team, #chosen {
+    border: 1px solid black;
 }
 

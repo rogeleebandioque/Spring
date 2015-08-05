@@ -14,13 +14,10 @@
 <html>
     <head>
     <spring:url value="/resources/css/servlets.css" var="ServletsCss" />
-	<spring:url value="/resources/js/Servlets.js" var="ServletsJs" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <spring:url value="/resources/js/jq.js" var="JqJs" />
     <spring:url value="/resources/js/deleteperson.js" var="DeleteJs" />
     <link rel="stylesheet" type="text/css" href="${ServletsCss}"/>
     <script src="${ServletsJs}"></script>
-    <script src="${JqJs}"></script>
     <script src="${DeleteJs}"></script>
     <title>Spring Activity</title>
     </head>
@@ -33,41 +30,45 @@
                 <strong>${msg}</strong>
                 </div>
             </c:if>
+            
+
+            <span style="float: left; text-align: right">
+                <a href="projects"> View Projects</a>
+            </span>
             <span style="float: right; text-align: right">
-                Welcome : <b>${pageContext.request.userPrincipal.name} </b>| <a
+            Welcome : <b>${pageContext.request.userPrincipal.name} </b>| <a
                 href="javascript:formSubmit()"> Logout</a>
                 <br/>
                 <a href="?lang=en">en</a>|
                 <a href="?lang=tlg">tlg</a>
             </span>
-
-            <span style="float: left; text-align: right">
-                <a href="projects"> View Projects</a>
-            </span>
-
             <br/><br/>
-            <h1 align="center">Spring Activity</h1>
+            <h1>Spring Activity</h1>
             <div id="search">
-
                 <c:url value="/logout" var="logoutUrl" />
                 <form action="${logoutUrl}" method="post" id="logoutForm">
                     <input type="hidden" name="${_csrf.parameterName}"
                 value="${_csrf.token}" />
                 </form>
-    
-                <div id="add"><button onClick="location.href='AddPerson'">
-                    <spring:message code="label.addperson"/> </button></div><br/>                
-                    <spring:message code="label.search"/>  
-                        <select>
-                            <option id="person">Person</option>
-                            <option id="prole">Role</option>
-                        </select>   
-                    <div id="s">                      
+            </div>      
+            <div id="add"><button onClick="location.href='AddPerson'">
+                <spring:message code="label.addperson"/> </button>
+                <br/>                
+                <spring:message code="label.search"/>  :
+                <select>
+                    <option id="person">Person</option>
+                    <option id="prole">Role</option>
+                </select>   
+                <div id="s">                      
                     <form id="displist">
                     </form>
-                    </div>
+                    <form id="disp">
+                    </form>
                 </div>
-           
+            </div>
+        
+
+                    
             <div id="usermessage"></div>
 
             <c:if test="${empty person}">

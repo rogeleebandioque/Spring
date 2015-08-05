@@ -1,15 +1,32 @@
 $(document).ready(function() {
+    var addperson = function(e){
+        var name = $(e).html();
+        $("#chosen").append('<option class=\"remove\" value=\"'+ $(e).val() +'\">'+name+'</option>');
+        $(e).remove();
+    };
+     var rmperson = function(t){
+        var name = $(t).html();
+        $("#team").append('<option class=\"choice\" value=\"'+ $(t).val() +'\">'+name+'</option>');
+        $(t).remove();
+    };
+    $("#chosen").on("dblclick",".remove",function(e){
+        rmperson($(this));
+        e.preventDefault();
+    });
+    $("#team").on("dblclick",".choice",function(e){
+        addperson($(this));
+        e.preventDefault();
+    });
+
     $('#projectForm').submit(function(event) {
-        alert("submit");
         var id = $('#project_id').val();
         var project_name = $('#project_name').val();
         var start_date= $('#start_date').val();
         var end_date = $('#end_date').val();
-        var person_id = $('select#team').val();
-        var persons =[];     
-        for(var i=0; i<person_id.length; i++) {
-            persons[i] = {"id":person_id[i]};
-        }
+        var persons= [];
+        $('#chosen option').each(function(e){
+            persons.push({"id":$(this).val()});
+        });
         
         var json = {"project_id": id, 
                     "project_name" : project_name, 
@@ -31,6 +48,7 @@ $(document).ready(function() {
         });
         ajaxCall.done(function(data) {
             if (data == true) {
+                alert("Project Updated!");
                $("#message").html("Project Updated!");
             } else {
                $("#message").html("Unable to update Project");

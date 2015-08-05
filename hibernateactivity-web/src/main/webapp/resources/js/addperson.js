@@ -73,9 +73,10 @@ $(document).ready(function() {
         });
         ajaxCall.done(function(data) {
             if (data == true) {
-               $("#message").html("Person Updated!");
+               alert("Person Added");
+               $("#message").html("Person Added!");
             } else {
-               $("#message").html("Unable to update Person");
+               $("#message").html("Unable to add Person");
             }
         });
     };

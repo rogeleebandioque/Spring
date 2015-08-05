@@ -73,6 +73,7 @@ $(document).ready(function() {
         });
         ajaxCall.done(function(data) {
             if (data == true) {
+               alert("Person Updated");
                $("#message").html("Person Updated!");
             } else {
                $("#message").html("Unable to update Person");
