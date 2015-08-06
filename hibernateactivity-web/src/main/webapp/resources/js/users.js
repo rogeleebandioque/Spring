@@ -35,8 +35,10 @@ $(document).ready(function() {
                     "<td>"+element.id+"</td>" +
                     "<td>"+element.username+"</td>" +
                     "<td>"+element.role+"</td>" +
-                    "<td><button id=\""+element.id+"\"onclick=\"location.href=\'upuser/"+element.id+"\'\">Update</button>" +
-                    "<button class=\"deleteuser\" value =\""+element.id+"\">Delete</button></td></tr>");
+                    "<td>"+
+                    ((role == "ROLE_ADMIN") ? "<button class=\"update\" value= \""+element.id+"\">Update</button>"+
+                    "<button class=\"deleteuser\" value =\""+element.id+"\">Delete</button>": "NONE")+
+                                "</td></tr>");
             });
         });
         ajaxCall.fail(function() {

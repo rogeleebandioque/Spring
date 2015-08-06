@@ -1,20 +1,15 @@
 package hibernateactivity.web;
 
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.LockedException;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.stereotype.Controller;
@@ -45,7 +40,6 @@ import hibernateactivity.core.model.Contacts;
 import hibernateactivity.core.service.Service;
 import hibernateactivity.core.model.Name;
 import hibernateactivity.core.model.Roles;
-import hibernateactivity.web.PersonFormValidator;
 import hibernateactivity.web.Operations;
 import hibernateactivity.core.model.FileUpload;
 
@@ -84,8 +78,15 @@ public class ActivityController{
 	@RequestMapping(value ="/Persons", method = RequestMethod.GET)
     public String displayPerson(ModelMap model) {
         logger.debug("displayPerson()");
+        Collection<SimpleGrantedAuthority> authorities = (Collection<SimpleGrantedAuthority>)    
+        SecurityContextHolder.getContext().getAuthentication().getAuthorities();
         model.addAttribute("person",service.getPerson());
+        for (SimpleGrantedAuthority authority : authorities) {
+            model.addAttribute("role", authority.getAuthority());
+            break;
+        }
         return "Main";
+
     }
 
     @RequestMapping(value="Persons", 

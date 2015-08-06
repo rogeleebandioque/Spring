@@ -1,5 +1,5 @@
 $(document).ready(function() {
-
+    var role=
     $("#logout").click(function(){
         $("#logoutForm").submit();
     });
@@ -38,7 +38,6 @@ $(document).ready(function() {
         var searchBy = $('#searchBy').val();
         var list = $('#listBy').val();
         var order = $('#order').val();
-        console.log(searchBy + " " + list + " "+order);
         var aCall = $.ajax({    
             url: "Persons",
             type: "POST",
@@ -65,9 +64,12 @@ $(document).ready(function() {
                 "<td>"+new Date(element.date_hired).toISOString().slice(0, 10)+"</td>" +
                 "<td>"+element.grade+"</td>" +
                 "<td>"+ contact +"</td>" +
-                "<td><button id=\""+element.id+"\"onclick=\"location.href=\'update/"+element.id+"\'\">Update</button>" +
-                "<button class=\"delete\" value =\""+element.id+"\">Delete</button></td></tr>");
+                "<td>"+
+                "<button id=\""+element.id+"\"onclick=\"location.href=\'update/"+element.id+"\'\">Update</button>" +
+                ((role == "ROLE_ADMIN") ? "<button class=\"delete\" value =\""+element.id+"\">Delete</button>" : "")+
+                "</td></tr>");
             }); 
+            alert(role == "ROLE_ADMIN");
         });
         aCall.fail(function() {
             alert("Sorry.");
@@ -104,7 +106,9 @@ $(document).ready(function() {
                 "<td>"+element.grade+"</td>" +
                 "<td>"+ contact +"</td>" +
                 "<td><button id=\""+element.id+"\"onclick=\"location.href=\'update/"+element.id+"\'\">Update</button>" +
-                "<button class=\"delete\" value =\""+element.id+"\">Delete</button></td></tr>");
+               ((role == "ROLE_ADMIN") ? 
+                "<button class=\"delete\" value =\""+element.id+"\">Delete</button>" : "")+
+                "</td></tr>");
             }); 
         });
         aCall.fail(function() {

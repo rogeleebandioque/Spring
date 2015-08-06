@@ -82,6 +82,9 @@ $(document).ready(function() {
                $("#message").html("Unable to update Person");
             }
         });
+        ajaxCall.fail(function() {
+            alert("Unable to Add.");
+        });
     };
 
     $("#container").on("submit","#personForm",function(e){

@@ -58,6 +58,9 @@ $(document).ready(function() {
                $("#message").html("Unable to add Project");
             }
         });
+        ajaxCall.fail(function() {
+            alert("Unable to Add.");
+        });
         event.preventDefault();
     });
 }); 

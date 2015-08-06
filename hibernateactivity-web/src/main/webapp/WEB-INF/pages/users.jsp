@@ -102,5 +102,12 @@
 
             <br/><br/><br/>
         </div>
+        <c:if test="${not empty pageContext.request.userPrincipal}">
+            <c:if test="${pageContext.request.isUserInRole('ROLE_ADMIN')}">
+                <p>hello</p>
+                <script>var role = "ROLE_ADMIN"</script>
+            </c:if>
+        </c:if>
+
     </body>
 </html>

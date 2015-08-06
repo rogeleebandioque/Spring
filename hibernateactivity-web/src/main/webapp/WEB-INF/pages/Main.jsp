@@ -10,12 +10,16 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <spring:url value="/resources/js/deleteperson.js" var="DeleteJs" />
     <link rel="stylesheet" type="text/css" href="${ServletsCss}"/>
-    <script src="${ServletsJs}"></script>
-    <script src="${DeleteJs}"></script>
+
+    <script src="${DeleteJs}"></script>   
+
     <title>Spring Activity</title>
+
     </head>
 
     <body>
+    
+    <script> var role = ${role}</script> 
         <div id="container">
             <span style="float: left; text-align: right">
                 <a href="projects"> View Projects</a>
@@ -84,7 +88,7 @@
                         <td>${user.date_hired}</td>
                         <td>${user.grade}</td>
                         <td>
-                            <c:forEach var="cont" items="${user.contact}" varStatus="loop">
+                        <c:forEach var="cont" items="${user.contact}" varStatus="loop">
 	                        ${cont.type} : ${cont.contact}
             				    <c:if test="${not loop.last}"><br/></c:if>
                           </c:forEach>

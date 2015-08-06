@@ -57,6 +57,9 @@ $(document).ready(function() {
                $("#message").html("Unable to update Project");
             }
         });
+        ajaxCall.fail(function() {
+            alert("Unable to Update.");
+        });
         event.preventDefault();
     });
 }); 

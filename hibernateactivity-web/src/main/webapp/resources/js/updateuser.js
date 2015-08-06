@@ -1,7 +1,6 @@
 $(document).ready(function() {
-    $(".update").click(function(e){
-        alert("j");
-        var id = $(this).val();
+    var update = function(e){
+        var id = e;
         var header = $("meta[name='_csrf_header']").attr("content");
         var token = $("meta[name='_csrf']").attr("content");
          var ajaxCall = $.ajax({
@@ -13,25 +12,25 @@ $(document).ready(function() {
             }        
         });
         ajaxCall.done(function(data) {
-            $("body").append("<div id=\"change\"> <br/><br/><br/>" + 
-                "<form name=\"userform\" modelAttribute=\"userform\">"+
-                "<table border=\"1\" align=\"center\"> <input type=\"hidden\" name=\"id\"value=\""+ data.id +"\"/>"+
-                "<tr><td>Username: </td><td><input type=\"text\" name=\"username\" value=\""+data.username+"\"/></td></tr>" +
-                "<tr><td>Password: </td><td><input type=\"password\" name=\"password\"value=\""+data.password+"\"/></td></tr>" +
+            $("#container").append("<div id=\"change\"> <br/><br/><br/>" + 
+                "<form id=\"editform\" modelAttribute=\"userform\">"+
+                "<table border=\"1\" align=\"center\"> <input type=\"hidden\" id=\"editid\"value=\""+ data.id +"\"/>"+
+                "<tr><td>Username: </td><td><input type=\"text\" id=\"editusername\" value=\""+data.username+"\"/></td></tr>" +
+                "<tr><td>Password: </td><td><input type=\"password\" id=\"editpassword\"value=\""+data.password+"\"/></td></tr>" +
                 "<tr><td>Role</td><td>"+
-                "<select name=\"role\"><option value=\"ROLE_ADMIN\">Admin</option><option value=\"ROLE_USER\">User</option></select>"+
+                "<select id=\"editrole\"><option value=\"ROLE_ADMIN\">Admin</option><option value=\"ROLE_USER\">User</option></select>"+
                 "</td></tr>" +
-                "<tr><td colspan=\"2\"><center><input type=\"submit\"value=\"Submit\">" +
-                "<button id=\"cancel\">Cancel</button></center></td></tr></table></form>");
+                "<tr><td colspan=\"2\"><center><input type=\"submit\"value=\"Submit\"/>" +
+                "<input type=\"button\" id=\"cancel\" value=\"Cancel\"/></center></td></tr></table></form>");
         });
-    });
-    $("body").on("submit","#userform",function(e){
+    };
+    $("#container").on("submit","#editform",function(e){
         var header = $("meta[name='_csrf_header']").attr("content");
         var token = $("meta[name='_csrf']").attr("content");
-        var id=$("id").val();
-        var username = $("#username").val();
-        var password = $("#password").val();
-        var role = $("#role").val();
+        var id=$("#editid").val();
+        var username = $("#editusername").val();
+        var password = $("#editpassword").val();
+        var role = $("#editrole").val();
         
         var ajaxCall = $.ajax({
             url: "UpdateUser",
@@ -50,20 +49,32 @@ $(document).ready(function() {
 
         ajaxCall.done(function(user) {
             alert("User Updated!");
-            $("#userform").remove();
             $("#userTable").find("tr:gt(1)").remove();
             $.each(user, function(index, element) {
                 $("#userTable").append("<tr>" + 
                     "<td>"+element.id+"</td>" +
                     "<td>"+element.username+"</td>" +
                     "<td>"+element.role+"</td>" +
-                    "<td><button id=\""+element.id+"\"onclick=\"location.href=\'upuser/"+element.id+"\'\">Update</button>" +
-                    "<button class=\"deleteuser\" value =\""+element.id+"\">Delete</button></td></tr>");
+                    "<td><sec:authorize access=\"hasRole(\'ROLE_ADMIN\')\">"+
+                                "<button class=\"update\" value= \""+element.id+"\">Update</button>"+
+                                "<button class=\"deleteuser\" value =\""+element.id+"\">Delete</button>"+
+                                "</sec:authorize>"+
+                                "<sec:authorize access=\"hasRole(\'ROLE_USER\')\">None"+
+                                "</sec:authorize></td></tr>");
             });
+            $("#change").remove();
         });
         ajaxCall.fail(function() {
             alert("Unable to edit.");
         });
         e.preventDefault();
+    });
+    $("container").on("click","#cancel",function(e){
+        $("#change").remove();
+        e.preventDefault();
+    });
+    $("#userTable").on("click",".update", function(e){
+        update($(this).val());
+        e.preventDefault(); 
     });
 });
