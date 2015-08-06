@@ -178,7 +178,8 @@ public class ActivityController{
     } 
 
     @RequestMapping(value = "/uploadForm", method = RequestMethod.POST)
-    public String uploadFileHandler(@RequestParam("file") MultipartFile file,@RequestParam("name") String name, Model model) {
+    public String uploadFileHandler(@RequestParam("file") MultipartFile file,
+                                    @RequestParam("name") String name, Model model) {
         Person person = new Person();
         Name n = person.getNames();
         Set<Contacts> c = person.getContact();

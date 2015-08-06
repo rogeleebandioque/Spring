@@ -19,6 +19,8 @@ $(document).ready(function() {
     });
 
     $('#projectForm').submit(function(event) {
+        var header = $("meta[name='_csrf_header']").attr("content");
+        var token = $("meta[name='_csrf']").attr("content");
         var id = $('#project_id').val();
         var project_name = $('#project_name').val();
         var start_date= $('#start_date').val();
@@ -42,6 +44,7 @@ $(document).ready(function() {
             type: "PUT",
             data: JSON.stringify(json),
             beforeSend: function(xhr) {
+                xhr.setRequestHeader(header, token);
                 xhr.setRequestHeader("Accept", "application/json");
                 xhr.setRequestHeader("Content-Type", "application/json");
             }        

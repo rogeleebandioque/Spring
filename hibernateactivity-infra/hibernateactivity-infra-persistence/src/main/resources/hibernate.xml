@@ -10,8 +10,6 @@ http://www.springframework.org/schema/tx/spring-tx.xsd
 http://www.springframework.org/schema/aop
 http://www.springframework.org/schema/aop/spring-aop.xsd">
 
-<!-- class="org.springframework.jdbc.datasource.DriverManagerDataSource"
-Hibernate session factory -->
     <bean class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close" id="dataSource">  
         <property name="driverClassName" value="org.postgresql.Driver"></property>  
         <property name="url" value="jdbc:postgresql://localhost/Person"></property>  

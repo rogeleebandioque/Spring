@@ -1,6 +1,8 @@
 $(document).ready(function() {
     $(".deleteproj").click(function(e) {
-        if (!confirm("Are you sure you want to delete the Project?")) {
+        var header = $("meta[name='_csrf_header']").attr("content");
+        var token = $("meta[name='_csrf']").attr("content");
+        if (!confirm("Delete Project?")) {
         return;
         }
         var id = $(this).val();
@@ -8,6 +10,7 @@ $(document).ready(function() {
             url: "removeproject/" + id,
             type: "DELETE",
             beforeSend: function(xhr) {
+                xhr.setRequestHeader(header, token);
                 xhr.setRequestHeader("Accept", "application/json");
                 xhr.setRequestHeader("Content-Type", "application/json");
             }

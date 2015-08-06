@@ -7,8 +7,6 @@
     display:none;
 }
 table{
-    width:90%;
-    
 }
 #search{
     text-align:right;
@@ -44,4 +42,13 @@ table{
 #team, #chosen {
     border: 1px solid black;
 }
-
+#change{
+    background:white;
+    border: 1px solid black;
+    position: fixed;
+    top: 20%;
+    left: 25%;
+    width: 50%;
+    height: 50%;
+    text-align: center;   
+}

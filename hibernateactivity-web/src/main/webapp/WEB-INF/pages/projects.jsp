@@ -3,37 +3,33 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.io.*,java.util.*, javax.servlet.*" %>
 <%@ page import="javax.servlet.http.*" %>
-<%@ page import="org.apache.commons.lang3.StringUtils" %>
-<%@ page import="hibernateactivity.web.Operations" %>
 <%@ page import="javax.servlet.http.HttpServletRequest" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
 <html>
     <head>
-    <spring:url value="/resources/css/servlets.css" var="ServletsCss" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <spring:url value="/resources/js/deleteproject.js" var="deleteproject" />
-    <script src="${deleteproject}"></script>
-    <link rel="stylesheet" type="text/css" href="${ServletsCss}"/>
-    <title>Spring Activity</title>
+        <sec:csrfMetaTags/> 
+        <spring:url value="/resources/css/servlets.css" var="ServletsCss" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <spring:url value="/resources/js/deleteproject.js" var="deleteproject" />
+        <script src="${deleteproject}"></script>
+        <link rel="stylesheet" type="text/css" href="${ServletsCss}"/>
+        <title>Spring Activity</title>
     </head>
 
     <body>
         <div id="container">
-            <c:if test="${not empty msg}">     
-                <div id="alertUser">
-                <button type="button" onClick="removeAlert()">&times;</button>
-                <strong>${msg}</strong>
-                </div>
-            </c:if>
             <span style="float: right; text-align: right">
-                Welcome : <b>${pageContext.request.userPrincipal.name} </b>| <a
-                href="javascript:formSubmit()"> Logout</a>
+                <a href="?lang=en">en</a>|<a href="?lang=tlg">tlg</a>           
+                <br/>   
+                Welcome : <b>${pageContext.request.userPrincipal.name} </b>| 
+                <button id="logout" value="logout">Logout</button>
                 <br/>
-                <a href="?lang=en">en</a>|
-                <a href="?lang=tlg">tlg</a>
             </span> 
 
             <span style="float: left; text-align: right">
                 <a href="Persons"> View Persons</a>
+                <a href="users"> View Users</a>
             </span>
 
             <br/><br/>
@@ -81,7 +77,9 @@
                         <td><center>
                             <button id="${project.project_id}" 
                             onclick="location.href='/upproject/${project.project_id}'">Update</button>
+                            <sec:authorize access="hasRole('ROLE_ADMIN')">
                             <button class="deleteproj" value = "${project.project_id}">Delete</button>
+                            </sec:authorize>
                         </center></td>
                     </tr>
 			    </c:forEach>     

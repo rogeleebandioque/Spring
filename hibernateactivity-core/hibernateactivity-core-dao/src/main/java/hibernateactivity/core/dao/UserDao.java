@@ -6,9 +6,8 @@ import hibernateactivity.core.model.Users;
 
 interface UserDao{
     public List<Users> getUsers();
-    public Users getUserByUsername(String username);
+    public Users getUser(int id);
     public String addUser(Users user);
     public String updateUser(Users user);
     public String deleteUser(int id);
-
 }

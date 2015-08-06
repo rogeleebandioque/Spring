@@ -10,6 +10,9 @@
     <bean id="projectsController" class="hibernateactivity.web.ProjectsController">    
     </bean>
 
+    <bean id="usersController" class="hibernateactivity.web.UsersController">    
+    </bean>
+
     <bean id="operations" class="hibernateactivity.web.Operations" >
     </bean>
 

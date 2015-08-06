@@ -1,5 +1,9 @@
 $(document).ready(function() {
 
+    $("#logout").click(function(){
+        $("#logoutForm").submit();
+    });
+
     $("#person").click(function(){ 
             $("#displist").empty();
             $("#disp").empty();
@@ -28,6 +32,9 @@ $(document).ready(function() {
     });
 
     var searchperson = function(){
+        var header = $("meta[name='_csrf_header']").attr("content");
+        var token = $("meta[name='_csrf']").attr("content");
+        
         var searchBy = $('#searchBy').val();
         var list = $('#listBy').val();
         var order = $('#order').val();
@@ -40,7 +47,10 @@ $(document).ready(function() {
                     "search":searchBy,
                     "listBy":list,
                     "order":order
-                    }
+                    },
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader(header, token);
+            }            
         });
         aCall.done(function(person) {
             $("#persons").find("tr:gt(1)").remove();
@@ -65,6 +75,9 @@ $(document).ready(function() {
     };
 
     var searchrole = function(){
+        var header = $("meta[name='_csrf_header']").attr("content");
+        var token = $("meta[name='_csrf']").attr("content");
+        
         var list = $('#listBy').val();
         var aCall = $.ajax({    
             url: "SearchRole",
@@ -72,7 +85,10 @@ $(document).ready(function() {
             dataType: "json",
             data: {
                     "listBy":list,
-                    }
+                    },
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader(header, token);
+            }
         });
         aCall.done(function(person) {
             $("#persons").find("tr:gt(1)").remove();
@@ -96,22 +112,26 @@ $(document).ready(function() {
         });
     };
 
-    var deleteButton = function(e) {
+    var deleteButton = function(x) {
         if (!confirm("Delete Employee?")) {
-        return;
+            return;
         }
-        var id = $(this).val();
+        var header = $("meta[name='_csrf_header']").attr("content");
+        var token = $("meta[name='_csrf']").attr("content");
+        
+        var id = $(x).val();
         var ajaxCall = $.ajax({
             url: "remove/" + id,
             type: "DELETE",
             beforeSend: function(xhr) {
+                xhr.setRequestHeader(header, token);
                 xhr.setRequestHeader("Accept", "application/json");
                 xhr.setRequestHeader("Content-Type", "application/json");
             }
         });
         ajaxCall.done(function(data) {
             if (data == true) {
-                var tr = $(e.target).closest("tr");
+                var tr = $(x).closest("tr");
                 tr.remove();
             } else {
                 alert("Unable to delete employee.");
@@ -131,9 +151,9 @@ $(document).ready(function() {
         event.preventDefault();
     });
 
-    $("#persons").on("click",".delete",function(e) {
-        deleteButton();
-        e.preventDefault();
+    $("#persons").on("click",".delete",function(event) {
+        deleteButton($(this));
+        event.preventDefault();
     });
 
 });

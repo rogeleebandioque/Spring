@@ -1,5 +1,7 @@
 $(document).ready(function() {
    var updateperson = function(event) {
+        var header = $("meta[name='_csrf_header']").attr("content");
+        var token = $("meta[name='_csrf']").attr("content");
         var id = $('#id').val();
         var first_name = $('#names\\.first_name').val();
         var last_name = $('#names\\.last_name').val();
@@ -67,6 +69,7 @@ $(document).ready(function() {
             type: "PUT",
             data: JSON.stringify(json),
             beforeSend: function(xhr) {
+                xhr.setRequestHeader(header, token);
                 xhr.setRequestHeader("Accept", "application/json");
                 xhr.setRequestHeader("Content-Type", "application/json");
             }        

@@ -11,16 +11,23 @@ import org.springframework.transaction.annotation.Transactional;
 import hibernateactivity.core.dao.UserDaoImpl;
 import hibernateactivity.core.model.Users;
 
+@Transactional(rollbackFor=Exception.class)
 public class UserService {
 
-    UserDaoImpl userDaoImpl = new UserDaoImpl();
+    UserDaoImpl userDaoImpl;
     @Autowired
     public void setUserDaoImpl(UserDaoImpl userDaoImpl){
         this.userDaoImpl = userDaoImpl;
     }
-
+    
+    @Transactional(readOnly=true)
     public List<Users> getUsers() {
         return userDaoImpl.getUsers();
+    }
+
+    @Transactional(readOnly=true)
+    public Users getUser(int id) {
+        return userDaoImpl.getUser(id);
     }
 
     public String deleteUser(int id) {

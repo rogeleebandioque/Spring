@@ -15,8 +15,8 @@ public class UserDaoImpl implements UserDao {
         return HibernateUtil.perform(new ListUser(), List.class);         
     }
 
-    public Users getUserByUsername(String username) {
-        return HibernateUtil.perform(new GetUserByUsername(username), Users.class);
+    public Users getUser(int id) {
+        return HibernateUtil.perform(new GetUserByUsername(id), Users.class);
     }
 
     public String addUser(Users user) {

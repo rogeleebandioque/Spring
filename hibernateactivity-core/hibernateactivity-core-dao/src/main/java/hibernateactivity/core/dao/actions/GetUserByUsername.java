@@ -11,10 +11,10 @@ import org.hibernate.transform.Transformers;
 public class GetUserByUsername implements Command {
 
     private Session session;
-    private String username;
+    private int id;
 
-    public GetUserByUsername(String username) {
-        this.username = username;
+    public GetUserByUsername(int id) {
+        this.id = id;
     }
 
     public void setSession(Session session) {
@@ -22,6 +22,6 @@ public class GetUserByUsername implements Command {
     }
 
     public Object execute() {
-        return (Users) session.get(Users.class, username);
+        return (Users) session.get(Users.class, id);
     }
 }

@@ -5,20 +5,22 @@ import javax.persistence.*;
 @Entity
 @Table(name="Users")
 public class Users {
-    
+    @Id
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="user_generator")
     @SequenceGenerator(name="user_generator", sequenceName="user_generator", allocationSize=1)
     @Column(name="id")
-    private Integer id;
+    private int id;
 
-    @Id
     @Column(name="username")
     private String username;
 
     @Column(name="password")
     private String password;
+    
+    @Column(name="enabled")
+    private Boolean enabled;
 
-    @Column(name="role_name")
+    @Column(name="role")
     private String role;
 
     public Users(){}
@@ -27,11 +29,11 @@ public class Users {
         this.password = password;
     }
 
-    public Integer getId(){
+    public int getId(){
         return this.id;
     }
     
-    public void setId(Integer id){
+    public void setId(int id){
         this.id = id;
     }
 
@@ -49,6 +51,14 @@ public class Users {
 
     public void setPassword(String password){
         this.password = password;
+    }
+
+    public Boolean getEnabled(){
+        return this.enabled;
+    }
+
+    public void setEnabled(Boolean enabled){
+        this.enabled = enabled;
     }
 
     public String getRole(){
