@@ -1,5 +1,6 @@
 *~
-hibernateactivity-app/target/
+hibernateactivity-web/Uploaded Files/
+hibernateactivity-web/logs/
 hibernateactivity-core/hibernateactivity-core-dao/target/
 hibernateactivity-core/hibernateactivity-core-model/target/
 hibernateactivity-core/hibernateactivity-core-service/target/

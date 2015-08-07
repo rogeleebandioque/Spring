@@ -29,11 +29,12 @@
             <h1 align="center">Spring Activity</h1>
             <h1>Add Person</h1>
             <div id="fileUpload">
-                <form:form action="/uploadForm"enctype="multipart/form-data">
+                <form id="uploadForm" action="/uploadForm?${_csrf.parameterName}=${_csrf.token}" method="POST"enctype="multipart/form-data" >
                     Upload File: <input type="file" name="file"/><br/>
                     Name: <input type="text" name="name" required><br />
                     <input type="submit" value="Add File"/>
-                </form:form>
+                    <input type="hidden" name="${_csrf.parameterName}"value="${_csrf.token}"/>
+                </form>
             </div>
             <br/>
             or

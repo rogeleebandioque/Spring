@@ -50,9 +50,9 @@
             <c:if test="${empty user}">
                 <h2>No Projects Found!</h2>
             </c:if>
-            <div id="userformdiv">
+            <div id="userformdiv" >
                 <form id="userform">
-                <table border="1" align="center">
+                <table border ="1"align="center">
                     <th colspan="2">Add User</th>
                     <tr><td>Username:</td><td><input path="username" id="username" required="true"/></td></tr>
                     <tr><td>Password:</td><td><input type="password" path="password" id="password"required="true"/></td></tr>                    
@@ -104,7 +104,6 @@
         </div>
         <c:if test="${not empty pageContext.request.userPrincipal}">
             <c:if test="${pageContext.request.isUserInRole('ROLE_ADMIN')}">
-                <p>hello</p>
                 <script>var role = "ROLE_ADMIN"</script>
             </c:if>
         </c:if>

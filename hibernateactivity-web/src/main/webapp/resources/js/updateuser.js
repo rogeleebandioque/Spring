@@ -56,11 +56,9 @@ $(document).ready(function() {
                     "<td>"+element.username+"</td>" +
                     "<td>"+element.role+"</td>" +
                     "<td><sec:authorize access=\"hasRole(\'ROLE_ADMIN\')\">"+
-                                "<button class=\"update\" value= \""+element.id+"\">Update</button>"+
-                                "<button class=\"deleteuser\" value =\""+element.id+"\">Delete</button>"+
-                                "</sec:authorize>"+
-                                "<sec:authorize access=\"hasRole(\'ROLE_USER\')\">None"+
-                                "</sec:authorize></td></tr>");
+                    ((role == "ROLE_ADMIN") ? "<button class=\"update\" value= \""+element.id+"\">Update</button>"+
+                    "<button class=\"deleteuser\" value =\""+element.id+"\">Delete</button>": "NONE")+
+                    "</td></tr>");
             });
             $("#change").remove();
         });
