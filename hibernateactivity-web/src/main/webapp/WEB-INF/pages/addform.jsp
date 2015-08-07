@@ -29,6 +29,7 @@
             <h1 align="center">Spring Activity</h1>
             <h1>Add Person</h1>
             <div id="fileUpload">
+            ${message}
                 <form id="uploadForm" action="/uploadForm?${_csrf.parameterName}=${_csrf.token}" method="POST"enctype="multipart/form-data" >
                     Upload File: <input type="file" name="file"/><br/>
                     Name: <input type="text" name="name" required><br />
