@@ -12,11 +12,11 @@ $(document).ready(function() {
             }        
         });
         ajaxCall.done(function(data) {
-            $("#container").append("<div id=\"change\"> <br/><br/><br/>" + 
+            $("#container").append("<div id=\"change\"> <br/><br/><h1>Edit User</h1><br/><br/>" + 
                 "<form id=\"editform\" modelAttribute=\"userform\">"+
                 "<table border=\"1\" align=\"center\"> <input type=\"hidden\" id=\"editid\"value=\""+ data.id +"\"/>"+
                 "<tr><td>Username: </td><td><input type=\"text\" id=\"editusername\" value=\""+data.username+"\"/></td></tr>" +
-                "<tr><td>Password: </td><td><input type=\"password\" id=\"editpassword\"value=\""+data.password+"\"/></td></tr>" +
+                "<tr><td>New Password: </td><td><input type=\"password\" id=\"editpassword\"/></td></tr>" +
                 "<tr><td>Role</td><td>"+
                 "<select id=\"editrole\"><option value=\"ROLE_ADMIN\">Admin</option><option value=\"ROLE_USER\">User</option></select>"+
                 "</td></tr>" +
@@ -67,7 +67,7 @@ $(document).ready(function() {
         });
         e.preventDefault();
     });
-    $("container").on("click","#cancel",function(e){
+    $("#container").on("click","#cancel",function(e){
         $("#change").remove();
         e.preventDefault();
     });
