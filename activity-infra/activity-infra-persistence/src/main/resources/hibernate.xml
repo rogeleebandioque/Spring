@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:aop="http://www.springframework.org/schema/aop"
+xmlns:tx="http://www.springframework.org/schema/tx"
+xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-2.5.xsd 
+http://www.springframework.org/schema/tx
+http://www.springframework.org/schema/tx/spring-tx.xsd
+http://www.springframework.org/schema/aop
+http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <bean class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close" id="dataSource">  
+        <property name="driverClassName" value="org.postgresql.Driver"></property>  
+        <property name="url" value="jdbc:postgresql://localhost/Person"></property>  
+        <property name="username" value="rbandioque"></property>  
+        <property name="password" value="rbandioque"></property>  
+        <property name="removeAbandoned" value="true" />
+        <property name="initialSize" value="20" />
+        <property name="maxActive" value="30" />
+    </bean>
+
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+     
+        <property name="dataSource" ref="dataSource" />
+     
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</prop>
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.format_sql">true</prop>
+                <prop key="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory</prop>
+                <prop key="hibernate.cache.use_second_level_cache">true</prop>
+                <prop key="hibernate.cache.use_query_cache">true</prop>
+                <prop key="net.sf.ehcache.configurationResourceName">myehcache.xml</prop>
+            </props>
+        </property>
+     
+        <property name="annotatedClasses">
+	        <list>
+	        	<value>activity.core.model.Name</value>
+                <value>activity.core.model.Person</value>
+                <value>activity.core.model.Roles</value>
+                <value>activity.core.model.Contacts</value>
+                <value>activity.core.model.Users</value>
+                <value>activity.core.model.Projects</value>
+        	</list>
+        </property>
+    </bean>
+
+   
+
+</beans>
+
+

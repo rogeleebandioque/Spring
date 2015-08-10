@@ -1,12 +1,12 @@
 *~
-hibernateactivity-web/Uploaded Files/
-hibernateactivity-web/logs/
-hibernateactivity-core/hibernateactivity-core-dao/target/
-hibernateactivity-core/hibernateactivity-core-model/target/
-hibernateactivity-core/hibernateactivity-core-service/target/
-hibernateactivity-core/target/
-hibernateactivity-infra/hibernateactivity-infra-buildtools/target/
-hibernateactivity-infra/hibernateactivity-infra-persistence/target/
-hibernateactivity-infra/target/
+activity-web/Uploaded Files/
+activity-web/logs/
+activity-core/hibernateactivity-core-dao/target/
+activity-core/hibernateactivity-core-model/target/
+activity-core/hibernateactivity-core-service/target/
+activity-core/target/
+activity-infra/hibernateactivity-infra-buildtools/target/
+activity-infra/hibernateactivity-infra-persistence/target/
+activity-infra/target/
 target/
 
