@@ -52,7 +52,7 @@ public class ProjectsController{
     public String displayProjects(ModelMap model) {
     logger.debug("Displaying projects...");
     model.addAttribute("projects",projectService.getProjects());
-    return "projects";
+    return "/projects/projects";
     }   
 
     @RequestMapping(value = "AddProject", method = RequestMethod.GET)
@@ -60,7 +60,7 @@ public class ProjectsController{
         logger.debug("Add Project Form...");
         populateModel(model);
 		model.addAttribute("projectForm", new Projects());
-        return "addprojectform";
+        return "/projects/addprojectform";
 	}
 
     @RequestMapping(value ="/AddProject", 
@@ -95,7 +95,7 @@ public class ProjectsController{
         model.addAttribute("projectForm", project);
         model.addAttribute("team", person);
         populateModel(model);
-        return "updateprojectform";
+        return "/projects/updateprojectform";
     }
     
     @RequestMapping(value ="/UpdateProject", 

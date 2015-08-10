@@ -3,14 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.io.*,java.util.*, javax.servlet.*" %>
 <%@ page import="javax.servlet.http.*" %>
-<%@ page import="hibernateactivity.core.service.Service" %>
-<%@ page import="hibernateactivity.core.model.Person" %>
-<%@ page import="hibernateactivity.core.model.Contacts" %>
-<%@ page import="hibernateactivity.core.model.Name" %>
-<%@ page import="hibernateactivity.core.model.Roles" %>
-<%@ page import="org.apache.commons.lang3.StringUtils" %>
-<%@ page import="hibernateactivity.web.Operations" %>
-<%@ page import="javax.servlet.http.HttpServletRequest" %>
 <html>
     <head>
     <spring:url value="/resources/css/servlets.css" var="ServletsCss" />
@@ -50,8 +42,9 @@
 					        <td><input type='password' name='password' /></td>
 				        </tr>
 				        <tr>
-					        <td colspan='2'><input name="submit" type="submit"
-						        value="submit" /></td>
+					        <td colspan='2'>
+                                <input name="submit" type="submit" value="submit" />
+                            </td>
 				        </tr>
 			        </table>
 

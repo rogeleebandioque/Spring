@@ -66,7 +66,7 @@ public class ActivityController{
 			model.addAttribute("msg", "You've been logged out successfully.");
 		}
 
-		return "/Login";
+		return "/tools/Login";
 	}
 
 	@RequestMapping(value ="/Persons", method = RequestMethod.GET)

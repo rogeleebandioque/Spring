@@ -39,7 +39,7 @@ public class UsersController{
     public String displayPerson(ModelMap model) {
         logger.debug("Displaying Users...");
         model.addAttribute("user",userService.getUsers());
-        return "users";
+        return "users/users";
     }
     @RequestMapping(value = "updateuser/{id}", 
                     method = RequestMethod.GET,

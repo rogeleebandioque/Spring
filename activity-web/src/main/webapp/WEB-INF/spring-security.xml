@@ -14,6 +14,7 @@
         <intercept-url pattern="/remove*" access="hasRole('ROLE_ADMIN')"/>
 
 		<form-login 
+            login-page="/Login" 
 		    default-target-url="/Persons"
 			authentication-failure-url="/Login?error" 
 			username-parameter="username"
