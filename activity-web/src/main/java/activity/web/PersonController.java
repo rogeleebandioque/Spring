@@ -44,7 +44,7 @@ import activity.core.model.Roles;
 import activity.core.model.FileUpload;
 
 @Controller
-public class ActivityController{
+public class PersonController{
     private PersonService personService;
     private final Logger logger = LoggerFactory.getLogger(ActivityController.class);
     
