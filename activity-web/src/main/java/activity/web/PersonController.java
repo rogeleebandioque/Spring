@@ -64,7 +64,7 @@ public class PersonController {
 
     @RequestMapping(value = "SearchPersons",
             method = RequestMethod.POST,
-            headers = "Accept=saveAutoapplication/json")
+            headers = "Accept=application/json")
     @ResponseBody
     public List<Person> getPersons(
             @RequestParam(value = "listBy", defaultValue = "grade") String listBy,

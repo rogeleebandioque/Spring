@@ -177,12 +177,12 @@ public class PersonControllerTest {
         when(personService.getPersons(i)).thenReturn(p1);
         when(person.getRole()).thenReturn(p1.getRole());
         when(person.getContact()).thenReturn(p1.getContact());
-        mockMvc.perform(get("update/{id}", i))
+
+        mockMvc.perform(get("/update/{id}", i))
                 .andExpect(status().isOk())
                 .andExpect(model().attribute("personForm", p1))
                 .andExpect(model().attribute("roles", p1.getRole()))
                 .andExpect(model().attribute("contact", p1.getContact()))
-                .andExpect(content().string("true"))
                 .andExpect(view().name("persons/updateform"));
     }
 
@@ -197,9 +197,25 @@ public class PersonControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().string("true"));
     }
-}
-//SAVE: 
 
+    @Test
+    public void searchPersonTest() throws Exception {
+        System.out.println("Search person test..");
+        String list = "grade";
+        String order ="asc";
+        String search = "";
+        when(personService.searchPerson(search, list, order)).thenReturn(Arrays.asList(p1));
+        mockMvc.perform(put("/UpdatePerson")
+                .param("listBy", "grade")
+                .param("order","asc")
+                .param("search","")
+                .content(PERSON_JSON)
+                .header("Accept","application/json"))
+                .andExpect(status().isOk());
+    }
+}
+
+//SAVE: 
     //@Autowired
 //private WebApplicationContext webApplicationContext;
     //mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
