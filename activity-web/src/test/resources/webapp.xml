@@ -12,5 +12,5 @@
 
     <bean id="usersController" class="activity.web.UsersController">    
     </bean>
-
+    
 </beans>

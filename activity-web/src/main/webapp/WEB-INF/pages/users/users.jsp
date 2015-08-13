@@ -14,7 +14,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         <spring:url value="/resources/js/users/users.js" var="users" />
         <spring:url value="/resources/js/users/updateuser.js" var="update" />
-        
+
         <script src="${users}"></script>
         <script src="${update}"></script>
         <link rel="stylesheet" type="text/css" href="${ServletsCss}"/>
@@ -42,50 +42,69 @@
                 <c:url value="../logout" var="logoutUrl" />
                 <form action="${logoutUrl}" method="post" id="logoutForm">
                     <input type="hidden" name="${_csrf.parameterName}"
-                    value="${_csrf.token}" />
+                           value="${_csrf.token}" />
                 </form>
             </div>
 
-            <div id="usermessage"></div>
-
-            <c:if test="${empty user}">
-                <h2>No Projects Found!</h2>
-            </c:if>
+            <div id="usermessage">
+                <c:if test="${empty user}">
+                    <h2>No Projects Found!</h2>
+                </c:if>
+            </div>
             <div id="userformdiv" >
                 <form id="userform">
-                <table border ="1"align="center">
-                    <th colspan="2">Add User</th>
-                    <tr><td>Username:</td><td><input id="username" required="true"/></td></tr>
-                    <tr><td>Password:</td><td><input type="password" id="password"required="true"/></td></tr>                    
-                    <sec:authorize access="hasRole('ROLE_ADMIN')">                    
-                    <tr><td>Role:</td><td>
-                        <select id="role">
-                            <option value="ROLE_ADMIN">ADMIN</option>
-                            <option value="ROLE_USER">USER</option>
-                        </select>
-                    </td></tr>
-                    </sec:authorize>
+                    <table border ="1"align="center">
+                        <th colspan="2">Add User</th>
+                        <tr>
+                            <td>Username:</td>
+                            <td><input id="username" required="true"/></td>
+                        </tr>
+                        <tr>
+                            <td>Password:</td>
+                            <td><input type="password" id="password"required="true"/></td>
+                        </tr>                    
+                        <sec:authorize access="hasRole('ROLE_ADMIN')">                    
+                            <tr>
+                                <td>Role:</td>
+                                <td>
+                                    <select id="role">
+                                        <option value="ROLE_ADMIN">ADMIN</option>
+                                        <option value="ROLE_USER">USER</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </sec:authorize>
+                        <sec:authorize access="hasRole('ROLE_USER')">                    
+                            <tr>
+                                <td>Role:</td>
+                                <td>
+                                    <select id="role">
+                                        <option value="ROLE_USER">USER</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </sec:authorize>
 
-                    <sec:authorize access="hasRole('ROLE_USER')">                    
-                    <tr><td>Role:</td><td>
-                        <select id="role">
-                            <option value="ROLE_USER">USER</option>
-                        </select>
-                    </td></tr>
-                    </sec:authorize>
-
-                    <tr><td colspan="2"><center><input type="submit" value="Submit"/></center>  </td></tr>
-                </table>
+                        <tr>
+                            <td colspan="2">
+                                <input type="submit" value="Submit"/>
+                            </td>
+                        </tr>
+                    </table>
                 </form>
             </div>
 
             <div id="list">
                 <table border="1" align="center"id="userTable">
-                    <thead><tr><th colspan="6"><spring:message code="label.users"/> </th></tr>
-                        <tr><th>ID</th>
-                        <th><spring:message code="label.username"/></th>
-                        <th><spring:message code="label.role"/></th>
-                        <th><spring:message code="label.action"/></th>
+                    <thead>
+                        <tr>
+                            <th colspan="6"><spring:message code="label.users"/></th>
+                        </tr>
+                        <tr>
+                            <th>ID</th>
+                            <th><spring:message code="label.username"/></th>
+                            <th><spring:message code="label.role"/></th>
+                            <th><spring:message code="label.action"/></th>
                         </tr>
                     </thead>
                     <c:forEach var="users" items="${user}">
@@ -93,26 +112,27 @@
                             <td>${users.id}</td>
                             <td>${users.username}</td>
                             <td>${users.role}</td>
-                            <td><center>
+                            <td>
                                 <sec:authorize access="hasRole('ROLE_ADMIN')">
-                                <button class="update" value= "${users.id}">Update</button>
-                                <button class="deleteuser" value = "${users.id}">Delete</button>
+                                    <button class="update" value= "${users.id}">Update</button>
+                                    <button class="deleteuser" value = "${users.id}">Delete</button>
                                 </sec:authorize>
                                 <sec:authorize access="hasRole('ROLE_USER')">
-                                    None
+                                    NONE
                                 </sec:authorize>
-                                </center>
                             </td>
                         </tr>
-			        </c:forEach>     
+                    </c:forEach>     
                 </table>
-            </div>
-        <br/><br/><br/>
+            </div><br/><br/><br/>
         </div>
 
         <c:if test="${not empty pageContext.request.userPrincipal}">
             <c:if test="${pageContext.request.isUserInRole('ROLE_ADMIN')}">
                 <script>var role = "ROLE_ADMIN"</script>
+            </c:if>
+            <c:if test="${pageContext.request.isUserInRole('ROLE_USER')}">
+                <script>var role = "ROLE_USER"</script>
             </c:if>
         </c:if>
     </body>

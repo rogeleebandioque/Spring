@@ -1,18 +1,15 @@
 package activity.core.service;
 
 import activity.core.dao.PersonDaoImpl;
-import activity.core.dao.UserDaoImpl;
 import activity.core.model.Person;
-import activity.core.model.Contacts;
 import activity.core.model.Roles;
-import activity.core.model.Users;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 @Transactional(rollbackFor=Exception.class)
-public class PersonService {
+public class PersonServiceImpl implements PersonServiceInterface {
 
     private PersonDaoImpl personDaoImpl;
 
@@ -22,33 +19,40 @@ public class PersonService {
     }
 
     @Transactional(readOnly=true)
+    @Override
     public List<Person> getPerson() {
         return personDaoImpl.getPeople();
     }
 
+    @Override
     public String deletePersons(int idNum) {
         return personDaoImpl.deletePeople(idNum);
     }
 
     @Transactional(readOnly=true)
+    @Override
     public boolean searchPersons(int idNum) {
         return personDaoImpl.inRecord(idNum);
     }
 
+    @Override
     public String addPersons(Person person) {
         return personDaoImpl.addPeople(person);
     }
 
+    @Override
     public String updatePersons(Person person) {
         return personDaoImpl.updatePeople(person);
     }
 
     @Transactional(readOnly=true)
+    @Override
     public Person getPersons(int idNum) {
         return personDaoImpl.getPeople(idNum);
     }
 
     @Transactional(readOnly=true)
+    @Override
     public Roles getByRole(Integer category) {
         return personDaoImpl.getRole(category);
     }

@@ -5,16 +5,13 @@
 
 <html>
     <head>
-    <sec:csrfMetaTags/>
-    <spring:url value="/resources/css/servlets.css" var="ServletsCss" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <spring:url value="/resources/js/persons/deleteperson.js" var="DeleteJs" />
-    <link rel="stylesheet" type="text/css" href="${ServletsCss}"/>
-
-    <script src="${DeleteJs}"></script>   
-
-    <title>Spring Activity</title>
-
+        <sec:csrfMetaTags/>
+        <spring:url value="/resources/css/servlets.css" var="ServletsCss" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <spring:url value="/resources/js/persons/deleteperson.js" var="DeleteJs" />
+        <link rel="stylesheet" type="text/css" href="${ServletsCss}"/>
+        <script src="${DeleteJs}"></script>   
+        <title>Spring Activity</title>
     </head>
 
     <body>
@@ -24,7 +21,7 @@
                 <a href="../users"> View Users</a>
             </span>
 
-           <span style="float: right; text-align: right">
+            <span style="float: right; text-align: right">
                 <a href="?lang=en">en</a>|<a href="?lang=tlg">tlg</a>           
                 <br/>   
                 Welcome : <b>${pageContext.request.userPrincipal.name} </b>| 
@@ -44,7 +41,7 @@
             </div>      
 
             <div id="add">
-                <button onClick="location.href='AddPerson'">
+                <button onClick="location.href = 'AddPerson'">
                     <spring:message code="label.addperson"/> 
                 </button> <br/>                
 
@@ -61,7 +58,7 @@
                     </form>
                 </div>
             </div>
-                    
+
             <div id="usermessage"></div>
 
             <c:if test="${empty person}">
@@ -84,24 +81,30 @@
                         <td>${user.date_hired}</td>
                         <td>${user.grade}</td>
                         <td>
-                        <c:forEach var="cont" items="${user.contact}" varStatus="loop">
-	                        ${cont.type} : ${cont.contact}
-            				    <c:if test="${not loop.last}"><br/></c:if>
-                          </c:forEach>
+                            <c:forEach var="cont" items="${user.contact}" varStatus="loop">
+                                ${cont.type} : ${cont.contact}
+                                <c:if test="${not loop.last}"><br/></c:if>
+                            </c:forEach>
                         </td>
                         <td>
-                            <button id="${user.id}" onclick="location.href='update/${user.id}'">Update</button>
+                            <button id="${user.id}" onclick="location.href = 'update/${user.id}'">Update</button>
                             <sec:authorize access="hasRole('ROLE_ADMIN')">
-                            <button class="delete" value = "${user.id}">Delete</button>
+                                <button class="delete" value = "${user.id}">Delete</button>
                             </sec:authorize>
                         </td>
                     </tr>
-			    </c:forEach>     
+                </c:forEach>     
             </table>
             <br/><br/><br/>
         </div>
-        
-        <input type="hidden" value="${role}" id="r"/>
-        <script> var roles = $("#r").val(); </script> 
+
+        <c:if test="${not empty pageContext.request.userPrincipal}">
+            <c:if test="${pageContext.request.isUserInRole('ROLE_ADMIN')}">
+                <script>var roles = "ROLE_ADMIN";</script>
+            </c:if>
+            <c:if test="${pageContext.request.isUserInRole('ROLE_USER')}">
+                <script>var roles = "ROLE_USER";</script>
+            </c:if>
+        </c:if>
     </body>
 </html>
