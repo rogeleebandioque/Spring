@@ -63,7 +63,7 @@ public class PersonController {
     }
 
     @RequestMapping(value = "SearchPersons",
-            method = RequestMethod.POST,
+            method = RequestMethod.POST, 
             headers = "Accept=application/json")
     @ResponseBody
     public List<Person> getPersons(
@@ -194,7 +194,7 @@ public class PersonController {
         if (!files.getContentType().equals("text/plain")) {
             model.addAttribute("personForm", new Person());
             model.addAttribute("message", "Invalid file format!");
-     
+
             return "persons/addform";
         } else {
             Person person = new Person();
@@ -290,7 +290,7 @@ public class PersonController {
 
                 } catch (Exception e) {
                     System.out.println(e);
-                    
+
                 }
                 model.addAttribute("roles", r);
                 model.addAttribute("personForm", person);

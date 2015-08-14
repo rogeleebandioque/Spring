@@ -3,25 +3,21 @@ package activity.web;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.test.web.servlet.*;
 import java.util.*;
 import activity.core.model.Person;
+import activity.core.model.Roles;
 import activity.core.service.PersonServiceImpl;
-
-import static org.hamcrest.Matchers.*;
-import org.junit.rules.ExpectedException;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import static org.mockito.Mockito.*;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
+import static org.mockito.Mockito.*;
+import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
@@ -37,11 +33,12 @@ public class PersonControllerTest {
 
     @Mock
     Person person;
-
+    
     @InjectMocks
     private PersonController personController;
 
     private final String PERSON_JSON = "{\"test\" : \"test\"}";
+    private final String LIST_JSON = "{{\"test\" : \"test\"}}";
 
     @Before
     public void setUp() {
@@ -202,20 +199,32 @@ public class PersonControllerTest {
     public void searchPersonTest() throws Exception {
         System.out.println("Search person test..");
         String list = "grade";
-        String order ="asc";
+        String order = "asc";
         String search = "";
         when(personService.searchPerson(search, list, order)).thenReturn(Arrays.asList(p1));
-        mockMvc.perform(put("/UpdatePerson")
-                .param("listBy", "grade")
-                .param("order","asc")
-                .param("search","")
-                .content(PERSON_JSON)
-                .header("Accept","application/json"))
+        mockMvc.perform(post("/SearchPersons")
+                .param("listBy", list)
+                .param("order", order)
+                .param("search", search)
+                .content(LIST_JSON)
+                .header("Accept", "application/json"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void searchRoleTest() throws Exception {
+        System.out.println("Search role test..");
+        Roles role = mock(Roles.class);
+        Set<Person> pr = new HashSet();
+        pr.add(p1);
+        String list = "1";
+        int orders = Integer.parseInt(list);
+        when(personService.getByRole(orders)).thenReturn(role);
+        when(role.getPersonRole()).thenReturn(pr);
+        mockMvc.perform(post("/SearchRole")
+                .param("listBy", list)
+                .content(LIST_JSON)
+                .header("Accept", "application/json"))
                 .andExpect(status().isOk());
     }
 }
-
-//SAVE: 
-    //@Autowired
-//private WebApplicationContext webApplicationContext;
-    //mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();

@@ -24,9 +24,11 @@ public class Users {
     private String role;
 
     public Users(){}
-    public Users(String username, String password){
+    public Users(String username, String password, Boolean enabled, String role){
         this.username = username;
         this.password = password;
+        this.enabled = enabled;
+        this.role = role;
     }
 
     public int getId(){

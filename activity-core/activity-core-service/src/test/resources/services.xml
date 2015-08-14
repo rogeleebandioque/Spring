@@ -18,7 +18,9 @@ http://www.springframework.org/schema/aop/spring-aop.xsd">
 
     <bean id="projectService" class="activity.core.service.ProjectServiceImpl">
     </bean>
-
+    
+    <import resource="classpath:dao.xml"/>
+    
     <tx:annotation-driven transaction-manager="txManager" proxy-target-class="true"/>
     <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource"/>

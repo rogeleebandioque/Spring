@@ -16,7 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.*;
 
-import activity.core.service.ProjectService;
+import activity.core.service.ProjectServiceImpl;
 import activity.core.service.PersonServiceImpl;
 import activity.core.model.Projects;
 import activity.core.model.Person;
@@ -24,13 +24,13 @@ import activity.core.model.Person;
 @Controller
 public class ProjectsController {
 
-    private ProjectService projectService;
+    private ProjectServiceImpl projectService;
     private PersonServiceImpl personService;
 
     private final Logger logger = LoggerFactory.getLogger(ProjectsController.class);
 
     @Autowired
-    public void setProjectService(ProjectService projectService) {
+    public void setProjectService(ProjectServiceImpl projectService) {
         this.projectService = projectService;
     }
 
@@ -42,7 +42,8 @@ public class ProjectsController {
     @RequestMapping(value = "projects", method = RequestMethod.GET)
     public String displayProjects(ModelMap model) {
         logger.debug("Displaying projects...");
-        model.addAttribute("projects", projectService.getProjects());
+        List<Projects> project = projectService.getProjects();
+        model.addAttribute("projects", project);
         return "/projects/projects";
     }
 

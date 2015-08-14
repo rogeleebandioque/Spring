@@ -29,7 +29,7 @@
 
             <span style="float: left; text-align: right">
                 <a href="../Persons"> View Persons</a>
-                <a href="../users"> View Users</a>
+                <a href="../userslist"> View Users</a>
             </span>
 
             <br/><br/>

@@ -18,7 +18,7 @@
         <div id="container">    
             <span style="float: left; text-align: right">
                 <a href="../projects"> View Projects</a>
-                <a href="../users"> View Users</a>
+                <a href="../userslist"> View Users</a>
             </span>
 
             <span style="float: right; text-align: right">

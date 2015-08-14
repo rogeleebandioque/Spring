@@ -16,26 +16,27 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.*;
 
-import activity.core.service.UserService;
+import activity.core.service.UserServiceImpl;
 import activity.core.model.Users;
 
 @Controller
 public class UsersController {
 
-    private UserService userService;
+    private UserServiceImpl userService;
 
     private final Logger logger = LoggerFactory.getLogger(UsersController.class);
 
     @Autowired
-    public void setUserService(UserService userService) {
+    public void setUserService(UserServiceImpl userService) {
         this.userService = userService;
     }
 
-    @RequestMapping(value = "/users", method = RequestMethod.GET)
+    @RequestMapping(value = "/userslist", method = RequestMethod.GET)
     public String displayPerson(ModelMap model) {
         logger.debug("Displaying Users...");
-        model.addAttribute("user", userService.getUsers());
-        return "users/users";
+        List<Users> users = userService.getUsers();
+        model.addAttribute("user",users );
+        return "/users/user";
     }
 
     @RequestMapping(value = "updateuser/{id}",
