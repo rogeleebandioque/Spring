@@ -16,7 +16,7 @@ $(document).ready(function() {
         var contact = [];
         var detail = [];
         var roles = [];
-        var contacts = []
+        var contacts = [];
 
         $(".contactDetail").each(function() {
             contact.push($(this).val());
@@ -34,15 +34,15 @@ $(document).ready(function() {
         $("input:checkbox[name=r]:checked").each(function(){
             var id = $(this).val();    
             console.log(id);        
-            if(id == "Police") {
+            if(id === "Police") {
                 roles.push({"id": 1, "roleName": id});
-            } if(id == "Politician") {
+            } if(id === "Politician") {
                 roles.push({"id": 2, "roleName": id});
-            } if(id == "Celebrity") {
+            } if(id === "Celebrity") {
                 roles.push({"id": 3, "roleName": id});
-            } if(id == "Soldier") {
+            } if(id === "Soldier") {
                 roles.push({"id": 4, "roleName": id});
-            } if(id == "Worker") {
+            } if(id === "Worker") {
                 roles.push({"id": 5, "roleName": id});
             } 
         });
@@ -75,7 +75,7 @@ $(document).ready(function() {
             }        
         });
         ajaxCall.done(function(data) {
-            if (data == true) {
+            if (data === true) {
                alert("Person Updated");
                $("#message").html("Person Updated!");
             } else {

@@ -7,21 +7,22 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
-@Transactional(rollbackFor=Exception.class)
-public class ProjectServiceImpl implements ProjectServiceInterface  {
+@Transactional(rollbackFor = Exception.class)
+public class ProjectServiceImpl implements ProjectServiceInterface {
+
     private ProjectDaoImpl projectDaoImpl;
-    
+
     @Autowired
-    public void setProjectDaoImpl(ProjectDaoImpl projectDaoImpl){
+    public void setProjectDaoImpl(ProjectDaoImpl projectDaoImpl) {
         this.projectDaoImpl = projectDaoImpl;
     }
 
-    @Transactional(readOnly=true)
+    @Transactional(readOnly = true)
     public List<Projects> getProjects() {
         return projectDaoImpl.getProjects();
     }
-    
-    @Transactional(readOnly=true)
+
+    @Transactional(readOnly = true)
     public Projects getProject(Integer projectId) {
         return projectDaoImpl.getProject(projectId);
     }

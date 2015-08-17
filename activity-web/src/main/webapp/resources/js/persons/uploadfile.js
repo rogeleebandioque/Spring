@@ -13,7 +13,7 @@ $(document).ready(function() {
             }        
         });
         ajaxCall.done(function(data) {
-            if (data == true) {
+            if (data === true) {
                $("#message").html("Person Updated!");
             } else {
                $("#message").html("Unable to update Person");

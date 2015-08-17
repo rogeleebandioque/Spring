@@ -5,8 +5,6 @@ import activity.core.model.Person;
 import org.hibernate.Session;
 import java.util.*;
 import org.hibernate.*;
-import org.hibernate.criterion.*;
-import org.hibernate.transform.Transformers;
 
 public class ListPerson implements Command {
 

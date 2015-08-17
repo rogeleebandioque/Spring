@@ -2,9 +2,7 @@ package activity.core.dao.actions.persons;
 
 import activity.core.dao.Command;
 import activity.core.model.Person;
-import org.hibernate.Hibernate;
 import org.hibernate.Session;
-
 
 public class GetPerson implements Command {
 

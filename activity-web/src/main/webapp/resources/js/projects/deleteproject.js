@@ -16,7 +16,7 @@ $(document).ready(function () {
             }
         });
         ajaxCall.done(function (data) {
-            if (data == true) {
+            if (data === true) {
                 var tr = $(e.target).closest("tr");
                 tr.remove();
             } else {

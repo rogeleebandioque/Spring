@@ -1,78 +1,89 @@
-$(document).ready(function() {
-    var update = function(e){
+$(document).ready(function () {
+    var update = function (e) {
         var id = e;
         var header = $("meta[name='_csrf_header']").attr("content");
         var token = $("meta[name='_csrf']").attr("content");
-         var ajaxCall = $.ajax({
-            url: "/updateuser/"+id,
+        var ajaxCall = $.ajax({
+            url: "/updateuser/" + id,
             type: "GET",
             dataType: "json",
-            beforeSend: function(xhr) {
+            beforeSend: function (xhr) {
                 xhr.setRequestHeader(header, token);
-            }        
+            }
         });
-        ajaxCall.done(function(data) {
-            $("#container").append("<div id=\"change\"> <br/><br/><h1>Edit User</h1><br/><br/>" + 
-                "<form id=\"editform\" modelAttribute=\"userform\">"+
-                "<table border=\"1\" align=\"center\"> <input type=\"hidden\" id=\"editid\"value=\""+ data.id +"\"/>"+
-                "<tr><td>Username: </td><td><input type=\"text\" id=\"editusername\" value=\""+data.username+"\"/></td></tr>" +
-                "<tr><td>New Password: </td><td><input type=\"password\" id=\"editpassword\"/></td></tr>" +
-                "<tr><td>Role</td><td>"+
-                "<select id=\"editrole\"><option value=\"ROLE_ADMIN\">Admin</option><option value=\"ROLE_USER\">User</option></select>"+
-                "</td></tr>" +
-                "<tr><td colspan=\"2\"><center><input type=\"submit\"value=\"Submit\"/>" +
-                "<input type=\"button\" id=\"cancel\" value=\"Cancel\"/></center></td></tr></table></form>");
+        ajaxCall.done(function (data) {
+            $("#container").append("<div id=\"change\"> <br/><br/>"+
+                    "<h1>Edit User</h1><br/><br/>" +
+                    "<form id=\"editform\" modelAttribute=\"userform\">" +
+                    "<table border=\"1\" align=\"center\">"+
+                    "<input type=\"hidden\" id=\"editid\"value=\"" + data.id + "\"/>" +
+                    "<tr><td>Username: </td>"+
+                    "<td><input type=\"text\" id=\"editusername\" value=\"" + 
+                    data.username + "\"/></td></tr>" +
+                    "<tr><td>New Password: </td>"+
+                    "<td><input type=\"password\" id=\"editpassword\"/></td></tr>" +
+                    "<tr><td>Role</td><td>" +
+                    "<select id=\"editrole\">"+
+                    "<option value=\"ROLE_ADMIN\">Admin</option>"+
+                    "<option value=\"ROLE_USER\">User</option>"+
+                    "</select></td></tr>" +
+                    "<tr><td colspan=\"2\"><center>"+
+                    "<input type=\"submit\"value=\"Submit\"/>" +
+                    "<input type=\"button\" id=\"cancel\" value=\"Cancel\"/>"+
+                    "</center></td></tr></table></form>");
         });
     };
-    $("#container").on("submit","#editform",function(e){
+    $("#container").on("submit", "#editform", function (e) {
         var header = $("meta[name='_csrf_header']").attr("content");
         var token = $("meta[name='_csrf']").attr("content");
-        var id=$("#editid").val();
+        var id = $("#editid").val();
         var username = $("#editusername").val();
         var password = $("#editpassword").val();
         var role = $("#editrole").val();
-        
+
         var ajaxCall = $.ajax({
             url: "UpdateUser",
             type: "POST",
-            dataType:"json",
+            dataType: "json",
             data: {
-                    "username":username,
-                    "password":password,
-                    "role":role,
-                    "id":id
-                  },
-            beforeSend: function(xhr) {
+                "username": username,
+                "password": password,
+                "role": role,
+                "id": id
+            },
+            beforeSend: function (xhr) {
                 xhr.setRequestHeader(header, token);
             }
         });
 
-        ajaxCall.done(function(user) {
+        ajaxCall.done(function (user) {
             alert("User Updated!");
             $("#userTable").find("tr:gt(1)").remove();
-            $.each(user, function(index, element) {
-                $("#userTable").append("<tr>" + 
-                    "<td>"+element.id+"</td>" +
-                    "<td>"+element.username+"</td>" +
-                    "<td>"+element.role+"</td>" +
-                    "<td><sec:authorize access=\"hasRole(\'ROLE_ADMIN\')\">"+
-                    ((role == "ROLE_ADMIN") ? "<button class=\"update\" value= \""+element.id+"\">Update</button>"+
-                    "<button class=\"deleteuser\" value =\""+element.id+"\">Delete</button>": "NONE")+
-                    "</td></tr>");
+            $.each(user, function (index, element) {
+                $("#userTable").append("<tr>" +
+                        "<td>" + element.id + "</td>" +
+                        "<td>" + element.username + "</td>" +
+                        "<td>" + element.role + "</td>" +
+                        "<td><sec:authorize access=\"hasRole(\'ROLE_ADMIN\')\">" +
+                        ((role == "ROLE_ADMIN") ? "<button class=\"update\" value= \"" + 
+                        element.id + "\">Update</button>" +
+                        "<button class=\"deleteuser\" value =\"" + 
+                        element.id + "\">Delete</button>" : "NONE") +
+                        "</td></tr>");
             });
             $("#change").remove();
         });
-        ajaxCall.fail(function() {
+        ajaxCall.fail(function () {
             alert("Unable to edit.");
         });
         e.preventDefault();
     });
-    $("#container").on("click","#cancel",function(e){
+    $("#container").on("click", "#cancel", function (e) {
         $("#change").remove();
         e.preventDefault();
     });
-    $("#userTable").on("click",".update", function(e){
+    $("#userTable").on("click", ".update", function (e) {
         update($(this).val());
-        e.preventDefault(); 
+        e.preventDefault();
     });
 });

@@ -35,9 +35,9 @@ $(document).ready(function() {
                     "<td>"+element.username+"</td>" +
                     "<td>"+element.role+"</td>" +
                     "<td>"+
-                    ((role == "ROLE_ADMIN") ? "<button class=\"update\" value= \""+element.id+"\">Update</button>"+
-                    "<button class=\"deleteuser\" value =\""+element.id+"\">Delete</button>": "NONE")+
-                                "</td></tr>");
+                    ((role === "ROLE_ADMIN") ? "<button class=\"update\" value= \""+
+                    element.id+"\">Update</button><button class=\"deleteuser\" "+
+                    "value =\""+element.id+"\">Delete</button>": "NONE")+"</td></tr>");
             });
         });
         ajaxCall.fail(function() {
@@ -64,7 +64,7 @@ $(document).ready(function() {
             }
         });
         ajaxCall.done(function(data) {
-            if (data == true) {
+            if (data === true) {
                 var tr = $(x).closest("tr");
                 tr.remove();
             } else {

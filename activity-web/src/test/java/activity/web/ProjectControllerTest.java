@@ -154,7 +154,7 @@ public class ProjectControllerTest {
 
     @Test
     public void updateProjectTest() throws Exception {
-      System.out.println("Update Project Test");
+        System.out.println("Update Project Test");
         Set<Person> id = new HashSet<>();
         Set<Person> members = new HashSet<>();
         when(projects.getPer_proj()).thenReturn(id);

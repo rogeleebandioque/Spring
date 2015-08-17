@@ -78,7 +78,7 @@ $(document).ready(function () {
         var header = $("meta[name='_csrf_header']").attr("content");
         var token = $("meta[name='_csrf']").attr("content");
 
-        var list = $('#listBy').val();
+        var list = $('select[name=listBy]').val();
         var aCall = $.ajax({
             url: "SearchRole",
             type: "POST",

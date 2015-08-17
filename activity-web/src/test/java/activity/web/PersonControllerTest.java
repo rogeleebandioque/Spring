@@ -33,7 +33,7 @@ public class PersonControllerTest {
 
     @Mock
     Person person;
-    
+
     @InjectMocks
     private PersonController personController;
 
@@ -91,7 +91,8 @@ public class PersonControllerTest {
     @Test
     public void uploadInvalidFile() throws Exception {
         System.out.println("Invalid File Format");
-        MockMultipartFile firstFile = new MockMultipartFile("data", "filename.txt", "xml", "some xml".getBytes());
+        MockMultipartFile firstFile = new MockMultipartFile("data", "filename.txt",
+                "xml", "some xml".getBytes());
 
         mockMvc.perform(fileUpload("/uploadForm")
                 .file(firstFile)
@@ -104,7 +105,8 @@ public class PersonControllerTest {
     @Test
     public void uploadValidFileIsEmpty() throws Exception {
         System.out.println("Valid File Format, Empty Content");
-        MockMultipartFile firstFile = new MockMultipartFile("data", "filename.txt", "text/plain", "".getBytes());
+        MockMultipartFile firstFile = new MockMultipartFile("data", "filename.txt",
+                "text/plain", "".getBytes());
 
         mockMvc.perform(fileUpload("/uploadForm")
                 .file(firstFile)
@@ -117,7 +119,8 @@ public class PersonControllerTest {
     @Test
     public void uploadValidFileIsNotEMpty() throws Exception {
         System.out.println("Valid File Format, With Content");
-        MockMultipartFile firstFile = new MockMultipartFile("data", "filename.txt", "text/plain", "first_name:TEST".getBytes());
+        MockMultipartFile firstFile = new MockMultipartFile("data", "filename.txt",
+                "text/plain", "first_name:TEST".getBytes());
 
         mockMvc.perform(fileUpload("/uploadForm")
                 .file(firstFile)
