@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -25,12 +25,20 @@ import activity.core.model.Contacts;
 import activity.core.service.PersonServiceImpl;
 import activity.core.model.Name;
 import activity.core.model.Roles;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class PersonController {
 
+    private PersonFormValidator personFormValidator;
     private PersonServiceImpl personService;
     private final Logger logger = LoggerFactory.getLogger(PersonController.class);
+
+    @Autowired
+    public void setPersonFormValidator(PersonFormValidator personFormValidator) {
+        this.personFormValidator = personFormValidator;
+    }
 
     @Autowired
     public void setPersonService(PersonServiceImpl personService) {
@@ -98,10 +106,10 @@ public class PersonController {
 
         model.addAttribute("personForm", new Person());
         populateModel(model);
-        return "persons/addform";
+        return "persons/userform";
     }
 
-    @RequestMapping(value = "update/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/update{id}", method = RequestMethod.GET)
     public String updatePerson(@PathVariable int id, Model model) {
         logger.debug("updatePerson()");
 
@@ -115,37 +123,51 @@ public class PersonController {
         model.addAttribute("roles", roles);
 
         populateModel(model);
-        return "persons/updateform";
+        return "persons/userform";
     }
 
-    @RequestMapping(value = "/UpdatePerson",
-            method = RequestMethod.PUT,
-            produces = MediaType.APPLICATION_JSON_VALUE,
-            consumes = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
-    public boolean update(@RequestBody Person person) {
-        logger.debug("Updating person..");
-        try {
-            personService.updatePersons(person);
-            return true;
-        } catch (Exception e) {
-            return false;
+    @RequestMapping(value = "SaveUpdate", method = RequestMethod.POST)
+    public String saveOrUpdateUser(@ModelAttribute("personForm") Person person,
+            BindingResult result,
+            @RequestParam(value = "r", required = false) String[] roles,
+            @RequestParam(value = "contactDetail", required = false) String[] detail,
+            @RequestParam(value = "contactType", required = false) String[] type,
+            Model model,
+            final RedirectAttributes redirectAttributes) {
+        logger.debug("saveOrUpdateUser()");
+        Set<Roles> r = new HashSet();
+        Set<Contacts> c = new HashSet();
+        System.out.println(person.getBday());
+        if (roles != null) {
+            r = addRole(roles);
+            person.setRole(r);
+
         }
-    }
 
-    @RequestMapping(value = "/AddPerson",
-            method = RequestMethod.POST,
-            produces = MediaType.APPLICATION_JSON_VALUE,
-            consumes = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
-    public boolean add(@RequestBody Person person) {
-        logger.debug("Adding person..");
-        try {
+        if (detail != null) {
+            c = contactDetails(detail, type);
+            person.setContact(c);
+        }
+
+        personFormValidator.validate(person, result);
+        if (result.hasErrors()) {
+            model.addAttribute("roles", r);
+            model.addAttribute("personForm", person);
+            model.addAttribute("contact", c);
+            populateModel(model);
+            return "persons/userform";
+        }
+
+        if (person.isNew()) {
+            redirectAttributes.addFlashAttribute("msg", "User added successfully!");
             personService.addPersons(person);
-            return true;
-        } catch (Exception e) {
-            return false;
+        } else {
+            redirectAttributes.addFlashAttribute("msg", "User updated successfully!");
+            personService.updatePersons(person);
         }
+
+        return "redirect:Persons";
+
     }
 
     @RequestMapping(value = "/remove/{id}",
@@ -313,4 +335,38 @@ public class PersonController {
             }
         }
     }
+
+    public Set contactDetails(String[] cDetails, String[] cType) {
+        Set cD = new HashSet();
+        for (int i = 0; i < cDetails.length; i++) {
+            Contacts c = new Contacts(cDetails[i], cType[i].toLowerCase());
+            cD.add(c);
+        }
+        return cD;
+    }
+
+    public Set<Roles> addRole(String[] roles) {
+        Set r = new HashSet();
+        for (int i = 0; i < roles.length; i++) {
+            switch (roles[i].toLowerCase()) {
+                case "police":
+                    r.add(new Roles(1, "Police"));
+                    break;
+                case "politician":
+                    r.add(new Roles(2, "Politician"));
+                    break;
+                case "soldier":
+                    r.add(new Roles(3, "Soldier"));
+                    break;
+                case "celebrity":
+                    r.add(new Roles(4, "Celebrity"));
+                    break;
+                case "worker":
+                    r.add(new Roles(5, "Worker"));
+                    break;
+            }
+        }
+        return r;
+    }
+
 }

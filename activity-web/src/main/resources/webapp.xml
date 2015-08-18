@@ -9,6 +9,12 @@
 
     <bean id="projectsController" class="activity.web.ProjectsController">    
     </bean>
+    
+    <bean id="personFormValidator" class="activity.web.PersonFormValidator" >
+    </bean>    
+    
+    <bean id="projectFormValidator" class="activity.web.ProjectFormValidator" >
+    </bean>
 
     <bean id="usersController" class="activity.web.UsersController">    
     </bean>

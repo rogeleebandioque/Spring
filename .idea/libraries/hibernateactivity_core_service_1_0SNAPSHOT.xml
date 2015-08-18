@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="hibernateactivity-core-service-1.0SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/hibernateactivity-core/hibernateactivity-core-service/target/hibernateactivity-core-service-1.0SNAPSHOT.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

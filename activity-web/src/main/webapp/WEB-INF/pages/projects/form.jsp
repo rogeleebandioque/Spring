@@ -1,4 +1,5 @@
-<form:form id="projectForm" modelAttribute="projectForm">
+
+<form:form method="POST" action="SaveUpdateProject" id="projectForm" modelAttribute="projectForm">
     <table align="center">
         <form:hidden path="project_id" value="${projectForm.project_id}"/>
             <tr><td><spring:message code="label.prname"/></td>
@@ -29,7 +30,7 @@
             </c:forEach>
             </select>  
 
-            <select id="chosen" multiple="multiple" size="10">
+            <select id="chosen" multiple="multiple" size="10" name="members">
                 <c:forEach var="t" items="${team}" varStatus="loop">
                   <option class="remove" value="${t.id}">${t.names.first_name} ${t.names.last_name}</option>
                 </c:forEach>

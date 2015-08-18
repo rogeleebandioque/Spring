@@ -81,11 +81,15 @@
                             <td>{{persons.names.first_name}} {{persons.names.last_name}}</td>
                             <td ng-bind="persons.date_hired | date:'yyyy-MM-dd'">{{persons.date_hired}}</td>
                             <td>{{persons.grade}}</td>
-                            <td ng-repeat="contacts in persons.contact">
-                                {{contacts.type}} : {{contacts.contact}}
+                            <td>
+                                <ul>
+                                    <li ng-repeat="contacts in persons.contact">
+                                        {{contacts.type}} : {{contacts.contact}}
+                                    </li>
+                                </ul
                             </td>
                             <td>
-                                <button id="{{persons.id}}" onclick="location.href = 'update/{{persons.id}}'">Update</button>
+                                <button id="{{persons.id}}" onclick="location.href ='update{{persons.id}}'">Update</button>
                                 <sec:authorize access="hasRole('ROLE_ADMIN')">
                                     <button class="delete" value = "{{persons.id}}">Delete</button>
                                 </sec:authorize>

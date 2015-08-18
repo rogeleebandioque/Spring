@@ -59,7 +59,7 @@
                     <thead>
                         <tr>
                             <th colspan="6"><spring:message code="label.projectname"/> 
-                        </th>
+                            </th>
                         </tr>
                         <tr>
                             <th>ID</th>
@@ -70,22 +70,33 @@
                             <th><spring:message code="label.action"/></th>
                         </tr>
                     </thead>
-                    <tr ng-repeat="projects in projectsList">
-                        <td>{{projects.project_id}}</td>
-                        <td>{{projects.projects_name}}</td>
-                        <td ng-bind="projects.start_date | date:'yyyy - MM - dd'">{{projects.start_date}}</td>
-                        <td ng-bind="projects.end_date | date:'yyyy - MM - dd'">{{projects.end_date}}</td>
-                        <td ng-repeat="persons in projects.per_proj">
-                            {{persons.name.first_name}} {{persons.name.last_name}}
-                        </td>
-                        <td>
-                            <button id="{{projects.project_id}}" onclick="location.href = 'update/{{projects.project_id}}'">Update</button>
-                            <sec:authorize access="hasRole('ROLE_ADMIN')">
-                                <button class="delete" value = "{{projects.project_id}}">Delete</button>
-                            </sec:authorize>
-                        </td>
-
-                    </tr>
+                    <c:forEach var="project" items="${projects}">
+                        <tr>
+                            <td>
+                                ${project.project_id}
+                            </td>
+                            <td>${project.project_name} ${user.names.last_name}</td>
+                            <td>${project.start_date}</td>
+                            <td>${project.end_date}</td>
+                            <td>
+                                <c:forEach var="team" items="${project.per_proj}" varStatus="loop">
+                                    ${team.names.first_name} ${team.names.last_name} <br/>
+                                    <c:if test="${not loop.last}"><br/></c:if>
+                                </c:forEach>
+                            </td>
+                            <td>
+                                <button id="${project.project_id}"
+                                        onclick="location.href = '/upproject${project.project_id}'">
+                                    Update
+                                </button>
+                                <sec:authorize access="hasRole('ROLE_ADMIN')">
+                                    <button class="deleteproj" value = "${project.project_id}">
+                                        Delete
+                                    </button>
+                                </sec:authorize>
+                            </td>
+                        </tr>
+                    </c:forEach>     
 
                 </table>
             </div>

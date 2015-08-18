@@ -154,18 +154,6 @@ public class PersonControllerTest {
     }
 
     @Test
-    public void addPersonTest() throws Exception {
-        System.out.println("Add person test..");
-        Mockito.when(personService.addPersons(p1)).thenReturn("Added");
-        mockMvc.perform(MockMvcRequestBuilders.post("/AddPerson")
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .content(PERSON_JSON)
-                .accept(MediaType.APPLICATION_JSON_VALUE))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().string("true"));
-    }
-
-    @Test
     public void updatePersonFormTest() throws Exception {
         System.out.println("Update person form test..");
         int i = 1;
@@ -173,40 +161,12 @@ public class PersonControllerTest {
         Mockito.when(person.getRole()).thenReturn(p1.getRole());
         Mockito.when(person.getContact()).thenReturn(p1.getContact());
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/update/{id}", i))
+        mockMvc.perform(MockMvcRequestBuilders.get("/update{id}", i))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.model().attribute("personForm", p1))
                 .andExpect(MockMvcResultMatchers.model().attribute("roles", p1.getRole()))
                 .andExpect(MockMvcResultMatchers.model().attribute("contact", p1.getContact()))
                 .andExpect(MockMvcResultMatchers.view().name("persons/updateform"));
-    }
-
-    @Test
-    public void updatePersonTest() throws Exception {
-        System.out.println("Update person test..");
-        Mockito.when(personService.updatePersons(p1)).thenReturn("Updated");
-        mockMvc.perform(MockMvcRequestBuilders.put("/UpdatePerson")
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .content(PERSON_JSON)
-                .accept(MediaType.APPLICATION_JSON_VALUE))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().string("true"));
-    }
-
-    @Test
-    public void searchPersonTest() throws Exception {
-        System.out.println("Search person test..");
-        String list = "grade";
-        String order = "asc";
-        String search = "";
-        Mockito.when(personService.searchPerson(search, list, order)).thenReturn(Arrays.asList(p1));
-        mockMvc.perform(MockMvcRequestBuilders.post("/SearchPersons")
-                .param("listBy", list)
-                .param("order", order)
-                .param("search", search)
-                .content(LIST_JSON)
-                .header("Accept", "application/json"))
-                .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
     @Test

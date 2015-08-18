@@ -86,10 +86,5 @@ $(document).ready(function() {
             alert("Unable to Add.");
         });
     };
-
-    $("#container").on("submit","#personForm",function(e){
-        addperson();
-        e.preventDefault();
-    });
 }); 
 

@@ -4,7 +4,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.ui.Model;
@@ -17,14 +16,23 @@ import activity.core.service.ProjectServiceImpl;
 import activity.core.service.PersonServiceImpl;
 import activity.core.model.Projects;
 import activity.core.model.Person;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class ProjectsController {
 
+    private ProjectFormValidator projectFormValidator;
     private ProjectServiceImpl projectService;
     private PersonServiceImpl personService;
-
     private final Logger logger = LoggerFactory.getLogger(ProjectsController.class);
+
+    @Autowired
+    public void setProjectFormValidator(ProjectFormValidator projectFormValidator) {
+        this.projectFormValidator = projectFormValidator;
+    }
 
     @Autowired
     public void setProjectService(ProjectServiceImpl projectService) {
@@ -49,34 +57,10 @@ public class ProjectsController {
         logger.debug("Add Project Form...");
         populateModel(model);
         model.addAttribute("projectForm", new Projects());
-        return "/projects/addprojectform";
+        return "/projects/projectForm";
     }
 
-    @RequestMapping(value = "/AddProject",
-            method = RequestMethod.POST,
-            produces = MediaType.APPLICATION_JSON_VALUE,
-            consumes = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
-    public boolean addProject(@RequestBody Projects project) {
-
-        logger.debug("Adding project..");
-        try {
-            Set<Person> id = project.getPer_proj();
-            Set<Person> members = new HashSet<Person>();
-
-            for (Person i : id) {
-                members.add(personService.getPersons(i.getId()));
-                System.out.println(i.getId());
-            }
-            project.setPer_proj(members);
-            projectService.addProject(project);
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
-    }
-
-    @RequestMapping(value = "upproject/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "upproject{id}", method = RequestMethod.GET)
     public String updateProject(@PathVariable int id, Model model) {
         logger.debug("Update Project...");
 
@@ -86,30 +70,42 @@ public class ProjectsController {
         Set<Person> person = project.getPer_proj();
         model.addAttribute("team", person);
         populateModel(model);
-        return "/projects/updateprojectform";
+        return "/projects/projectForm";
     }
 
-    @RequestMapping(value = "/UpdateProject",
-            method = RequestMethod.PUT,
-            produces = MediaType.APPLICATION_JSON_VALUE,
-            consumes = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
-    public boolean update(@RequestBody Projects project) {
-        logger.debug("Updating project..");
-        try {
-            Set<Person> id = project.getPer_proj();
-            Set<Person> members = new HashSet<Person>();
+    @RequestMapping(value = "SaveUpdateProject", method = RequestMethod.POST)
+    public String saveOrUpdateProject(@ModelAttribute("projectForm") Projects project,
+            BindingResult result,
+            @RequestParam(value = "members", required = false) String[] members,
+            Model model,
+            final RedirectAttributes redirectAttributes) {
+        logger.debug("Save projects");
+        Set<Person> team = new HashSet<>();
 
-            for (Person i : id) {
-                members.add(personService.getPersons(i.getId()));
-                System.out.println(i.getId());
+        if (members != null) {
+            for (String i : members) {
+                team.add(personService.getPersons(Integer.parseInt(i)));
             }
-            project.setPer_proj(members);
-            projectService.updateProject(project);
-            return true;
-        } catch (Exception e) {
-            return false;
         }
+        project.setPer_proj(team);
+
+        projectFormValidator.validate(project, result);
+        if (result.hasErrors()) {
+            model.addAttribute("projectForm", project);
+            populateModel(model);
+            return "projects/projectForm";
+        }
+
+        if (project.getProject_id() == 0) {
+            redirectAttributes.addFlashAttribute("msg", "Project added successfully!");
+            projectService.addProject(project);
+        } else {
+            redirectAttributes.addFlashAttribute("msg", "Project updated successfully!");
+            projectService.updateProject(project);
+        }
+
+        return "redirect:projects";
+
     }
 
     @RequestMapping(value = "/removeproject/{id}",
