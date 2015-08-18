@@ -11,16 +11,15 @@ import java.util.*;
 import activity.core.model.Person;
 import activity.core.model.Roles;
 import activity.core.service.PersonServiceImpl;
+import org.hamcrest.Matchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
-import static org.mockito.Mockito.*;
-import static org.hamcrest.Matchers.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+import org.mockito.Mockito;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:Spring-servlet.xml", "classpath:webapp.xml"})
@@ -60,9 +59,9 @@ public class PersonControllerTest {
     @Test
     public void loginTest() throws Exception {
         System.out.println("Inside login test...");
-        mockMvc.perform(get("/Login"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("/tools/Login"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/Login"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.view().name("/tools/Login"))
                 .andReturn();
     }
 
@@ -70,22 +69,22 @@ public class PersonControllerTest {
     public void displayPersonsTest() throws Exception {
         System.out.println("Inside display person test...");
 
-        when(personService.getPerson()).thenReturn(Arrays.asList(p1));
+        Mockito.when(personService.getPerson()).thenReturn(Arrays.asList(p1));
 
-        mockMvc.perform(get("/Persons"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("persons/person"))
-                .andExpect(model().attribute("person", hasSize(1)));
-        verify(personService, times(1)).getPerson();
-        verifyNoMoreInteractions(personService);
+        mockMvc.perform(MockMvcRequestBuilders.get("/Persons"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.view().name("persons/person"))
+                .andExpect(MockMvcResultMatchers.model().attribute("person", Matchers.hasSize(1)));
+        Mockito.verify(personService, Mockito.times(1)).getPerson();
+        Mockito.verifyNoMoreInteractions(personService);
     }
 
     @Test
     public void addPersonFormTest() throws Exception {
         System.out.println("Inside display add person form test...");
-        mockMvc.perform(get("/AddPerson"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("persons/addform"));
+        mockMvc.perform(MockMvcRequestBuilders.get("/AddPerson"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.view().name("persons/addform"));
     }
 
     @Test
@@ -94,12 +93,12 @@ public class PersonControllerTest {
         MockMultipartFile firstFile = new MockMultipartFile("data", "filename.txt",
                 "xml", "some xml".getBytes());
 
-        mockMvc.perform(fileUpload("/uploadForm")
+        mockMvc.perform(MockMvcRequestBuilders.fileUpload("/uploadForm")
                 .file(firstFile)
                 .param("name", "TEST"))
-                .andExpect(status().is(200))
-                .andExpect(model().attribute("message", "Invalid file format!"))
-                .andExpect(view().name("persons/addform"));
+                .andExpect(MockMvcResultMatchers.status().is(200))
+                .andExpect(MockMvcResultMatchers.model().attribute("message", "Invalid file format!"))
+                .andExpect(MockMvcResultMatchers.view().name("persons/addform"));
     }
 
     @Test
@@ -108,12 +107,12 @@ public class PersonControllerTest {
         MockMultipartFile firstFile = new MockMultipartFile("data", "filename.txt",
                 "text/plain", "".getBytes());
 
-        mockMvc.perform(fileUpload("/uploadForm")
+        mockMvc.perform(MockMvcRequestBuilders.fileUpload("/uploadForm")
                 .file(firstFile)
                 .param("name", "TEST"))
-                .andExpect(model().attribute("message", "File Empty!"))
-                .andExpect(status().is(200))
-                .andExpect(view().name("persons/addform"));
+                .andExpect(MockMvcResultMatchers.model().attribute("message", "File Empty!"))
+                .andExpect(MockMvcResultMatchers.status().is(200))
+                .andExpect(MockMvcResultMatchers.view().name("persons/addform"));
     }
 
     @Test
@@ -122,37 +121,37 @@ public class PersonControllerTest {
         MockMultipartFile firstFile = new MockMultipartFile("data", "filename.txt",
                 "text/plain", "first_name:TEST".getBytes());
 
-        mockMvc.perform(fileUpload("/uploadForm")
+        mockMvc.perform(MockMvcRequestBuilders.fileUpload("/uploadForm")
                 .file(firstFile)
                 .param("name", "TEST"))
-                .andExpect(status().is(200))
-                .andExpect(view().name("persons/addform"));
+                .andExpect(MockMvcResultMatchers.status().is(200))
+                .andExpect(MockMvcResultMatchers.view().name("persons/addform"));
     }
 
     @Test
     public void deleteEmployeeTest() throws Exception {
         System.out.println("Delete person test..");
         int i = 1;
-        when(personService.deletePersons(i)).thenReturn("deleted");
+        Mockito.when(personService.deletePersons(i)).thenReturn("deleted");
 
-        mockMvc.perform(delete("/remove/{id}", i)
+        mockMvc.perform(MockMvcRequestBuilders.delete("/remove/{id}", i)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .accept(MediaType.APPLICATION_JSON_VALUE))
-                .andExpect(status().isOk())
-                .andExpect(content().string("true"));
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().string("true"));
     }
 
     @Test
     public void deleteEmployeeExceptionTest() {
         System.out.println("Delete person exception test..");
         int i = 1;
-        when(personService.deletePersons(i)).thenThrow(Exception.class);
+        Mockito.when(personService.deletePersons(i)).thenThrow(Exception.class);
         try {
-            mockMvc.perform(delete("/remove/{id}", i)
+            mockMvc.perform(MockMvcRequestBuilders.delete("/remove/{id}", i)
                     .contentType(MediaType.APPLICATION_JSON_VALUE)
                     .accept(MediaType.APPLICATION_JSON_VALUE))
-                    .andExpect(status().isOk())
-                    .andExpect(content().string("false"));
+                    .andExpect(MockMvcResultMatchers.status().isOk())
+                    .andExpect(MockMvcResultMatchers.content().string("false"));
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -161,41 +160,41 @@ public class PersonControllerTest {
     @Test
     public void addPersonTest() throws Exception {
         System.out.println("Add person test..");
-        when(personService.addPersons(p1)).thenReturn("Added");
-        mockMvc.perform(post("/AddPerson")
+        Mockito.when(personService.addPersons(p1)).thenReturn("Added");
+        mockMvc.perform(MockMvcRequestBuilders.post("/AddPerson")
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content(PERSON_JSON)
                 .accept(MediaType.APPLICATION_JSON_VALUE))
-                .andExpect(status().isOk())
-                .andExpect(content().string("true"));
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().string("true"));
     }
 
     @Test
     public void updatePersonFormTest() throws Exception {
         System.out.println("Update person form test..");
         int i = 1;
-        when(personService.getPersons(i)).thenReturn(p1);
-        when(person.getRole()).thenReturn(p1.getRole());
-        when(person.getContact()).thenReturn(p1.getContact());
+        Mockito.when(personService.getPersons(i)).thenReturn(p1);
+        Mockito.when(person.getRole()).thenReturn(p1.getRole());
+        Mockito.when(person.getContact()).thenReturn(p1.getContact());
 
-        mockMvc.perform(get("/update/{id}", i))
-                .andExpect(status().isOk())
-                .andExpect(model().attribute("personForm", p1))
-                .andExpect(model().attribute("roles", p1.getRole()))
-                .andExpect(model().attribute("contact", p1.getContact()))
-                .andExpect(view().name("persons/updateform"));
+        mockMvc.perform(MockMvcRequestBuilders.get("/update/{id}", i))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.model().attribute("personForm", p1))
+                .andExpect(MockMvcResultMatchers.model().attribute("roles", p1.getRole()))
+                .andExpect(MockMvcResultMatchers.model().attribute("contact", p1.getContact()))
+                .andExpect(MockMvcResultMatchers.view().name("persons/updateform"));
     }
 
     @Test
     public void updatePersonTest() throws Exception {
         System.out.println("Update person test..");
-        when(personService.updatePersons(p1)).thenReturn("Updated");
-        mockMvc.perform(put("/UpdatePerson")
+        Mockito.when(personService.updatePersons(p1)).thenReturn("Updated");
+        mockMvc.perform(MockMvcRequestBuilders.put("/UpdatePerson")
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content(PERSON_JSON)
                 .accept(MediaType.APPLICATION_JSON_VALUE))
-                .andExpect(status().isOk())
-                .andExpect(content().string("true"));
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().string("true"));
     }
 
     @Test
@@ -204,30 +203,30 @@ public class PersonControllerTest {
         String list = "grade";
         String order = "asc";
         String search = "";
-        when(personService.searchPerson(search, list, order)).thenReturn(Arrays.asList(p1));
-        mockMvc.perform(post("/SearchPersons")
+        Mockito.when(personService.searchPerson(search, list, order)).thenReturn(Arrays.asList(p1));
+        mockMvc.perform(MockMvcRequestBuilders.post("/SearchPersons")
                 .param("listBy", list)
                 .param("order", order)
                 .param("search", search)
                 .content(LIST_JSON)
                 .header("Accept", "application/json"))
-                .andExpect(status().isOk());
+                .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
     @Test
     public void searchRoleTest() throws Exception {
         System.out.println("Search role test..");
-        Roles role = mock(Roles.class);
+        Roles role = Mockito.mock(Roles.class);
         Set<Person> pr = new HashSet();
         pr.add(p1);
         String list = "1";
         int orders = Integer.parseInt(list);
-        when(personService.getByRole(orders)).thenReturn(role);
-        when(role.getPersonRole()).thenReturn(pr);
-        mockMvc.perform(post("/SearchRole")
+        Mockito.when(personService.getByRole(orders)).thenReturn(role);
+        Mockito.when(role.getPersonRole()).thenReturn(pr);
+        mockMvc.perform(MockMvcRequestBuilders.post("/SearchRole")
                 .param("listBy", list)
                 .content(LIST_JSON)
                 .header("Accept", "application/json"))
-                .andExpect(status().isOk());
+                .andExpect(MockMvcResultMatchers.status().isOk());
     }
 }

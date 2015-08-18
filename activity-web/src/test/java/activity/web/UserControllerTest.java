@@ -1,6 +1,5 @@
 package activity.web;
 
-import activity.core.model.Person;
 import activity.core.model.Users;
 import activity.core.service.UserServiceImpl;
 import org.junit.Before;
@@ -11,15 +10,14 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import java.util.*;
-import static org.hamcrest.Matchers.*;
+import org.hamcrest.Matchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import static org.mockito.Mockito.*;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.MediaType;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:Spring-servlet.xml", "classpath:webapp.xml"})
@@ -56,24 +54,24 @@ public class UserControllerTest {
     @Test
     public void displayUserTest() throws Exception {
         System.out.println("Display User Test");
-        when(userService.getUsers()).thenReturn(Arrays.asList(mockUser));
+        Mockito.when(userService.getUsers()).thenReturn(Arrays.asList(mockUser));
 
-        mockMvc.perform(get("/userslist"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("/users/user"))
-                .andExpect(model().attribute("user", hasSize(1)));
+        mockMvc.perform(MockMvcRequestBuilders.get("/userslist"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.view().name("/users/user"))
+                .andExpect(MockMvcResultMatchers.model().attribute("user", Matchers.hasSize(1)));
     }
 
     @Test
     public void updateUserFormtest() throws Exception {
         System.out.println("Update User Form Test");
 
-        when(userService.getUsers()).thenReturn(Arrays.asList(mockUser));
+        Mockito.when(userService.getUsers()).thenReturn(Arrays.asList(mockUser));
 
-        mockMvc.perform(get("/updateuser/{id}",1)
+        mockMvc.perform(MockMvcRequestBuilders.get("/updateuser/{id}",1)
                 .content(USER_JSON)
                 .header("Accept", "application/json"))
-                .andExpect(status().isOk());
+                .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
     @Test
@@ -84,17 +82,17 @@ public class UserControllerTest {
         String role = "TEST";
         String enabled = "true";
 
-        when(userService.getUsers()).thenReturn(Arrays.asList(mockUser));
-        when(userService.addUser(mockUser)).thenReturn("added");
+        Mockito.when(userService.getUsers()).thenReturn(Arrays.asList(mockUser));
+        Mockito.when(userService.addUser(mockUser)).thenReturn("added");
 
-        mockMvc.perform(post("/AddUser")
+        mockMvc.perform(MockMvcRequestBuilders.post("/AddUser")
                 .param("username", username)
                 .param("password", password)
                 .param("enabled", enabled)
                 .param("role", role)
                 .content(USER_JSON)
                 .header("Accept", "application/json"))
-                .andExpect(status().isOk());
+                .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
     @Test
@@ -104,28 +102,28 @@ public class UserControllerTest {
         String password = "TEST";
         String role = "TEST";
 
-        when(userService.getUsers()).thenReturn(Arrays.asList(mockUser));
-        when(userService.updateUser(mockUser)).thenReturn("added");
+        Mockito.when(userService.getUsers()).thenReturn(Arrays.asList(mockUser));
+        Mockito.when(userService.updateUser(mockUser)).thenReturn("added");
 
-        mockMvc.perform(post("/UpdateUser")
+        mockMvc.perform(MockMvcRequestBuilders.post("/UpdateUser")
                 .param("username", username)
                 .param("id", "1")
                 .param("password", password)
                 .param("role", role)
                 .content(USER_JSON)
                 .header("Accept", "application/json"))
-                .andExpect(status().isOk());
+                .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
     @Test
     public void deleteEmployeeTest() throws Exception {
         System.out.println("Delete User Test");
         int i = 1;
-        when(userService.deleteUser(i)).thenReturn("deleted");
+        Mockito.when(userService.deleteUser(i)).thenReturn("deleted");
 
-        mockMvc.perform(delete("/removeuser/{id}", i)
+        mockMvc.perform(MockMvcRequestBuilders.delete("/removeuser/{id}", i)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .accept(MediaType.APPLICATION_JSON_VALUE))
-                .andExpect(status().isOk());
+                .andExpect(MockMvcResultMatchers.status().isOk());
     }
 }

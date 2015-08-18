@@ -9,13 +9,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.*;
-
 import activity.core.service.UserServiceImpl;
 import activity.core.model.Users;
 
@@ -35,7 +32,7 @@ public class UsersController {
     public String displayPerson(ModelMap model) {
         logger.debug("Displaying Users...");
         List<Users> users = userService.getUsers();
-        model.addAttribute("user",users );
+        model.addAttribute("user", users);
         return "/users/user";
     }
 
@@ -55,7 +52,7 @@ public class UsersController {
     @ResponseBody
     public boolean deleteUser(@PathVariable int id) {
         try {
-            logger.debug("deleting user..");
+            logger.debug("Deleting user..");
             String mes = userService.deleteUser(id);
             return true;
         } catch (Exception e) {
@@ -71,12 +68,15 @@ public class UsersController {
             @RequestParam("password") String password,
             @RequestParam("role") String role) {
         logger.debug("Adding user..");
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
         Users user = new Users();
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        
         user.setUsername(username);
         user.setPassword(passwordEncoder.encode(password));
         user.setEnabled(true);
         user.setRole(role);
+        
         userService.addUser(user);
         return userService.getUsers();
     }
@@ -90,13 +90,16 @@ public class UsersController {
             @RequestParam("password") String password,
             @RequestParam("role") String role) {
         logger.debug("Adding user..");
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        
         Users user = new Users();
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        
         user.setId(Integer.parseInt(id));
         user.setUsername(username);
         user.setPassword(passwordEncoder.encode(password));
         user.setEnabled(true);
         user.setRole(role);
+        
         userService.updateUser(user);
         return userService.getUsers();
     }

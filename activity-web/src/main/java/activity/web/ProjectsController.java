@@ -9,13 +9,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.ui.Model;
 import org.springframework.http.MediaType;
-
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.*;
-
 import activity.core.service.ProjectServiceImpl;
 import activity.core.service.PersonServiceImpl;
 import activity.core.model.Projects;
@@ -82,9 +79,11 @@ public class ProjectsController {
     @RequestMapping(value = "upproject/{id}", method = RequestMethod.GET)
     public String updateProject(@PathVariable int id, Model model) {
         logger.debug("Update Project...");
+
         Projects project = projectService.getProject(id);
-        Set<Person> person = project.getPer_proj();
         model.addAttribute("projectForm", project);
+
+        Set<Person> person = project.getPer_proj();
         model.addAttribute("team", person);
         populateModel(model);
         return "/projects/updateprojectform";

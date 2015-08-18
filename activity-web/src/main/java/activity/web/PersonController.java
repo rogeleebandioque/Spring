@@ -63,7 +63,7 @@ public class PersonController {
     }
 
     @RequestMapping(value = "SearchPersons",
-            method = RequestMethod.POST, 
+            method = RequestMethod.POST,
             headers = "Accept=application/json")
     @ResponseBody
     public List<Person> getPersons(
@@ -98,12 +98,16 @@ public class PersonController {
     @RequestMapping(value = "update/{id}", method = RequestMethod.GET)
     public String updatePerson(@PathVariable int id, Model model) {
         logger.debug("updatePerson()");
+
         Person person = personService.getPersons(id);
-        Set<Roles> roles = person.getRole();
-        Set<Contacts> contact = person.getContact();
         model.addAttribute("personForm", person);
-        model.addAttribute("roles", roles);
+        
+        Set<Contacts> contact = person.getContact();
         model.addAttribute("contact", contact);
+        
+        Set<Roles> roles = person.getRole();
+        model.addAttribute("roles", roles);
+        
         populateModel(model);
         return "persons/updateform";
     }
