@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -8,6 +9,8 @@
         <sec:csrfMetaTags/>
         <spring:url value="/resources/css/servlets.css" var="ServletsCss" />
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
+
         <spring:url value="/resources/js/persons/deleteperson.js" var="DeleteJs" />
         <link rel="stylesheet" type="text/css" href="${ServletsCss}"/>
         <script src="${DeleteJs}"></script>   
@@ -15,7 +18,7 @@
     </head>
 
     <body>
-        <div id="container">    
+        <div id="container" ng-app="myApp">    
             <span style="float: left; text-align: right">
                 <a href="../projects"> View Projects</a>
                 <a href="../userslist"> View Users</a>
@@ -61,41 +64,37 @@
 
             <div id="usermessage"></div>
 
-            <c:if test="${empty person}">
-                <h2>No Persons Found!</h2>
-            </c:if>
-            <table border="1"align="center"id="persons">
-                <thead><tr><th colspan="6"><spring:message code="label.tablename"/> </th></tr>
-                    <tr><th>ID</th>
-                        <th><spring:message code="label.name"/></th>
-                        <th><spring:message code="label.datehired"/></th>
-                        <th><spring:message code="label.grade"/></th>
-                        <th><spring:message code="label.contact"/></th>
-                        <th><spring:message code="label.action"/></th></tr>
-                    </tr>
-                </thead>
-                <c:forEach var="user" items="${person}">
-                    <tr>
-                        <td>${user.id}</td>
-                        <td>${user.names.first_name} ${user.names.last_name}</td>
-                        <td>${user.date_hired}</td>
-                        <td>${user.grade}</td>
-                        <td>
-                            <c:forEach var="cont" items="${user.contact}" varStatus="loop">
-                                ${cont.type} : ${cont.contact}
-                                <c:if test="${not loop.last}"><br/></c:if>
-                            </c:forEach>
-                        </td>
-                        <td>
-                            <button id="${user.id}" onclick="location.href = 'update/${user.id}'">Update</button>
-                            <sec:authorize access="hasRole('ROLE_ADMIN')">
-                                <button class="delete" value = "${user.id}">Delete</button>
-                            </sec:authorize>
-                        </td>
-                    </tr>
-                </c:forEach>     
-            </table>
-            <br/><br/><br/>
+            <div >
+                <div ng-controller="personController">
+                    <table border="1"align="center"id="persons">
+                        <thead><tr><th colspan="6"><spring:message code="label.tablename"/> </th></tr>
+                            <tr><th>ID</th>
+                                <th><spring:message code="label.name"/></th>
+                                <th><spring:message code="label.datehired"/></th>
+                                <th><spring:message code="label.grade"/></th>
+                                <th><spring:message code="label.contact"/></th>
+                                <th><spring:message code="label.action"/></th></tr>
+                            </tr>
+                        </thead>
+                        <tr ng-repeat="persons in personsList">
+                            <td>{{persons.id}}</td>
+                            <td>{{persons.names.first_name}} {{persons.names.last_name}}</td>
+                            <td ng-bind="persons.date_hired | date:'yyyy-MM-dd'">{{persons.date_hired}}</td>
+                            <td>{{persons.grade}}</td>
+                            <td ng-repeat="contacts in persons.contact">
+                                {{contacts.type}} : {{contacts.contact}}
+                            </td>
+                            <td>
+                                <button id="{{persons.id}}" onclick="location.href = 'update/{{persons.id}}'">Update</button>
+                                <sec:authorize access="hasRole('ROLE_ADMIN')">
+                                    <button class="delete" value = "{{persons.id}}">Delete</button>
+                                </sec:authorize>
+                            </td>
+
+                        </tr>
+                    </table>
+                </div>
+            </div>
         </div>
 
         <c:if test="${not empty pageContext.request.userPrincipal}">

@@ -56,10 +56,16 @@ public class PersonController {
     @RequestMapping(value = "/Persons", method = RequestMethod.GET)
     public String displayPerson(ModelMap model) {
         logger.debug("displayPerson()");
-        List<Person> persons = personService.getPerson();
-        model.addAttribute("person", persons);
-
         return "persons/person";
+    }
+
+    @RequestMapping(value = "/Persons",
+            method = RequestMethod.GET,
+            headers = "Accept=application/json")
+    @ResponseBody
+    public List<Person> populatePersons() {
+        logger.debug("Getting all persons..");
+        return personService.getPerson();
     }
 
     @RequestMapping(value = "SearchPersons",
@@ -101,13 +107,13 @@ public class PersonController {
 
         Person person = personService.getPersons(id);
         model.addAttribute("personForm", person);
-        
+
         Set<Contacts> contact = person.getContact();
         model.addAttribute("contact", contact);
-        
+
         Set<Roles> roles = person.getRole();
         model.addAttribute("roles", roles);
-        
+
         populateModel(model);
         return "persons/updateform";
     }

@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -10,6 +11,7 @@
     <head>
         <sec:csrfMetaTags/> 
         <spring:url value="/resources/css/servlets.css" var="ServletsCss" />
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
         <spring:url value="/resources/js/projects/deleteproject.js" var="deleteproject" />
         <script src="${deleteproject}"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -18,7 +20,7 @@
     </head>
 
     <body>
-        <div id="container">
+        <div id="container" ng-app="myApp">
             <span style="float: right; text-align: right">
                 <a href="?lang=en">en</a>|<a href="?lang=tlg">tlg</a>           
                 <br/>   
@@ -52,49 +54,41 @@
                     <h2>No Projects Found!</h2>
                 </c:if>
             </div>
-            <table border="1"align="center">
-                <thead>
-                    <tr>
-                        <th colspan="6"><spring:message code="label.projectname"/> 
+            <div ng-controller="projController">
+                <table border="1"align="center">
+                    <thead>
+                        <tr>
+                            <th colspan="6"><spring:message code="label.projectname"/> 
                         </th>
-                    </tr>
-                    <tr>
-                        <th>ID</th>
-                        <th><spring:message code="label.prname"/></th>
-                        <th><spring:message code="label.start"/></th>
-                        <th><spring:message code="label.end"/></th>
-                        <th><spring:message code="label.team"/></th>
-                        <th><spring:message code="label.action"/></th>
-                    </tr>
-                </thead>
-                <c:forEach var="project" items="${projects}">
-                    <tr>
-                        <td>
-                            ${project.project_id}
-                        </td>
-                        <td>${project.project_name} ${user.names.last_name}</td>
-                        <td>${project.start_date}</td>
-                        <td>${project.end_date}</td>
-                        <td>
-                            <c:forEach var="team" items="${project.per_proj}" varStatus="loop">
-                                ${team.names.first_name} ${team.names.last_name} <br/>
-                                <c:if test="${not loop.last}"><br/></c:if>
-                            </c:forEach>
+                        </tr>
+                        <tr>
+                            <th>ID</th>
+                            <th><spring:message code="label.prname"/></th>
+                            <th><spring:message code="label.start"/></th>
+                            <th><spring:message code="label.end"/></th>
+                            <th><spring:message code="label.team"/></th>
+                            <th><spring:message code="label.action"/></th>
+                        </tr>
+                    </thead>
+                    <tr ng-repeat="projects in projectsList">
+                        <td>{{projects.project_id}}</td>
+                        <td>{{projects.projects_name}}</td>
+                        <td ng-bind="projects.start_date | date:'yyyy - MM - dd'">{{projects.start_date}}</td>
+                        <td ng-bind="projects.end_date | date:'yyyy - MM - dd'">{{projects.end_date}}</td>
+                        <td ng-repeat="persons in projects.per_proj">
+                            {{persons.name.first_name}} {{persons.name.last_name}}
                         </td>
                         <td>
-                            <button id="${project.project_id}"
-                                    onclick="location.href = '/upproject/${project.project_id}'">
-                                Update
-                            </button>
+                            <button id="{{projects.project_id}}" onclick="location.href = 'update/{{projects.project_id}}'">Update</button>
                             <sec:authorize access="hasRole('ROLE_ADMIN')">
-                                <button class="deleteproj" value = "${project.project_id}">
-                                    Delete
-                                </button>
+                                <button class="delete" value = "{{projects.project_id}}">Delete</button>
                             </sec:authorize>
                         </td>
+
                     </tr>
-                </c:forEach>     
-            </table><br/><br/><br/>
+
+                </table>
+            </div>
         </div>
     </body>
 </html>

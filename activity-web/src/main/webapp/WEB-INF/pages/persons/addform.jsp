@@ -10,13 +10,11 @@
     <head>
         <sec:csrfMetaTags/> 
         <spring:url value="/resources/css/servlets.css" var="ServletsCss" />
-        <spring:url value="/resources/js/Servlets.js" var="ServletsJs" />
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         <spring:url value="/resources/js/persons/jq.js" var="JqJs" />
         <spring:url value="/resources/js/persons/addperson.js" var="AddJs" />
 
         <link rel="stylesheet" type="text/css" href="${ServletsCss}"/>
-        <script src="${ServletsJs}"></script>
         <script src="${JqJs}"></script>
         <script src="${AddJs}"></script>
 

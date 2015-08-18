@@ -13,7 +13,7 @@ $(document).ready(function () {
                 '<option id="listBy" value="grade"> Grade </option> </select> ' +
                 '<select name="order" id="order"><option value="asc"> Ascending </option> ' +
                 '<option value="desc"> Descending </option></select> <br/>' +
-                '<input type="submit" value="Search">');
+                '<button ng-click="searchPersons()">Search</button>');
     });
 
     $("#prole").click(function () {
@@ -146,7 +146,7 @@ $(document).ready(function () {
     $("#s").on("submit", "#displist", function (event) {
         searchperson();
         event.preventDefault();
-    });
+    }); 
     $("#s").on("submit", "#disp", function (event) {
         searchrole();
         event.preventDefault();
@@ -157,4 +157,24 @@ $(document).ready(function () {
         event.preventDefault();
     });
 
+
 });
+
+var app = angular.module('myApp', []);
+function personController($scope, $http) {
+    $http({method: 'GET', url: '/Persons'}).
+            success(function (data) {
+                $scope.personsList = data;
+            });
+}
+;
+
+function searchPersonController($scope, $http) {
+    $scope.searchPersons = function () {
+        $http({method: 'POST', url: 'SearchPersons'}).
+                success(function (data) {
+                    $scope.personsList = data;
+                });
+    }
+
+}

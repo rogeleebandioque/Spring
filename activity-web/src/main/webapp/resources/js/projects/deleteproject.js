@@ -29,3 +29,12 @@ $(document).ready(function () {
     });
 
 });
+
+var app = angular.module('myApp', []);
+function projController($scope, $http) {
+    $http({method: 'GET', url: '/listprojects'}).
+            success(function (data) {
+                $scope.personsList = data;
+            });
+}
+;
