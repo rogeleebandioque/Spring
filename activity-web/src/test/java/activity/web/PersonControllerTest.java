@@ -92,7 +92,7 @@ public class PersonControllerTest {
                 .param("name", "TEST"))
                 .andExpect(MockMvcResultMatchers.status().is(200))
                 .andExpect(MockMvcResultMatchers.model().attribute("message", "Invalid file format!"))
-                .andExpect(MockMvcResultMatchers.view().name("persons/addform"));
+                .andExpect(MockMvcResultMatchers.view().name("persons/userform"));
     }
 
     @Test
@@ -106,7 +106,7 @@ public class PersonControllerTest {
                 .param("name", "TEST"))
                 .andExpect(MockMvcResultMatchers.model().attribute("message", "File Empty!"))
                 .andExpect(MockMvcResultMatchers.status().is(200))
-                .andExpect(MockMvcResultMatchers.view().name("persons/addform"));
+                .andExpect(MockMvcResultMatchers.view().name("persons/userform"));
     }
 
     @Test
@@ -119,7 +119,7 @@ public class PersonControllerTest {
                 .file(firstFile)
                 .param("name", "TEST"))
                 .andExpect(MockMvcResultMatchers.status().is(200))
-                .andExpect(MockMvcResultMatchers.view().name("persons/addform"));
+                .andExpect(MockMvcResultMatchers.view().name("persons/userform"));
     }
 
     @Test
