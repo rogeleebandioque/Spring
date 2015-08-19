@@ -11,7 +11,6 @@ import java.util.*;
 import activity.core.model.Person;
 import activity.core.model.Roles;
 import activity.core.service.PersonServiceImpl;
-import org.hamcrest.Matchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;

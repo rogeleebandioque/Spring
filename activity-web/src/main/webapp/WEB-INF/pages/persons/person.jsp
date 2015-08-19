@@ -6,48 +6,27 @@
 
 <html>
     <head>
-        <sec:csrfMetaTags/>
-        <spring:url value="/resources/css/servlets.css" var="ServletsCss" />
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
-
+        <%@ include file="import.jsp" %>  
         <spring:url value="/resources/js/persons/deleteperson.js" var="DeleteJs" />
-        <link rel="stylesheet" type="text/css" href="${ServletsCss}"/>
         <script src="${DeleteJs}"></script>   
         <title>Spring Activity</title>
     </head>
 
     <body>
-        <div id="container" ng-app="myApp">    
-            <span style="float: left; text-align: right">
-                <a href="../projects"> View Projects</a>
-                <a href="../userslist"> View Users</a>
-            </span>
-
-            <span style="float: right; text-align: right">
+        <div class="row" id="container" ng-app="myApp">   
+            <div id="local" class="col-sm-3">
                 <a href="?lang=en">en</a>|<a href="?lang=tlg">tlg</a>           
                 <br/>   
                 Welcome : <b>${pageContext.request.userPrincipal.name} </b>| 
-                <button id="logout" value="logout">Logout</button>
-                <br/>
-            </span> 
-
-
-            <br/><br/>
-            <h1>Spring Activity</h1>
-
-            <div id="search">
-                <c:url value="../logout" var="logoutUrl" />
-                <form action="${logoutUrl}" method="post" id="logoutForm">
-                    <input type="hidden" name="${_csrf.parameterName}"value="${_csrf.token}" />
-                </form>
-            </div>      
-
-            <div id="add">
-                <button onClick="location.href = 'AddPerson'">
+                <button id="logout" value="logout" class="btn btn-warning">Logout</button>
+                <br/><br/>
+                <a href="../Persons"> View Persons</a> |
+                <a href="../projects"> View Projects</a> |
+                <a href="../userslist"> View Users</a>
+                <br><br>
+                <button class="btn btn-success" onClick="location.href = 'AddPerson'">
                     <spring:message code="label.addperson"/> 
-                </button> <br/>                
-
+                </button><br/><br> 
                 <spring:message code="label.search"/>:
                 <select>
                     <option id="person">Person</option>
@@ -60,14 +39,20 @@
                     <form id="disp">
                     </form>
                 </div>
-            </div>
-
+            </div> 
+                
+            <div class="col-sm-9" >
+                <div id="search">
+                    <c:url value="../logout" var="logoutUrl" />
+                    <form action="${logoutUrl}" method="post" id="logoutForm">
+                        <input type="hidden" name="${_csrf.parameterName}"value="${_csrf.token}" />
+                    </form>
+                </div>      
                 <div id="usermessage"><h2>${msg}</h2></div>
-
-            <div >
                 <div ng-controller="personController">
-                    <table border="1"align="center"id="persons">
-                        <thead><tr><th colspan="6"><spring:message code="label.tablename"/> </th></tr>
+                    <table align="center"id="persons" class="usertable table table-condensed table-hover">
+                        <thead><tr>
+                                <th colspan="6"><spring:message code="label.tablename"/> </tr>
                             <tr><th>ID</th>
                                 <th><spring:message code="label.name"/></th>
                                 <th><spring:message code="label.datehired"/></th>
@@ -79,7 +64,7 @@
                         <tr ng-repeat="persons in personsList">
                             <td>{{persons.id}}</td>
                             <td>{{persons.names.first_name}} {{persons.names.last_name}}</td>
-                            <td ng-bind="persons.date_hired | date:'yyyy-MM-dd'">{{persons.date_hired}}</td>
+                            <td ng-bind="persons.date_hired | date:'yyyy - MM - dd'">{{persons.date_hired}}</td>
                             <td>{{persons.grade}}</td>
                             <td>
                                 <ul>
@@ -89,12 +74,11 @@
                                 </ul
                             </td>
                             <td>
-                                <button id="{{persons.id}}" onclick="location.href ='update{{persons.id}}'">Update</button>
+                                <button type="button" class="btn btn-primary" id="{{persons.id}}" onclick="location.href ='update{{persons.id}}'">Update</button>
                                 <sec:authorize access="hasRole('ROLE_ADMIN')">
-                                    <button class="delete" value = "{{persons.id}}">Delete</button>
+                                    <button class="btn btn-danger delete" value = "{{persons.id}}">Delete</button>
                                 </sec:authorize>
                             </td>
-
                         </tr>
                     </table>
                 </div>

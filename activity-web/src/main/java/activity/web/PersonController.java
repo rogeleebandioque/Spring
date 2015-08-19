@@ -183,40 +183,6 @@ public class PersonController {
         }
     }
 
-    public void populateModel(Model model) {
-        List<String> roleId = new ArrayList<>();
-        roleId.add("Police");
-        roleId.add("Politician");
-        roleId.add("Soldier");
-        roleId.add("Celebrity");
-        roleId.add("Worker");
-        model.addAttribute("roleId", roleId);
-    }
-
-    public Date dateValid(String date) {
-        DateValidator dateVal = DateValidator.getInstance();
-        Date dt = null;
-
-        dt = dateVal.validate(date, "yyyy-MM-dd");
-        if (dt == null) {
-            date = "0001-01-01";
-            dt = dateVal.validate(date, "yyyy-MM-dd");
-        }
-        return dt;
-    }
-
-    public int integerValid(String in) {
-        boolean a = true;
-        int input = 0;
-
-        try {
-            input = Integer.parseInt(in);
-        } catch (NumberFormatException e) {
-            input = 100;
-        }
-        return input;
-    }
-
     @RequestMapping(value = "/uploadForm", method = RequestMethod.POST)
     public String uploadFormHandler(
             @RequestParam(value = "name") String name,
@@ -332,6 +298,40 @@ public class PersonController {
                 return "persons/userform";
             }
         }
+    }
+
+    public void populateModel(Model model) {
+        List<String> roleId = new ArrayList<>();
+        roleId.add("Police");
+        roleId.add("Politician");
+        roleId.add("Soldier");
+        roleId.add("Celebrity");
+        roleId.add("Worker");
+        model.addAttribute("roleId", roleId);
+    }
+
+    public Date dateValid(String date) {
+        DateValidator dateVal = DateValidator.getInstance();
+        Date dt = null;
+
+        dt = dateVal.validate(date, "yyyy-MM-dd");
+        if (dt == null) {
+            date = "0001-01-01";
+            dt = dateVal.validate(date, "yyyy-MM-dd");
+        }
+        return dt;
+    }
+
+    public int integerValid(String in) {
+        boolean a = true;
+        int input = 0;
+
+        try {
+            input = Integer.parseInt(in);
+        } catch (NumberFormatException e) {
+            input = 100;
+        }
+        return input;
     }
 
     public Set contactDetails(String[] cDetails, String[] cType) {

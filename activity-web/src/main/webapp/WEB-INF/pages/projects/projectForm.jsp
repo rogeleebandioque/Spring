@@ -9,27 +9,23 @@
 
 <html>
     <head>
-        <sec:csrfMetaTags/> 
-        <spring:url value="/resources/css/servlets.css" var="ServletsCss" />
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-        <spring:url value="/resources/js/projects/addproject.js" var="addproject" />
-
-        <link rel="stylesheet" type="text/css" href="${ServletsCss}"/>
-        <script src="${addproject}"></script>
-
+        <%@ include file="import.jsp" %>  
+        <spring:url value="/resources/js/projects/project.js" var="project" />
+        <script src="${project}"></script>
         <title>Spring Activity</title>
     </head>
-
-    <body>
-
+    <body><br><br>
         <div id="container">
-            <h1 align="center">Spring Activity</h1>
-            <h1>Add Project</h1>
-            <br/>
-            <div id="message"></div>
-            <br/>
+            <c:choose>
+                <c:when test="${projectForm.project_id == 0}">
+                    <h1>Add Project</h1>
+                    or
+                </c:when>
+                <c:otherwise>
+                    <h1>Update Project</h1>
+                </c:otherwise>
+            </c:choose>
             <%@ include file="form.jsp" %>     
-                        
         </div>
     </body>
 </html>

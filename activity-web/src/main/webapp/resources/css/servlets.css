@@ -1,43 +1,19 @@
-#container {
-    position:relative;    
-    top:5%;
-    text-align:center;
-}
-#todo {
-    display:none;
-}
-table{
+#container{
     text-align: center;
 }
-#search{
+
+#local{
     text-align:right;
-    position:relative;
-    right:5%;
-}
-#add{
-    text-align:right;
-    position:relative;
-    right:5%;
 }
 #alertUser{
     border:1px;
 
 }
-#fileUpload{
-    position:static;
 
-}
 .errors {
     color: red;
 }
-#login-box {
-    border:1px solid black;
-    text-align:center;
-    width:40%;
-    position: fixed;
-    top:20%;
-    left:30%;
-}
+
 #tablelogin {
 
     text-align:center;
@@ -54,6 +30,6 @@ table{
     top: 20%;
     left: 25%;
     width: 50%;
-    height: 50%;
+    height: 25%;
     text-align: center;   
 }

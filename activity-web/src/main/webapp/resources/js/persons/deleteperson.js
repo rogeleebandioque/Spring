@@ -13,7 +13,7 @@ $(document).ready(function () {
                 '<option id="listBy" value="grade"> Grade </option> </select> ' +
                 '<select name="order" id="order"><option value="asc"> Ascending </option> ' +
                 '<option value="desc"> Descending </option></select> <br/>' +
-                '<button ng-click="searchPersons()">Search</button>');
+                '<button class=\"btn btn-info\" ng-click="searchPersons()">Search</button>');
     });
 
     $("#prole").click(function () {
@@ -25,7 +25,7 @@ $(document).ready(function () {
                 '<option value="3"> Soldier </option>' +
                 '<option value="4"> Celebrity </option>' +
                 '<option value="5"> Worker <br/>' +
-                '<input type="submit" value="Search">' +
+                '<input class=\"btn btn-info\"type="submit" value="Search">' +
                 '</select>');
 
     });
@@ -64,8 +64,8 @@ $(document).ready(function () {
                         "<td>" + element.grade + "</td>" +
                         "<td>" + contact + "</td>" +
                         "<td>" +
-                        "<button id=\"" + element.id + "\"onclick=\"location.href=\'update/" + element.id + "\'\">Update</button>" +
-                        ((roles == "ROLE_ADMIN") ? "<button class=\"delete\" value =\"" + element.id + "\">Delete</button>" : "") +
+                        "<button class=\"btn btn-primary\" id=\"" + element.id + "\"onclick=\"location.href=\'update/" + element.id + "\'\">Update</button>" +
+                        ((roles == "ROLE_ADMIN") ? " <button class=\"btn btn-danger delete\" value =\"" + element.id + "\">Delete</button>" : "") +
                         "</td></tr>");
             });
         });
@@ -103,8 +103,8 @@ $(document).ready(function () {
                         "<td>" + new Date(element.date_hired).toISOString().slice(0, 10) + "</td>" +
                         "<td>" + element.grade + "</td>" +
                         "<td>" + contact + "</td>" +
-                        "<td><button id=\"" + element.id + "\"onclick=\"location.href=\'update/" + element.id + "\'\">Update</button>" +
-                        ((roles == "ROLE_ADMIN") ? "<button class=\"delete\" value =\"" + element.id + "\">Delete</button>" : "") +
+                        "<td><button class=\"btn btn-primary\"id=\"" + element.id + "\"onclick=\"location.href=\'update/" + element.id + "\'\">Update</button>" +
+                        ((roles == "ROLE_ADMIN") ? " <button class=\"btn btn-danger delete\" value =\"" + element.id + "\">Delete</button>" : "") +
                         "</td></tr>");
             });
         });

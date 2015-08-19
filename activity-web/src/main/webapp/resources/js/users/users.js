@@ -35,8 +35,8 @@ $(document).ready(function() {
                     "<td>"+element.username+"</td>" +
                     "<td>"+element.role+"</td>" +
                     "<td>"+
-                    ((role === "ROLE_ADMIN") ? "<button class=\"update\" value= \""+
-                    element.id+"\">Update</button><button class=\"deleteuser\" "+
+                    ((role === "ROLE_ADMIN") ? "<button class=\"btn btn-primary update\"value= \""+
+                    element.id+"\">Update</button> <button class=\"btn btn-danger deleteuser\" "+
                     "value =\""+element.id+"\">Delete</button>": "NONE")+"</td></tr>");
             });
         });

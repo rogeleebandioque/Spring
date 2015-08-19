@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -8,13 +9,14 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <html>
-    <head>
+    <head>  
         <sec:csrfMetaTags/> 
         <spring:url value="/resources/css/servlets.css" var="ServletsCss" />
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         <spring:url value="/resources/js/users/users.js" var="users" />
         <spring:url value="/resources/js/users/updateuser.js" var="update" />
-
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script> 
         <script src="${users}"></script>
         <script src="${update}"></script>
         <link rel="stylesheet" type="text/css" href="${ServletsCss}"/>
@@ -22,38 +24,19 @@
     </head>
 
     <body>
-        <div id="container">
-            <span style="float: right; text-align: right">
-                <a href="?lang=en">en</a>|<a href="?lang=tlg">tlg</a>           
-                <br/>   
+        <div id="container" class="row">
+            <div id="local" class="col-sm-3">
+                <a href="?lang=en">en</a>|<a href="?lang=tlg">tlg</a><br/>           
                 Welcome : <b>${pageContext.request.userPrincipal.name} </b>| 
-                <button id="logout" value="logout">Logout</button>
-                <br/>
-            </span> 
+                <button id="logout" value="logout" class="btn btn-warning">Logout</button>
+                <br/><br/>
+                <a href="../Persons"> View Persons</a> |
+                <a href="../projects"> View Projects</a> |
+                <a href="../userslist"> View Users</a>
+                <br/><br/>
 
-            <span style="float: left; text-align: right">
-                <a href="../Persons"> View Persons</a>
-                <a href="../projects"> View Projects</a>
-            </span>
-
-            <br/><br/>
-            <h1>Spring Activity</h1>
-            <div id="search">
-                <c:url value="../logout" var="logoutUrl" />
-                <form action="${logoutUrl}" method="post" id="logoutForm">
-                    <input type="hidden" name="${_csrf.parameterName}"
-                           value="${_csrf.token}" />
-                </form>
-            </div>
-
-            <div id="usermessage">
-                <c:if test="${empty user}">
-                    <h2>No Projects Found!</h2>
-                </c:if>
-            </div>
-            <div id="userformdiv" >
                 <form id="userform">
-                    <table border ="1"align="center">
+                    <table border ="1" class="table-condensed" align="right">
                         <th colspan="2">Add User</th>
                         <tr>
                             <td>Username:</td>
@@ -84,18 +67,24 @@
                                 </td>
                             </tr>
                         </sec:authorize>
-
                         <tr>
                             <td colspan="2">
-                                <input type="submit" value="Submit"/>
+                                <input class="btn btn-success btn-block" type="submit" value="Submit"/>
                             </td>
                         </tr>
                     </table>
                 </form>
-            </div>
+                <div id="search">
+                    <c:url value="../logout" var="logoutUrl" />
+                    <form action="${logoutUrl}" method="post" id="logoutForm">
+                        <input type="hidden" name="${_csrf.parameterName}"
+                               value="${_csrf.token}" />
+                    </form>
+                </div>
+            </div> 
 
-            <div id="list">
-                <table border="1" align="center"id="userTable">
+            <div id="list" class="col-sm-9">
+                <table id="userTable" class="usertable table table-condensed table-hover">
                     <thead>
                         <tr>
                             <th colspan="6"><spring:message code="label.users"/></th>
@@ -114,8 +103,8 @@
                             <td>${users.role}</td>
                             <td>
                                 <sec:authorize access="hasRole('ROLE_ADMIN')">
-                                    <button class="update" value= "${users.id}">Update</button>
-                                    <button class="deleteuser" value = "${users.id}">Delete</button>
+                                    <button class="btn btn-primary update" value= "${users.id}">Update</button>
+                                    <button class="btn btn-danger deleteuser" value = "${users.id}">Delete</button>
                                 </sec:authorize>
                                 <sec:authorize access="hasRole('ROLE_USER')">
                                     NONE
@@ -124,7 +113,7 @@
                         </tr>
                     </c:forEach>     
                 </table>
-            </div><br/><br/><br/>
+            </div>
         </div>
 
         <c:if test="${not empty pageContext.request.userPrincipal}">

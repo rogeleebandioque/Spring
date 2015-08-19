@@ -11,92 +11,83 @@
 
 <html>
     <head>
-        <sec:csrfMetaTags/> 
-        <spring:url value="/resources/css/servlets.css" var="ServletsCss" />
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <%@ include file="import.jsp" %>  
         <spring:url value="/resources/js/projects/deleteproject.js" var="deleteproject" />
         <script src="${deleteproject}"></script>
-        <link rel="stylesheet" type="text/css" href="${ServletsCss}"/>
         <title>Spring Activity</title>
     </head>
 
     <body>
-        <div id="container">
-            <span style="float: right; text-align: right">
-                <a href="?lang=en">en</a>|<a href="?lang=tlg">tlg</a>           
-                <br/>   
+        <div id="container" class="row">
+            <div id="local" class="col-sm-3">
+                <a href="?lang=en">en</a>|<a href="?lang=tlg">tlg</a><br/>   
                 Welcome : <b>${pageContext.request.userPrincipal.name} </b>| 
-                <button id="logout" value="logout">Logout</button>
-                <br/>
-            </span> 
-
-            <span style="float: left; text-align: right">
-                <a href="../Persons"> View Persons</a>
+                <button id="logout" value="logout" class="btn btn-warning">Logout</button>
+                <br/><br/>
+                <a href="../Persons"> View Persons</a> |
+                <a href="../projects"> View Projects</a> |
                 <a href="../userslist"> View Users</a>
-            </span>
+                <br><br>
+                <div id="add">
+                    <button onClick="location.href = 'AddProject'" class="btn btn-success">
+                        <spring:message code="label.addproject"/> 
+                    </button>
+                </div>
+                <div id="search">
+                    <c:url value="../logout" var="logoutUrl" />
+                    <form action="${logoutUrl}" method="post" id="logoutForm">
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                    </form>
+                </div>
+            </div> 
 
-            <br/><br/>
-            <h1>Spring Activity</h1>
-            <div id="search">
-                <c:url value="../logout" var="logoutUrl" />
-                <form action="${logoutUrl}" method="post" id="logoutForm">
-                    <input type="hidden" name="${_csrf.parameterName}"
-                           value="${_csrf.token}" />
-                </form>
-            </div>
-            <div id="add">
-                <button onClick="location.href = 'AddProject'">
-                    <spring:message code="label.addproject"/> 
-                </button>
-            </div><br/> 
-
-            <div id="usermessage">
-                <c:if test="${empty projects}">
-                    <h2>No Projects Found!</h2>
-                </c:if>
-            </div>
-            <table border="1"align="center">
-                <thead>
-                    <tr>
-                        <th colspan="6"><spring:message code="label.projectname"/> 
-                        </th>
-                    </tr>
-                    <tr>
-                        <th>ID</th>
-                        <th><spring:message code="label.prname"/></th>
-                        <th><spring:message code="label.start"/></th>
-                        <th><spring:message code="label.end"/></th>
-                        <th><spring:message code="label.team"/></th>
-                        <th><spring:message code="label.action"/></th>
-                    </tr>
-                </thead>
-                <c:forEach var="project" items="${projects}">
-                    <tr>
-                        <td>
-                            ${project.project_id}
-                        </td>
-                        <td>${project.project_name} ${user.names.last_name}</td>
-                        <td><fmt:formatDate pattern="yyyy-MM-dd" value="${project.start_date}"/></td>
-                        <td><fmt:formatDate pattern="yyyy-MM-dd" value="${project.end_date}"/></td>
-                        <td>
-                            <c:forEach var="team" items="${project.per_proj}" varStatus="loop">
-                                ${team.names.first_name} ${team.names.last_name} <br/>
-                                <c:if test="${not loop.last}"></c:if>
-                            </c:forEach>
-                        </td>
-                        <td>
-                            <button id="${project.project_id}" onclick="location.href = '/upproject${project.project_id}'">
-                                Update
-                            </button>
-                            <sec:authorize access="hasRole('ROLE_ADMIN')">
-                                <button class="deleteproj" value = "${project.project_id}">
-                                    Delete
+            <div class="col-sm-9">
+                <div id="usermessage">
+                    <h2>${msg}</h2>
+                </div>
+                <table class="usertable table table-condensed table-hover">
+                    <thead>
+                        <tr>
+                            <th colspan="6"><spring:message code="label.projectname"/> 
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>ID</th>
+                            <th><spring:message code="label.prname"/></th>
+                            <th><spring:message code="label.start"/></th>
+                            <th><spring:message code="label.end"/></th>
+                            <th><spring:message code="label.team"/></th>
+                            <th><spring:message code="label.action"/></th>
+                        </tr>
+                    </thead>
+                    <c:forEach var="project" items="${projects}">
+                        <tr>
+                            <td>
+                                ${project.project_id}
+                            </td>
+                            <td>${project.project_name} ${user.names.last_name}</td>
+                            <td><fmt:formatDate pattern="yyyy-MM-dd" value="${project.start_date}"/></td>
+                            <td><fmt:formatDate pattern="yyyy-MM-dd" value="${project.end_date}"/></td>
+                            <td>
+                                <c:forEach var="team" items="${project.per_proj}" varStatus="loop">
+                                    ${team.names.first_name} ${team.names.last_name} <br/>
+                                    <c:if test="${not loop.last}"></c:if>
+                                </c:forEach>
+                            </td>
+                            <td>
+                                <button  class="btn btn-primary" id="${project.project_id}" onclick="location.href = '/upproject${project.project_id}'">
+                                    Update
                                 </button>
-                            </sec:authorize>
-                        </td>
-                    </tr>
-                </c:forEach>     
-            </table>
+                                <sec:authorize access="hasRole('ROLE_ADMIN')">
+                                    <button class="btn btn-danger deleteproj" value = "${project.project_id}">
+                                        Delete
+                                    </button>
+                                </sec:authorize>
+                            </td>
+                        </tr>
+                    </c:forEach>     
+                </table>
+            </div>
         </div>
     </body>
 </html>

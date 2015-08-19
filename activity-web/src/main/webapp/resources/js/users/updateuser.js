@@ -13,10 +13,10 @@ $(document).ready(function () {
         });
         ajaxCall.done(function (data) {
             $("#container").append("<div id=\"change\"> <br/><br/>"+
-                    "<h1>Edit User</h1><br/><br/>" +
                     "<form id=\"editform\" modelAttribute=\"userform\">" +
-                    "<table border=\"1\" align=\"center\">"+
+                    "<table align=\"center\">"+
                     "<input type=\"hidden\" id=\"editid\"value=\"" + data.id + "\"/>" +
+                    "<tr><th colspan=\"2\">Edit User</th></tr>"+
                     "<tr><td>Username: </td>"+
                     "<td><input type=\"text\" id=\"editusername\" value=\"" + 
                     data.username + "\"/></td></tr>" +
@@ -28,8 +28,8 @@ $(document).ready(function () {
                     "<option value=\"ROLE_USER\">User</option>"+
                     "</select></td></tr>" +
                     "<tr><td colspan=\"2\"><center>"+
-                    "<input type=\"submit\"value=\"Submit\"/>" +
-                    "<input type=\"button\" id=\"cancel\" value=\"Cancel\"/>"+
+                    "<input class=\"btn btn-success\"type=\"submit\"value=\"Submit\"/> " +
+                    "<input class=\"btn btn-warning\"type=\"button\" id=\"cancel\" value=\"Cancel\"/>"+
                     "</center></td></tr></table></form>");
         });
     };
@@ -65,10 +65,10 @@ $(document).ready(function () {
                         "<td>" + element.username + "</td>" +
                         "<td>" + element.role + "</td>" +
                         "<td><sec:authorize access=\"hasRole(\'ROLE_ADMIN\')\">" +
-                        ((role == "ROLE_ADMIN") ? "<button class=\"update\" value= \"" + 
-                        element.id + "\">Update</button>" +
-                        "<button class=\"deleteuser\" value =\"" + 
-                        element.id + "\">Delete</button>" : "NONE") +
+                        ((role === "ROLE_ADMIN") ? "<button class=\"btn btn-primary update\" value= \"" + 
+                        element.id + "\">Update</button> " +
+                        "<button value =\"" + 
+                        element.id + "\" class=\"btn btn-danger deleteuser\">Delete</button>" : "NONE") +
                         "</td></tr>");
             });
             $("#change").remove();
