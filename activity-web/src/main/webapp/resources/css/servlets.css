@@ -1,5 +1,5 @@
 #container {
-	position:relative;    
+    position:relative;    
     top:5%;
     text-align:center;
 }
@@ -7,6 +7,7 @@
     display:none;
 }
 table{
+    text-align: center;
 }
 #search{
     text-align:right;
@@ -20,11 +21,11 @@ table{
 }
 #alertUser{
     border:1px;
-    
+
 }
 #fileUpload{
     position:static;
-    
+
 }
 .errors {
     color: red;
@@ -32,12 +33,16 @@ table{
 #login-box {
     border:1px solid black;
     text-align:center;
+    width:40%;
+    position: fixed;
+    top:20%;
+    left:30%;
 }
 #tablelogin {
 
     text-align:center;
     padding:1em;
-    
+
 }
 #team, #chosen {
     border: 1px solid black;

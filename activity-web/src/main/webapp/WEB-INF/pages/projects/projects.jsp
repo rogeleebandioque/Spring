@@ -6,6 +6,8 @@
 <%@ page import="javax.servlet.http.*" %>
 <%@ page import="javax.servlet.http.HttpServletRequest" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 
 <html>
     <head>
@@ -74,17 +76,16 @@
                             ${project.project_id}
                         </td>
                         <td>${project.project_name} ${user.names.last_name}</td>
-                        <td>${project.start_date}</td>
-                        <td>${project.end_date}</td>
+                        <td><fmt:formatDate pattern="yyyy-MM-dd" value="${project.start_date}"/></td>
+                        <td><fmt:formatDate pattern="yyyy-MM-dd" value="${project.end_date}"/></td>
                         <td>
                             <c:forEach var="team" items="${project.per_proj}" varStatus="loop">
                                 ${team.names.first_name} ${team.names.last_name} <br/>
-                                <c:if test="${not loop.last}"><br/></c:if>
+                                <c:if test="${not loop.last}"></c:if>
                             </c:forEach>
                         </td>
                         <td>
-                            <button id="${project.project_id}"
-                                    onclick="location.href = '/upproject${project.project_id}'">
+                            <button id="${project.project_id}" onclick="location.href = '/upproject${project.project_id}'">
                                 Update
                             </button>
                             <sec:authorize access="hasRole('ROLE_ADMIN')">

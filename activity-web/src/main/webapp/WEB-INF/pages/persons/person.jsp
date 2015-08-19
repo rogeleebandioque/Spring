@@ -62,7 +62,7 @@
                 </div>
             </div>
 
-            <div id="usermessage"></div>
+                <div id="usermessage"><h2>${msg}</h2></div>
 
             <div >
                 <div ng-controller="personController">

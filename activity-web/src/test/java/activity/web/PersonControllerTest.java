@@ -36,7 +36,6 @@ public class PersonControllerTest {
     @InjectMocks
     private PersonController personController;
 
-    private final String PERSON_JSON = "{\"test\" : \"test\"}";
     private final String LIST_JSON = "{{\"test\" : \"test\"}}";
 
     @Before
@@ -185,4 +184,5 @@ public class PersonControllerTest {
                 .header("Accept", "application/json"))
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
+    
 }

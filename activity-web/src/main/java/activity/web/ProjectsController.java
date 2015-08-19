@@ -95,6 +95,7 @@ public class ProjectsController {
         projectFormValidator.validate(project, result);
         if (result.hasErrors()) {
             model.addAttribute("projectForm", project);
+            model.addAttribute("team",team);
             populateModel(model);
             return "projects/projectForm";
         }

@@ -137,11 +137,9 @@ public class PersonController {
         logger.debug("saveOrUpdateUser()");
         Set<Roles> r = new HashSet();
         Set<Contacts> c = new HashSet();
-        System.out.println(person.getBday());
         if (roles != null) {
             r = addRole(roles);
             person.setRole(r);
-
         }
 
         if (detail != null) {
