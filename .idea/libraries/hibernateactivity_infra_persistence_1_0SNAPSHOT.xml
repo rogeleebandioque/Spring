@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="hibernateactivity-infra-persistence-1.0SNAPSHOT">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/hibernateactivity-infra/hibernateactivity-infra-persistence/target/hibernateactivity-infra-persistence-1.0SNAPSHOT.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>

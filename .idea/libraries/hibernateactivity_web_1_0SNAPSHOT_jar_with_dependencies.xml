@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="hibernateactivity-web-1.0SNAPSHOT-jar-with-dependencies">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/hibernateactivity-web/target/hibernateactivity-web-1.0SNAPSHOT-jar-with-dependencies.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>
