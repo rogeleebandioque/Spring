@@ -35,7 +35,7 @@ public class ProjectControllerTest {
 
     @Mock
     Projects projects;
-    
+
     Projects project;
 
     private final String PROJECT_JSON = "{\"test\" : \"test\"}";
@@ -87,7 +87,7 @@ public class ProjectControllerTest {
         Mockito.when(personService.getPerson()).thenReturn(Arrays.asList(person));
         mockMvc.perform(MockMvcRequestBuilders.get("/AddProject"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.view().name("/projects/addprojectform"));
+                .andExpect(MockMvcResultMatchers.view().name("/projects/projectForm"));
     }
 
     @Test
@@ -98,11 +98,11 @@ public class ProjectControllerTest {
         Mockito.when(projects.getPer_proj()).thenReturn(p);
         Mockito.when(projectService.updateProject(project)).thenReturn("updated");
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/upproject/{id}", 1))
+        mockMvc.perform(MockMvcRequestBuilders.get("/upproject{id}", 1))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.model().attribute("projectForm", project))
                 .andExpect(MockMvcResultMatchers.model().attribute("team", p))
-                .andExpect(MockMvcResultMatchers.view().name("/projects/updateprojectform"));
+                .andExpect(MockMvcResultMatchers.view().name("/projects/projectForm"));
     }
 
     @Test
@@ -129,38 +129,6 @@ public class ProjectControllerTest {
 
         mockMvc.perform(MockMvcRequestBuilders.delete("/removeproject/{id}", i)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .accept(MediaType.APPLICATION_JSON_VALUE))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().string("true"));
-    }
-
-    @Test
-    public void addProjectTest() throws Exception {
-        System.out.println("Add Project Test");
-        Set<Person> id = new HashSet<>();
-        Set<Person> members = new HashSet<>();
-        Mockito.when(projects.getPer_proj()).thenReturn(id);
-        Mockito.when(personService.getPersons(1)).thenReturn(person);
-        Mockito.when(projectService.addProject(project)).thenReturn("Added");
-        mockMvc.perform(MockMvcRequestBuilders.post("/AddProject")
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .content(PROJECT_JSON)
-                .accept(MediaType.APPLICATION_JSON_VALUE))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().string("true"));
-    }
-
-    @Test
-    public void updateProjectTest() throws Exception {
-        System.out.println("Update Project Test");
-        Set<Person> id = new HashSet<>();
-        Set<Person> members = new HashSet<>();
-        Mockito.when(projects.getPer_proj()).thenReturn(id);
-        Mockito.when(personService.getPersons(1)).thenReturn(person);
-        Mockito.when(projectService.addProject(project)).thenReturn("Added");
-        mockMvc.perform(MockMvcRequestBuilders.put("/UpdateProject")
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .content(PROJECT_JSON)
                 .accept(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().string("true"));

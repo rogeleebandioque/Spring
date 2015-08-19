@@ -30,7 +30,7 @@
                     <h1>Add Person</h1>
                     <div id="fileUpload">
                         <form:form method="post" action="/uploadForm?${_csrf.parameterName}=${_csrf.token}" enctype="multipart/form-data">
-                            Upload File: <input type="file" name="file"/><br/>
+                            Upload File: <input type="file" name="data"/><br/>
                             Name: <input type="text" name="name" required><br />
                             <input type="submit" value="Add File"/>
                         </form:form>
@@ -43,7 +43,7 @@
                 </c:otherwise>
             </c:choose>
             <br/>
-            or
+ 
             <br/>
             <div id="message"></div>
             <%@ include file="form.jsp" %>     

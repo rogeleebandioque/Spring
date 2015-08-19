@@ -227,7 +227,7 @@ public class PersonController {
             model.addAttribute("personForm", new Person());
             model.addAttribute("message", "Invalid file format!");
 
-            return "persons/addform";
+            return "persons/userform";
         } else {
             Person person = new Person();
             Name n = person.getNames();
@@ -328,10 +328,10 @@ public class PersonController {
                 model.addAttribute("personForm", person);
                 model.addAttribute("contact", c);
                 populateModel(model);
-                return "persons/addform";
+                return "persons/userform";
             } else {
                 model.addAttribute("message", "File Empty!");
-                return "persons/addform";
+                return "persons/userform";
             }
         }
     }

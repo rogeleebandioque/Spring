@@ -16,6 +16,8 @@ import activity.core.service.ProjectServiceImpl;
 import activity.core.service.PersonServiceImpl;
 import activity.core.model.Projects;
 import activity.core.model.Person;
+import com.sun.net.httpserver.HttpServer;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -81,8 +83,9 @@ public class ProjectsController {
             final RedirectAttributes redirectAttributes) {
         logger.debug("Save projects");
         Set<Person> team = new HashSet<>();
-
         if (members != null) {
+            
+            System.out.println("hello");
             for (String i : members) {
                 team.add(personService.getPersons(Integer.parseInt(i)));
             }

@@ -80,7 +80,7 @@ public class PersonControllerTest {
         System.out.println("Inside display add person form test...");
         mockMvc.perform(MockMvcRequestBuilders.get("/AddPerson"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.view().name("persons/addform"));
+                .andExpect(MockMvcResultMatchers.view().name("persons/userform"));
     }
 
     @Test
@@ -166,7 +166,7 @@ public class PersonControllerTest {
                 .andExpect(MockMvcResultMatchers.model().attribute("personForm", p1))
                 .andExpect(MockMvcResultMatchers.model().attribute("roles", p1.getRole()))
                 .andExpect(MockMvcResultMatchers.model().attribute("contact", p1.getContact()))
-                .andExpect(MockMvcResultMatchers.view().name("persons/updateform"));
+                .andExpect(MockMvcResultMatchers.view().name("persons/userform"));
     }
 
     @Test
