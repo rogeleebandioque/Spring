@@ -9,4 +9,4 @@ activity-infra/hibernateactivity-infra-buildtools/target/
 activity-infra/hibernateactivity-infra-persistence/target/
 activity-infra/target/
 target/
-
+.idea*

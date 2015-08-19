@@ -9,17 +9,14 @@
     border:1px;
 
 }
-
 .errors {
     color: red;
 }
-
 #tablelogin {
-
     text-align:center;
     padding:1em;
-
 }
+
 #team, #chosen {
     border: 1px solid black;
 }
