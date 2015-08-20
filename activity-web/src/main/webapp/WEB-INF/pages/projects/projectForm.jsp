@@ -19,7 +19,6 @@
             <c:choose>
                 <c:when test="${projectForm.project_id == 0}">
                     <h1>Add Project</h1>
-                    or
                 </c:when>
                 <c:otherwise>
                     <h1>Update Project</h1>

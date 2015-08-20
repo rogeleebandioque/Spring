@@ -34,46 +34,35 @@
                 <a href="../projects"> View Projects</a> |
                 <a href="../userslist"> View Users</a>
                 <br/><br/>
-
-                <form id="userform">
-                    <table border ="1" class="table-condensed" align="right">
-                        <th colspan="2">Add User</th>
-                        <tr>
-                            <td>Username:</td>
-                            <td><input id="username" required="true"/></td>
-                        </tr>
-                        <tr>
-                            <td>Password:</td>
-                            <td><input type="password" id="password"required="true"/></td>
-                        </tr>                    
-                        <sec:authorize access="hasRole('ROLE_ADMIN')">                    
+                <sec:authorize access="hasRole('ROLE_ADMIN')">   
+                    <form id="userform">
+                        <table border ="1" class="table-condensed" align="right">
+                            <th colspan="2">Add User</th>
+                            <tr>
+                                <td>Username:</td>
+                                <td><input id="username" required="true"/></td>
+                            </tr>
+                            <tr>
+                                <td>Password:</td>
+                                <td><input type="password" id="password"required="true"/></td>
+                            </tr>                    
                             <tr>
                                 <td>Role:</td>
                                 <td>
-                                    <select id="role">
+                                    <select id="p_role">
                                         <option value="ROLE_ADMIN">ADMIN</option>
                                         <option value="ROLE_USER">USER</option>
                                     </select>
                                 </td>
                             </tr>
-                        </sec:authorize>
-                        <sec:authorize access="hasRole('ROLE_USER')">                    
                             <tr>
-                                <td>Role:</td>
-                                <td>
-                                    <select id="role">
-                                        <option value="ROLE_USER">USER</option>
-                                    </select>
+                                <td colspan="2">
+                                    <input class="btn btn-success btn-block" type="submit" value="Submit"/>
                                 </td>
                             </tr>
-                        </sec:authorize>
-                        <tr>
-                            <td colspan="2">
-                                <input class="btn btn-success btn-block" type="submit" value="Submit"/>
-                            </td>
-                        </tr>
-                    </table>
-                </form>
+                        </table>
+                    </form>
+                </sec:authorize>
                 <div id="search">
                     <c:url value="../logout" var="logoutUrl" />
                     <form action="${logoutUrl}" method="post" id="logoutForm">

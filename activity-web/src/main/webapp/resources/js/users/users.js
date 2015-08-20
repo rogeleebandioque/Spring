@@ -10,7 +10,7 @@ $(document).ready(function() {
 
         var username = $("#username").val();
         var password = $("#password").val();
-        var role = $("#role").val();
+        var roles = $("#p_role").val();
         
         var ajaxCall = $.ajax({
             url: "AddUser",
@@ -19,7 +19,7 @@ $(document).ready(function() {
             data: {
                     "username":username,
                     "password":password,
-                    "role":role
+                    "role":roles
                   },
             beforeSend: function(xhr) {
                 xhr.setRequestHeader(header, token);
